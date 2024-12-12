@@ -6,7 +6,8 @@
   "scripts": {
     "dev:frontend": "pnpm --filter bookingeek-frontend dev",
     "dev:backend": "pnpm --filter bookingeek-api start:dev",
-    "build": "pnpm recursive run build"
+    "build:web": "pnpm recursive run build",
+    "build:android": "cd apps/bookingeek-frontend/android && sh gradlew build && ./gradlew assemble"
   },
   "keywords": [],
   "author": "",
