@@ -1,0 +1,14 @@
+{
+  "name": "bookingeek",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:frontend": "pnpm --filter bookingeek-frontend dev",
+    "dev:backend": "pnpm --filter bookingeek-api start:dev",
+    "build": "pnpm recursive run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
