@@ -11,6 +11,7 @@ import {
 } from 'mongodb';
 import { DbCollection } from 'src/database/collection.enum';
 import { PersistentEntity } from './types/persistent-entity';
+import { FromPersistentEntity } from './types/from-persistent-entity';
 
 @Injectable()
 export class DatabaseService {
@@ -64,7 +65,7 @@ export class DatabaseService {
 
   async insertOne<T>(
     collectionName: DbCollection,
-    entity: T,
+    entity: Omit<T, FromPersistentEntity>,
   ): Promise<T & PersistentEntity> {
     const collection = this.db.collection<T>(collectionName);
     const created = new Date().getTime();
@@ -89,7 +90,7 @@ export class DatabaseService {
       IS_DELETED: false,
       _id: query.insertedId,
     };
-    return entityInserted;
+    return entityInserted as T & PersistentEntity;
   }
 
   async updateOne<T>(
