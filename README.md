@@ -13,6 +13,8 @@ Drafts: https://www.figma.com/design/pMVdc3Qzz2htje5C1H3MZg/Bookingeek?node-id=0
 
 ## Endpoints
 
+- Name - who can make requests to it
+
 - Sign Up (register business and admin user) - business
 - Sign In - business
 - Update business - business
@@ -28,7 +30,7 @@ Drafts: https://www.figma.com/design/pMVdc3Qzz2htje5C1H3MZg/Bookingeek?node-id=0
 - Cancel reservation - customer
 - File upload - business
 
-## Modules
+## Backend Modules
 
 - Business: responsible for businesses and users registration and authentication.
 - Resources: responsible for resources management.
