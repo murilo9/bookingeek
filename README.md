@@ -47,11 +47,7 @@ Drafts: https://www.figma.com/design/pMVdc3Qzz2htje5C1H3MZg/Bookingeek?node-id=0
 
 ## Flows
 
-F: frontend
-
-B: backend
-
-S: stripe
+F: frontend; B: backend; S: stripe
 
 ### Sign Up
 
@@ -63,7 +59,7 @@ S: stripe
 
 1. F: user fills the form with sign in data, that generates a SignInDto, which is sent to the backend.
 2. B: checks if user exists and password matches. If so, signs a JWT token that is sent to the frontend.
-3. Persists the JWT token so the protected routes can be displayed.
+3. F: Persists the JWT token so the protected routes can be displayed.
 
 ### Reservation
 
