@@ -1,7 +1,6 @@
-import { Inject, Injectable, UseGuards } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { BusinessSignUpDto } from './dto/business-signup.dto';
 import { User } from './entities/user.entity';
-import { SignInGuard } from './guards/sign-in.guard';
 import { sign } from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
 import { Business } from './entities/business.entity';
@@ -11,6 +10,7 @@ import { DatabaseService } from 'src/database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
 import { UserPassword } from './entities/user-password.entity';
 import * as bcrypt from 'bcrypt';
+import { UpdateBusinessDto } from './dto/update-business.dto';
 
 @Injectable()
 export class BusinessesService {
@@ -79,7 +79,6 @@ export class BusinessesService {
   /**
    * Signs a user in.
    */
-  @UseGuards(SignInGuard)
   async signIn(user: User) {
     // Returns signed access token and user data
     return {
@@ -88,5 +87,36 @@ export class BusinessesService {
       }),
       user,
     };
+  }
+
+  /**
+   * Retrieves a business.
+   */
+  async retrieveBusiness(_id: ObjectId) {
+    const business = await this.databaseService.findOne<Business>(
+      DbCollection.Businesses,
+      { _id },
+    );
+    return business;
+  }
+
+  /**
+   * Updates a business.
+   */
+  async updateBusiness(
+    updateBusinessDto: UpdateBusinessDto,
+    businessId: ObjectId,
+  ) {
+    let business = await this.databaseService.findOne<Business>(
+      DbCollection.Businesses,
+      { _id: businessId },
+    );
+    business = { ...business, ...updateBusinessDto };
+    await this.databaseService.updateOne<Business>(
+      DbCollection.Businesses,
+      business,
+      { _id: businessId },
+    );
+    return business;
   }
 }
