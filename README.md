@@ -2,6 +2,8 @@
 
 A simple B2B scheduling platform.
 
+Drafts: https://www.figma.com/design/pMVdc3Qzz2htje5C1H3MZg/Bookingeek?node-id=0-1&t=V8XPE5VmtDbAqNky-1
+
 ## Principles
 
 - Businesses can register in the platform and create resources, which are bookeable.
