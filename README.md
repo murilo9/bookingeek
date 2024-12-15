@@ -43,6 +43,8 @@ Drafts: https://www.figma.com/design/pMVdc3Qzz2htje5C1H3MZg/Bookingeek?node-id=0
 
 - A reservation can be cancelled at any moment, bi either the customer or the business, regardless of its payment status. However, refunds can only be done by the business, and may be subject to their own refuding policies (some may offer partial refunds, others not, etc).
 
+- Users are business' emplyees, not customers. Customers don't sign up in the platform in order to use it.
+
 ## Flows
 
 F: frontend
@@ -53,7 +55,15 @@ S: stripe
 
 ### Sign Up
 
+1.  F: The business user fills the forms with all necessary info data to sign up, that generates a BusinessSignUpDto, which is sent to the backend.
+2.  B: Validates the BusinessSignUpDto, then creates the business instance in the database, among with its admin user and password. It also signs a JWT token that is sent back to the frontend.
+3.  F: Receives the JWT token and starts a session for the just-created business admin user.
+
 ### Sign In
+
+1. F: user fills the form with sign in data, that generates a SignInDto, which is sent to the backend.
+2. B: checks if user exists and password matches. If so, signs a JWT token that is sent to the frontend.
+3. Persists the JWT token so the protected routes can be displayed.
 
 ### Reservation
 
