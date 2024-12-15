@@ -43,9 +43,9 @@ Drafts: https://www.figma.com/design/pMVdc3Qzz2htje5C1H3MZg/Bookingeek?node-id=0
 
 - All services' methods should execute the flow considering the "happy path". It's up to the _guards_, and not to the services, to implement the validation logic (like checking for not found entities or invalid DTOs) in order to ensure that the services' logic can be executed without issues.
 
-- A reservation can be cancelled at any moment, bi either the customer or the business, regardless of its payment status. However, refunds can only be done by the business, and may be subject to their own refuding policies (some may offer partial refunds, others not, etc).
+- A reservation can be cancelled at any moment, by either the customer or the business, regardless of its payment status. However, refunds can only be done by the business, and may be subject to their own refuding policies (some may offer partial refunds, others not, etc).
 
-- Users are business' emplyees, not customers. Customers don't sign up in the platform in order to use it.
+- Users are business' employees, not customers. Customers don't sign up in the platform in order to use it.
 
 ## Flows
 
