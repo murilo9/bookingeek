@@ -65,6 +65,6 @@ S: stripe
 
 ## Android build note
 
-We're using Vite as bundling tool for web. We're using Capcitor as bundling tool for ios/android. Android sdk can beinstalled via sudo apt install android-sdk.
+Android sdk can be installed via sudo apt install android-sdk.
 
 In order to the Android build script work, the android/local.properties file (create it if not exists) must have the sdk.dir property pointing to the android-sdk folder (usually /usr/lib/android-sdk). Build the Android APK with the build:android script. If you got some error on having to accept license agreements, open android-sdk/tools/bin or android-sdk/cmdline-tools/latest/bin and run ./sdkmanager --licenses. If you're unfortunate enough (just like me) to sdkmanager not come in your android-sdk installation, download it [here](https://developer.android.com/tools/sdkmanager). Make sure to chmod -R 777 your android-sdk folder, just in case. The Android build result should generate .apk files inside android/app/build/outputs/apk.
