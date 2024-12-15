@@ -46,7 +46,9 @@ Drafts: https://www.figma.com/design/pMVdc3Qzz2htje5C1H3MZg/Bookingeek?node-id=0
 ## Flows
 
 F: frontend
+
 B: backend
+
 S: stripe
 
 ### Sign Up
