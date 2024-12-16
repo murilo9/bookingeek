@@ -66,10 +66,28 @@ F: frontend; B: backend; S: stripe
 ### Reservation
 
 1. F: The customer selects a resource and fills the necessary data to make a reservation, that generates a CreateReservationDto, which is sent to the backend.
-2. B: Validates the CreateReservationDto and creates a reservation, which is sent back to the frontend.
+2. B: Validates the CreateReservationDto and creates a reservation that is sent back to the frontend, and a reservation cancel key, that is sent to the customer's email as a query paramter in the cancel URL.
 3. F: Receives the created reservation. If online checkout was chosen, renders Stripe's embedded checkout form. Otherwise, the flow ends here.
 4. S: Once payment is done, emmits a checkout event via webhook.
 5. B: Receives Stripe's checkout event and updates the reservation's payment status.
+
+### Reservation Cancel (by Customer)
+
+1. The customer clicks the URL to cancel the reservation (sent by email), that redirects to a page prompting for cancel confirmation.
+2. F: The cancel confirmation page makes a request to the backend, sending the reservation ID and reservation cancel key, that generates a CustomerCancelReservationDto.
+3. B: Validates the CustomerCancelReservationDto and changes the reservation's cancelledBy attribute to 'customer'. Sends a notification to the business users.
+
+### Reservation Cancel (by Business)
+
+1. F: The business user clicks the reservation cancel button, which calls an endpoint in the backend.
+2. B: updates the reservation's cancelledBy attribute to 'business', and sends a notification to the customer's email.
+
+### Refunding a Reservation
+
+1. F: at any time a businees can refund a paid reservation (totally or partially) by going to the refund view and submitting the amount, which generates a RefundReservationDto.
+2. B: validates the RefundReservationDto, creates a Stripe refund for the reservation's Stripe paymentIntent and updates the refund attribute of the reservation.
+
+Obs: a business may do several refunds to the same reservation, as long as the total refunded amount does not get bigger than the charged total.
 
 ## References
 
