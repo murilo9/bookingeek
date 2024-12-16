@@ -35,6 +35,11 @@ export class BusinessesService {
       pictureUrl: null,
       adminUserId: null as ObjectId,
       stripeConnectedAccountId: null,
+      refundingPolicy: {
+        doesRefund: businessSignUpDto.doesRefund,
+        refundType: businessSignUpDto.refundType,
+        description: businessSignUpDto.refundDescription,
+      },
     };
     const business = await this.databaseService.insertOne<Business>(
       DbCollection.Businesses,

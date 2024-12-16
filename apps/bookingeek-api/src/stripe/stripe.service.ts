@@ -48,7 +48,17 @@ export class StripeService {
   }
 
   /**
-   * Calles by the webhook when a charge event is emmited by Stripe. Updates the payment status of a reservation.
+   * Creates a Stripe refund for a payment intent.
+   */
+  createRefund(paymentIntentId: string, amountInCents: number) {
+    return this.stripe.refunds.create({
+      payment_intent: paymentIntentId,
+      amount: amountInCents,
+    });
+  }
+
+  /**
+   * Called by the webhook when a charge event is emmited by Stripe. Updates the payment status of a reservation.
    */
   async handleCheckoutSessionEvent(checkoutSession: Stripe.Checkout.Session) {
     console.log('checkoutSession', checkoutSession);

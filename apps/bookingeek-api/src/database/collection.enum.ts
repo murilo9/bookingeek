@@ -4,4 +4,5 @@ export enum DbCollection {
   UserPasswords = 'userPasswords',
   Resources = 'resources',
   Reservations = 'reservations',
+  ReservationCancelKeys = 'reservationCancelKeys',
 }

@@ -17,4 +17,13 @@ export interface Business extends PersistentEntity {
   adminUserId: ObjectId;
   // Business Stripe connected account ID
   stripeConnectedAccountId: string | null;
+  // Information about refunding policy
+  refundingPolicy: {
+    // Whether the business does refunds or not
+    doesRefund: boolean;
+    // Refund type
+    refundType: 'partial' | 'total';
+    // A short description about how refunds work, to be displayed to customers
+    description: string;
+  };
 }

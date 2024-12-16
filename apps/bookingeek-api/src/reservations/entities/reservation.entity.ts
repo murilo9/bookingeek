@@ -49,4 +49,6 @@ export interface Reservation extends PersistentEntity {
   // Stripe checkout session's client ID, used for rendering the embedded checkout form in the frontend.
   // Only applies if resource's checkoutOptionChosen = 'online'
   checkoutSessionClientId: string | null;
+  // The total amount refunded. Can only ben non-zero when reservation paymentStatus = 'success' & stripePaymentIntent != null
+  refundedAmountInCents: number;
 }

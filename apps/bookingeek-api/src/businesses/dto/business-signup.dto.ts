@@ -1,5 +1,11 @@
 import { Expose } from 'class-transformer';
-import { IsDefined, IsIn, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsDefined,
+  IsIn,
+  IsNotEmpty,
+  IsString,
+} from 'class-validator';
 
 export class BusinessSignUpDto {
   @Expose()
@@ -40,4 +46,17 @@ export class BusinessSignUpDto {
   @IsString()
   @IsIn(['venues', 'services', 'people', 'vehicles'])
   businessArea: 'venues' | 'services' | 'people' | 'vehicles';
+  @Expose()
+  @IsDefined()
+  @IsBoolean()
+  doesRefund: boolean;
+  @Expose()
+  @IsDefined()
+  @IsString()
+  @IsIn(['total', 'partial'])
+  refundType: 'total' | 'partial';
+  @Expose()
+  @IsDefined()
+  @IsString()
+  refundDescription: string;
 }
