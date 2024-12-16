@@ -4,7 +4,7 @@ import { PersistentEntity } from 'src/database/types/persistent-entity';
 /**
  * Represents a reservation of a resource by a customer.
  */
-export interface ReservationEntity extends PersistentEntity {
+export interface Reservation extends PersistentEntity {
   // The resource being reserved
   resourceId: ObjectId;
   // A "picture" of the resource on the time of the reservation
