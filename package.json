@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:frontend": "pnpm --filter bookingeek-frontend dev",
+    "dev:frontend": "pnpm --filter bookingeek-app dev",
     "dev:backend": "pnpm --filter bookingeek-api start:dev",
     "build:web": "pnpm recursive run build",
-    "build:android": "cd apps/bookingeek-frontend/android && sh gradlew build && ./gradlew assemble"
+    "build:android": "cd apps/bookingeek-app/android && sh gradlew build && ./gradlew assemble"
   },
   "keywords": [],
   "author": "",

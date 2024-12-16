@@ -1,7 +1,7 @@
 FROM node:20-alpine
 
-RUN mkdir /home/node/bookingeek-frontend
-WORKDIR /home/node/bookingeek-frontend
+RUN mkdir /home/node/bookingeek-app
+WORKDIR /home/node/bookingeek-app
 
 COPY . .
 

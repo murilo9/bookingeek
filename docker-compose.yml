@@ -13,12 +13,12 @@ services:
     volumes:
       - ./apps/bookingeek-api/src:/home/node/bookingeek-api/src
   frontend:
-    build: ./apps/bookingeek-frontend
+    build: ./apps/bookingeek-app
     ports:
       - "5173:5173"
     volumes:
-      - ./apps/bookingeek-frontend/src:/home/node/bookingeek-frontend/src
-      - ./apps/bookingeek-frontend/public:/home/node/bookingeek-frontend/public
+      - ./apps/bookingeek-app/src:/home/node/bookingeek-app/src
+      - ./apps/bookingeek-app/public:/home/node/bookingeek-app/public
 volumes:
   mongo-data_prod:
     external: false

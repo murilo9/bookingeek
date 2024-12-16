@@ -98,3 +98,11 @@ Obs: a business may do several refunds to the same reservation, as long as the t
 Android sdk can be installed via sudo apt install android-sdk.
 
 In order to the Android build script work, the android/local.properties file (create it if not exists) must have the sdk.dir property pointing to the android-sdk folder (usually /usr/lib/android-sdk). Build the Android APK with the build:android script. If you got some error on having to accept license agreements, open android-sdk/tools/bin or android-sdk/cmdline-tools/latest/bin and run ./sdkmanager --licenses. If you're unfortunate enough (just like me) to sdkmanager not come in your android-sdk installation, download it [here](https://developer.android.com/tools/sdkmanager). Make sure to chmod -R 777 your android-sdk folder, just in case. The Android build result should generate .apk files inside android/app/build/outputs/apk.
+
+https://www.reddit.com/r/reactjs/comments/15p0mfx/why_react_developers_dont_comment_their_code/
+
+> Comment things that are unique and difficult to understand things that should not be deleted, even though they look pointless things that were put in place to fix a weird bug basically just everything weird in the context of the project.
+
+> I comment the shit out of my code. Know why? Because when I come back in 2 years to make changes I'll know right away what the hell it is. Not because I couldn't read it or didn't code it right, of course I can figure that out. But the extra comments frame it up and make it more memorable. In any case, education is the best teacher, and when you write docs or code comments, you are teaching the next person about your code, learning more about your own code. I can't tell you how many times I wrote docs or code comments and, because of this, realized issues or gaps in my code and fixed them.
+
+> In React , the path of least resistance is to write big components with lots of hooks and put a lot of logic inside the component proper. This is simple from the point of view of the author (it works) but not necessarily from that of the reader (lots of loc, lots of hooks callbacks etc. ) so authors don’t always feel compelled to write comments when they should.
