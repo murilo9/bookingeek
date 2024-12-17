@@ -1,0 +1,74 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 16px 0px 24px;
+  min-height: 64px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+header .left-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+header .right-container {
+  display: flex;
+  align-items: center;
+}
+
+header .right-container .desktop-links {
+  display: none;
+}
+
+header .right-container button.mobile-menu {
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+
+header .logo {
+  width: 40px;
+  height: 40px;
+}
+
+header .bookingeek {
+  width: 100px;
+  height: 20px;
+}
+
+@media only screen and (min-width: 1024px) {
+  header .logo {
+    width: 56px;
+    height: 56px;
+  }
+
+  header .bookingeek {
+    width: 125px;
+    height: 24px;
+  }
+
+  header .right-container .desktop-links {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+
+  header .right-container .desktop-links li {
+    list-style-type: none;
+  }
+
+  header .right-container .desktop-links li a,
+  header .right-container .desktop-links li button {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  header .right-container .desktop-links .button-black {
+    font-weight: 600;
+  }
+
+  header .right-container button.mobile-menu {
+    display: none;
+  }
+}

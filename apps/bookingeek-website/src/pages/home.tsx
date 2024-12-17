@@ -1,3 +1,5 @@
+import Header from "@/components/header/header";
+import Hero from "@/components/hero/hero";
 import { getSafeLng, makeT } from "@/locales";
 
 export type HomePageProps = { params: Promise<{ lng?: string[] } | undefined> };
@@ -13,7 +15,8 @@ export default async function HomePage(props: HomePageProps) {
 
   return (
     <>
-      <div>{t("regard")}</div>
+      <Header />
+      <Hero />
     </>
   );
 }

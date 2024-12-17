@@ -1,0 +1,10 @@
+button.button-black {
+  height: 40px;
+  padding: 0px 16px;
+  border-radius: 6px;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "Montserrat";
+}

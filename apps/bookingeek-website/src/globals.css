@@ -1,3 +1,8 @@
+:root {
+  --border-color: #cccccc;
+  --desktop-header-height: 64px;
+}
+
 html {
   scroll-behavior: smooth;
 }

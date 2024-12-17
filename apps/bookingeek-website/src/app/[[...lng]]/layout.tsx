@@ -2,15 +2,15 @@ import "@/globals.css";
 import "@/helpers.css";
 // import { GoogleAnalytics } from "@next/third-parties/google";
 import { Metadata } from "next";
-import { Public_Sans } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { getSafeLng } from "@/locales";
 
-const publicSans = Public_Sans({
+const montserrat = Montserrat({
   subsets: ["latin"],
   display: "swap",
 });
 
-const fontsClassNames = `${publicSans.className}`;
+const fontsClassNames = `${montserrat.className}`;
 
 export const metadata: Metadata = {
   title: "Bookingeek",
