@@ -52,6 +52,14 @@ section.hero .img {
     align-items: flex-start;
   }
 
+  section.hero .body h1 {
+    font-size: 40px;
+  }
+
+  section.hero .body p {
+    line-height: 32px;
+  }
+
   section.hero .img {
     border-radius: 0;
     width: 100%;
