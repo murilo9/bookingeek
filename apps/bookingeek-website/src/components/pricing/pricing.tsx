@@ -44,7 +44,7 @@ const PRICES = [
 
 export default function Pricing() {
   return (
-    <section className="pricing">
+    <section className="pricing" id="pricing">
       <div className="header">
         <h1>The right plan for you, whoever you are</h1>
         <p>
