@@ -1,0 +1,92 @@
+section.activities-list {
+  display: flex;
+  flex-direction: column;
+  padding: 48px 24px;
+  gap: 24px;
+}
+
+section.activities-list .hr {
+  border-bottom: 1px solid var(--border-color);
+  max-width: 800px;
+  width: 100%;
+  margin: auto;
+}
+
+section.activities-list .header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 800px;
+  margin: auto;
+}
+
+section.activities-list .header h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+section.activities-list .header p {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+section.activities-list ul.body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 1024px;
+  margin: auto;
+}
+
+section.activities-list ul.body li {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  list-style-type: none;
+}
+
+section.activities-list ul.body li img {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+}
+
+section.activities-list ul.body li h1 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+@media only screen and (min-width: 1024px) {
+  section.activities-list {
+    max-width: 1440px;
+    margin: auto;
+    padding: 120px 56px;
+    gap: 64px;
+  }
+
+  section.activities-list .header h1,
+  section.activities-list .header p {
+    text-align: center;
+  }
+
+  section.activities-list ul.body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 56px;
+  }
+
+  section.activities-list ul.body li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  section.activities-list ul.body li img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 20px;
+    aspect-ratio: 1 / 1;
+  }
+}

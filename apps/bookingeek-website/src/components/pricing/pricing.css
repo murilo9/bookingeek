@@ -1,0 +1,116 @@
+section.pricing {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 48px 24px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+section.pricing .header {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 900px;
+  margin: auto;
+}
+
+section.pricing .header h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+section.pricing .header p {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+section.pricing ul.price-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+section.pricing ul.price-cards .price-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.15);
+  padding: 32px 24px;
+  border-radius: 12px;
+}
+
+section.pricing ul.price-cards .price-card .price-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+section.pricing ul.price-cards .price-card .price-card__header > h1 {
+  font-size: 32px;
+  font-weight: 400;
+  text-align: center;
+}
+
+section.pricing ul.price-cards .price-card .price-card__header > h2 {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+section.pricing ul.price-cards .price-card .price-card__header > p {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+section.pricing ul.price-cards .price-card ul.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+section.pricing ul.price-cards .price-card ul.items-list li {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+section.pricing ul.price-cards .price-card ul.items-list li > p {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+@media only screen and (min-width: 1024px) {
+  section.pricing {
+    padding: 120px 56px;
+    gap: 56px;
+  }
+
+  section.pricing > .header > h1 {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  section.pricing > .header > p {
+    font-size: 20px;
+    line-height: 32px;
+    text-align: center;
+  }
+
+  section.pricing ul.price-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  section.pricing ul.price-cards .price-card {
+    justify-content: space-between;
+  }
+
+  section.pricing ul.price-cards .price-card .price-card__header > p {
+    height: 96px;
+  }
+
+  section.pricing ul.price-cards .price-card:first-child ul.items-list {
+    margin-bottom: auto;
+  }
+}
