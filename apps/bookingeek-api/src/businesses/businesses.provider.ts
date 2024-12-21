@@ -30,6 +30,7 @@ export class BusinessesService {
     // Pre-creates businness
     const businessToCreate: Omit<Business, FromPersistentEntity> = {
       name: businessSignUpDto.businessName,
+      slug: businessSignUpDto.businessSlug,
       address: businessSignUpDto.businessAddress,
       phone: businessSignUpDto.businessPhoneNumber,
       pictureUrl: null,

@@ -7,6 +7,8 @@ import { PersistentEntity } from 'src/database/types/persistent-entity';
 export interface Business extends PersistentEntity {
   // Business name
   name: string;
+  // Business slug
+  slug: string;
   // Business picture URL, if any
   pictureUrl: string | null;
   // Business address, if any

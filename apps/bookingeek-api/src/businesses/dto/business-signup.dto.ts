@@ -5,6 +5,7 @@ import {
   IsIn,
   IsNotEmpty,
   IsString,
+  MinLength,
 } from 'class-validator';
 
 export class BusinessSignUpDto {
@@ -13,6 +14,12 @@ export class BusinessSignUpDto {
   @IsString()
   @IsNotEmpty()
   businessName: string;
+  @Expose()
+  @IsDefined()
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(3)
+  businessSlug: string;
   @Expose()
   @IsDefined()
   @IsString()
