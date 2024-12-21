@@ -99,6 +99,8 @@ Obs: a business may do several refunds to the same reservation, as long as the t
 
 ## Frontend Architecture
 
+A note about components: some components are containers (accept children) while others are "final". Some components are pure/dumb (don't rely on external state other than props) while others are impure/smart (rely on the store).
+
 ### Pages
 
 A page loads all necessary data then renders one or more views. If rendering more than a view, a page will have the implementation of the proper navigation logic.
@@ -127,47 +129,75 @@ Displays business' resources so customers can make reservations
 
 Displays each step of a reservation form
 
+Components:
+
++-- ReservationOverview
++-- ResourceSelectStep
++---- ResourceItem
++-- DateSelectStep
++---- Calendar
++---- TimeSelectForm
++-- ExtraDataStep
++-- ConfirmationStep
++-- CheckoutStep
++-- DoneStep
+
 #### Page: Business Panel
 
-Used for business management
+Used for business management. Can display several different views.
 
 **View: Resources Manager**
 
-used for managing resources
+Used for managing resources
+
+Components:
+
++-- ResourcesList
++---- ResourceItem
++-- ResourceMenu
++-- ResourceBasicInfoSubView
++---- ResourceItem
++-- ResourceExtraDataFieldsSubView
++---- ExtraDataFieldForm
++-- ResourceScheduleTypeSubView
++-- ResourceAvailabilitySubView
++---- DayOfWeekAvailabilityForm
++-- ResourceUnavailabilitySubView
++---- DateUnavailabilityForm
++-- ResourceCustomPricesSubView
++---- DateUnavailabilityForm (with price)
 
 **View: Reservations List**
 
-lists reservations
+Lists reservations
+
+Components:
+
++-- ReservationItem
++-- ReservationDetailsSubView
 
 **View: Business Data**
 
-used for managing business data (name, address, phone)
+Used for managing business data (name, address, phone)
 
-**View: Users Manager**
+_No specific components_
 
-user for managing users (adding/removing)
+**View: Users Management**
 
-**View: Account Manager**
+Used for managing users (adding/removing)
 
-used for managing account data (email, name, password)
+Components:
 
-### Page: Store Slices
++-- UserItem
++-- AddUserForm
 
-**View: Business**
+**View: Account Management**
 
-holds all information about a business.
+Used for managing account data (email, name, password)
 
-**View: Resources**
+_No specific components_
 
-holds all data about the business' resources.
-
-**View: Reservations**
-
-holds a paginated list of reservations (for displaying the reservations list in the business management only).
-
-### Components
-
-Some components are containers (accept children) while others are "final". Some components are pure/dumb (don't rely on external state other than props) while others are impure/smart (rely on the store).
+### Reusable Components
 
 - Button
 - IconButton
@@ -176,6 +206,20 @@ Some components are containers (accept children) while others are "final". Some 
 - Select
 - Radio
 - Checkbox
+
+### Store Slices
+
+**Business**
+
+Holds all information about a business.
+
+**Resources**
+
+Holds all data about the business' resources.
+
+**Reservations**
+
+Holds a paginated list of reservations (for displaying the reservations list in the business management only).
 
 ## References
 
