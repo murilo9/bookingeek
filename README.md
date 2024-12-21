@@ -13,22 +13,30 @@ Drafts: https://www.figma.com/design/pMVdc3Qzz2htje5C1H3MZg/Bookingeek?node-id=0
 
 ## Endpoints
 
-- Name - who can make requests to it
+#### Called by business only
 
-- Sign Up (register business and admin user) - business
-- Sign In - business
-- Update business - business
-- Unregister business - business
-- Retrieve resources - any
-- Create resource - business
-- Update resource - business
-- Delete resource - business
-- Retrieve reservations - business
-- Update reservation - business
-- Cancel reservation - business
-- Request update reservation - customer
-- Cancel reservation - customer
-- File upload - business
+- Sign Up
+- Sign In
+- Update business
+- Unregister business
+- Create resource
+- Update resource
+- Delete resource
+- Retrieve reservations (paginated)
+- Update reservation
+- Cancel reservation
+- File upload
+
+#### Called by customer only
+
+- Validate reservation
+- Create reservation
+- Cancel reservation
+- Request update reservation
+
+#### Called by anyone
+
+- Retrieve resources
 
 ## Backend Modules
 
@@ -89,11 +97,102 @@ F: frontend; B: backend; S: stripe
 
 Obs: a business may do several refunds to the same reservation, as long as the total refunded amount does not get bigger than the charged total.
 
+## Frontend Architecture
+
+### Pages
+
+A page loads all necessary data then renders one or more views. If rendering more than a view, a page will have the implementation of the proper navigation logic.
+
+#### Page: Authentication
+
+Displays sign in/up options.
+
+**View: Authentication Landing**
+
+Display the options for sign in/up
+
+**View: Sign Up**
+
+Displays the sign up form
+
+**View: Sign In**
+
+Displays the sign in form
+
+#### Page: Business Showcase
+
+Displays business' resources so customers can make reservations
+
+**View: Reservation Form**
+
+Displays each step of a reservation form
+
+#### Page: Business Panel
+
+Used for business management
+
+**View: Resources Manager**
+
+used for managing resources
+
+**View: Reservations List**
+
+lists reservations
+
+**View: Business Data**
+
+used for managing business data (name, address, phone)
+
+**View: Users Manager**
+
+user for managing users (adding/removing)
+
+**View: Account Manager**
+
+used for managing account data (email, name, password)
+
+### Page: Store Slices
+
+**View: Business**
+
+holds all information about a business.
+
+**View: Resources**
+
+holds all data about the business' resources.
+
+**View: Reservations**
+
+holds a paginated list of reservations (for displaying the reservations list in the business management only).
+
+### Components
+
+Some components are containers (accept children) while others are "final". Some components are pure/dumb (don't rely on external state other than props) while others are impure/smart (rely on the store).
+
+- Button
+- IconButton
+- Input
+- Textarea
+- Select
+- Radio
+- Checkbox
+
 ## References
 
-- Monorepo setup: https://fazalerabbi.medium.com/monorepo-using-pnpm-workspaces-cb23ed332127
+- [Monorepo setup](https://fazalerabbi.medium.com/monorepo-using-pnpm-workspaces-cb23ed332127)
 
-## Android build note
+## Misc. Notes
+
+**Steps to render calendar given a month on Calendar component**
+
+1. Get the number of weeks in the month (date-fns).
+2. Build the empty month array of weeks.
+3. For each week in the month:
+   1. If last filled day is null, gets the first day of month (date-fns), place it on its day of week, and fills the next days of week, updating last filled day.
+   2. If last filled day is not null, fill each day of week, updating last filled month, until reaching last day of month.
+4. FInally, fill empty (i.e. not belonging to this month) days of first and last weeks.
+
+**Android build**
 
 Android sdk can be installed via sudo apt install android-sdk.
 
