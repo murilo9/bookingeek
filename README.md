@@ -98,15 +98,12 @@ F: frontend; B: backend; S: stripe
 
 Obs: a business may do several refunds to the same reservation, as long as the total refunded amount does not get bigger than the charged total.
 
-## Frontend Architecture
-
-A note about components: some components are containers (accept children) while others are "final". Some components are pure/dumb (don't rely on external state other than props) while others are impure/smart (rely on the store).
-
-### Pages
+## Pages
 
 A page loads all necessary data then renders one or more views. If rendering more than a view, a page will have the implementation of the proper navigation logic.
+A note about components: some components are containers (accept children) while others are "final". Some components are pure/dumb (don't rely on external state other than props) while others are impure/smart (rely on the store).
 
-#### Page: Authentication
+### Page: Authentication
 
 Displays sign in/up options.
 
@@ -122,7 +119,7 @@ Displays the sign up form
 
 Displays the sign in form
 
-#### Page: Business Showcase
+### Page: Business Showcase
 
 Displays business' resources so customers can make reservations
 
@@ -143,7 +140,7 @@ Components:
 +-- CheckoutStep
 +-- DoneStep
 
-#### Page: Business Panel
+### Page: Business Panel
 
 Used for business management. Can display several different views.
 
@@ -198,7 +195,7 @@ Used for managing account data (email, name, password)
 
 _No specific components_
 
-### Reusable Components
+## Reusable Components
 
 - Button
 - IconButton
@@ -208,7 +205,7 @@ _No specific components_
 - Radio
 - Checkbox
 
-### Store Slices
+## Store Slices
 
 **Business**
 
