@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
-import Button from "./button";
+import IconButton from "./icon-button";
+import CheckFullIcon from "../../icons/check-full";
 
 const meta = {
-  title: "Components/Common/Button",
-  component: Button,
+  title: "Components/Common/IconButton",
+  component: IconButton,
   parameters: {
     layout: "centered",
   },
@@ -16,9 +16,13 @@ const meta = {
         options: ["primary", "secondary", "danger"],
       },
     },
-    children: { control: "text", type: "string" },
+    disabled: {
+      control: {
+        type: "boolean",
+      },
+    },
   },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof IconButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -26,6 +30,6 @@ type Story = StoryObj<typeof meta>;
 export const Component: Story = {
   args: {
     variant: "primary",
-    children: "Button",
+    children: <CheckFullIcon />,
   },
 };

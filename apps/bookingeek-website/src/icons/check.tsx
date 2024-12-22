@@ -17,7 +17,7 @@ export default function CheckIcon({
       strokeWidth="1.5"
       stroke={computedColor}
       width={computedSize}
-      height={computedColor}
+      height={computedSize}
     >
       <path
         strokeLinecap="round"
