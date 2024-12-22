@@ -19,6 +19,15 @@ services:
     volumes:
       - ./apps/bookingeek-app/src:/home/node/bookingeek-app/src
       - ./apps/bookingeek-app/public:/home/node/bookingeek-app/public
+  storybook:
+    build: # As the Dockerfile for storybook is different, we need to specify context and dockerfile here
+      context: ./apps/bookingeek-app/
+      dockerfile: ./Dockerfile.storybook
+    ports:
+      - "6006:6006"
+    volumes:
+      - ./apps/bookingeek-app/src:/home/node/bookingeek-app/src
+      - ./apps/bookingeek-app/public:/home/node/bookingeek-app/public
   website:
     build: ./apps/bookingeek-website
     ports:
