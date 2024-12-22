@@ -129,6 +129,7 @@ Displays each step of a reservation form
 
 Components:
 
+```
 +-- ReservationOverview
 +-- ResourceSelectStep
 +---- ResourceItem
@@ -139,6 +140,7 @@ Components:
 +-- ConfirmationStep
 +-- CheckoutStep
 +-- DoneStep
+```
 
 ### Page: Business Panel
 
@@ -150,6 +152,7 @@ Used for managing resources
 
 Components:
 
+```
 +-- ResourcesList
 +---- ResourceItem
 +-- ResourceMenu
@@ -164,6 +167,7 @@ Components:
 +---- DateUnavailabilityForm
 +-- ResourceCustomPricesSubView
 +---- DateUnavailabilityForm (with price)
+```
 
 **View: Reservations List**
 
@@ -171,8 +175,10 @@ Lists reservations
 
 Components:
 
+```
 +-- ReservationItem
 +-- ReservationDetailsSubView
+```
 
 **View: Business Data**
 
@@ -186,8 +192,10 @@ Used for managing users (adding/removing)
 
 Components:
 
+```
 +-- UserItem
 +-- AddUserForm
+```
 
 **View: Account Management**
 
