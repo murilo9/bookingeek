@@ -18,7 +18,7 @@ export class StripeService {
   ) {
     const stripeApiKey = configService.get('STRIPE_KEY');
     this.stripe = new Stripe(stripeApiKey, {
-      apiVersion: '2024-11-20.acacia',
+      apiVersion: '2024-12-18.acacia',
     });
   }
 

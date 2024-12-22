@@ -29,6 +29,7 @@ Drafts: https://www.figma.com/design/pMVdc3Qzz2htje5C1H3MZg/Bookingeek?node-id=0
 
 #### Called by customer only
 
+- Retrieve resource availability
 - Validate reservation
 - Create reservation
 - Cancel reservation

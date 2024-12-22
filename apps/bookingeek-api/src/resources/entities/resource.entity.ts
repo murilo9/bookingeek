@@ -28,9 +28,9 @@ export interface Resource extends PersistentEntity {
   extraFields: Array<ResourceExtraField>;
   // Type of availability (date & times or dates only)
   availabilityType: 'date-time' | 'date-only';
-  // Type of availability. Only applies if type = 'date-time'
+  // Type of availability. Only applies if availabilityType = 'date-time'
   timeType: 'ranges' | 'slots';
-  // Time granularity. Only applies if type = 'date-time'
+  // Time granularity. Only applies if availabilityType = 'date-time'
   timeGranularity: '5-min' | '10-min' | '15-min' | '30-min' | 'hour';
   // Minimal duration of reservations. Only applies if timeType = 'ranges'
   minimalReservationDuration: {

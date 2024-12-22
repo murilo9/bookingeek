@@ -1,4 +1,4 @@
-import { Controller, Inject } from '@nestjs/common';
+import { Controller, Get, Inject } from '@nestjs/common';
 import { ReservationsService } from './reservations.provider';
 
 @Controller()

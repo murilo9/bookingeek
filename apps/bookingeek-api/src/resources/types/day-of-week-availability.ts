@@ -6,6 +6,6 @@ import { TimeRange } from 'src/common/types/time-range';
 export type DayOfWeekAvailability = {
   // Whether this day of week is available
   available: boolean;
-  // Available time ranges. Only applies if timeType = 'ranges'
+  // Available time ranges (works for both time ranges and time slots)
   rules: Array<TimeRange>;
 };
