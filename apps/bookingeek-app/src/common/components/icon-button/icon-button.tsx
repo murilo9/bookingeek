@@ -3,7 +3,8 @@ import styled from "styled-components";
 type IconButtonProps = {
   children?: JSX.Element | string | number;
   disabled?: boolean;
-  variant: "primary" | "danger";
+  variant?: "primary" | "danger";
+  onClick?: () => void;
 };
 
 const background = {
@@ -27,7 +28,7 @@ const StyledIconButton = styled.button<IconButtonProps>`
   cursor: ${(props) => (props.disabled ? "disabled" : "pointer")};
   background: ${background.normal};
   color: ${(props) =>
-    color[props.variant][props.disabled ? "disabled" : "normal"]};
+    color[props.variant!][props.disabled ? "disabled" : "normal"]};
   &:hover {
     background: ${(props) => background[props.disabled ? "normal" : "hover"]};
   }
@@ -37,5 +38,5 @@ const StyledIconButton = styled.button<IconButtonProps>`
 `;
 
 export default function IconButton(props: IconButtonProps) {
-  return <StyledIconButton {...props} />;
+  return <StyledIconButton {...props} variant={props.variant || "primary"} />;
 }
