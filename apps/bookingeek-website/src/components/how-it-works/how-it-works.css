@@ -16,28 +16,40 @@ section.how-it-works > h1 {
   font-weight: 700;
 }
 
-section.how-it-works ol {
+section.how-it-works ul {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 64px;
 }
 
-section.how-it-works ol li {
+section.how-it-works ul li {
   list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+section.how-it-works ul li .heading {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-section.how-it-works ol li h1 {
+section.how-it-works ul li h1 {
   font-size: 16px;
   font-weight: 600;
 }
 
-section.how-it-works ol li p {
+section.how-it-works ul li p {
   font-size: 16px;
   font-weight: 400;
-  padding-left: 16px;
+}
+
+section.how-it-works ul li img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.15);
 }
 
 @media only screen and (min-width: 1024px) {
@@ -47,11 +59,18 @@ section.how-it-works ol li p {
   }
 
   section.how-it-works > h1 {
+    font-size: 32px;
     text-align: center;
   }
 
-  section.how-it-works ol {
+  section.how-it-works ul {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 48px;
+    row-gap: 80px;
+  }
+
+  section.how-it-works ul li .heading {
+    height: 140px;
   }
 }
