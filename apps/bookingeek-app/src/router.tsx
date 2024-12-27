@@ -1,13 +1,13 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import { useAuth } from "./common/hooks/useAuth";
 import AuthenticationPage from "./common/pages/authentication";
-import BusinessPanelPage from "./business/pages/panel";
-import BusinessShowcasePage from "./business/pages/showcase";
-import ResourcesManagementView from "./business/views/resources";
-import ReservationsView from "./business/views/reservations";
-import BusinessInfoView from "./business/views/business";
-import UsersManagementView from "./business/views/users";
-import AccountManagementView from "./business/views/account";
+import BusinessPanelPage from "./businesses/pages/panel";
+import BusinessShowcasePage from "./businesses/pages/showcase";
+import ResourcesManagementView from "./businesses/views/resources";
+import ReservationsView from "./businesses/views/reservations";
+import BusinessInfoView from "./businesses/views/business";
+import UsersManagementView from "./businesses/views/users";
+import AccountManagementView from "./businesses/views/account";
 import NotFoundPage from "./common/pages/not-found";
 
 const PublicRouter = () => (

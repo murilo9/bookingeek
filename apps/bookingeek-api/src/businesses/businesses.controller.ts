@@ -59,7 +59,7 @@ export class BusinessesController {
    */
   @EntityShouldExist('id', DbCollection.Businesses, 'Business')
   @UseGuards(EntityExistsGuard)
-  @Get('business/:id')
+  @Get('businesses/:id')
   getBusiness(@Param('id') businessId: string) {
     return this.businessService.retrieveBusiness(new ObjectId(businessId));
   }
@@ -69,7 +69,7 @@ export class BusinessesController {
    */
   @EntityShouldExist('id', DbCollection.Businesses, 'Business')
   @UseGuards(IdentityGuard, EntityExistsGuard, UpdateBusinessGuard)
-  @Put('business/:id')
+  @Put('businesses/:id')
   updateBusiness(
     @Param('id') businessId: string,
     @Body(new ValidationPipe(UpdateBusinessDto))
