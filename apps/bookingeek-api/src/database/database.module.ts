@@ -6,7 +6,7 @@ import { DatabaseService } from './database.service';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env',
+      envFilePath: './src/.env',
     }),
   ],
   providers: [
@@ -16,6 +16,7 @@ import { DatabaseService } from './database.service';
       useFactory: async (configService: ConfigService) => {
         // console.log('MONGODB_URI', MONGODB_URI);
         const MONGODB_URI = configService.get('MONGODB_URI');
+        console.log('MONGODB_URI', MONGODB_URI);
         const client = new MongoClient(MONGODB_URI);
         try {
           console.log('connecting to database...');
