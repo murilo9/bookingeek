@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:app": "pnpm --filter bookingeek-app dev",
-    "dev:api": "pnpm --filter bookingeek-api start:dev",
-    "dev:website": "pnpm --filter bookingeek-website dev",
+    "dev:app": "pnpm --filter @bookingeek/app dev",
+    "dev:api": "pnpm --filter @bookingeek/api start:dev",
+    "dev:website": "pnpm --filter @bookingeek/website dev",
     "build:web": "pnpm recursive run build",
     "build:android": "cd apps/bookingeek-app/android && sh gradlew build && ./gradlew assemble",
-    "storybook:app": "pnpm --filter bookingeek-app storybook"
+    "storybook:app": "pnpm --filter @bookingeek/app storybook"
   },
   "keywords": [],
   "author": "",

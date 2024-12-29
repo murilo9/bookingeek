@@ -1,5 +1,5 @@
 {
-  "name": "bookingeek-website",
+  "name": "@bookingeek/website",
   "version": "0.1.0",
   "private": true,
   "scripts": {

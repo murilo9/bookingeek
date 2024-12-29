@@ -7,34 +7,37 @@ services:
     volumes:
       - ./mongo-data_prod:/data/db
   api:
-    build: ./apps/bookingeek-api
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.api
     ports:
       - "4000:4000"
     volumes:
-      - ./apps/bookingeek-api/src:/home/node/bookingeek-api/src
+      - ./:/home/node/bookingeek
   app:
-    build: ./apps/bookingeek-app
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.app
     ports:
       - "5173:5173"
     volumes:
-      - ./apps/bookingeek-app/src:/home/node/bookingeek-app/src
-      - ./apps/bookingeek-app/public:/home/node/bookingeek-app/public
+      - ./:/home/node/bookingeek
   storybook:
-    build: # As the Dockerfile for storybook is different, we need to specify context and dockerfile here
-      context: ./apps/bookingeek-app/
+    build:
+      context: ./
       dockerfile: ./Dockerfile.storybook
     ports:
       - "6006:6006"
     volumes:
-      - ./apps/bookingeek-app/src:/home/node/bookingeek-app/src
-      - ./apps/bookingeek-app/public:/home/node/bookingeek-app/public
+      - ./:/home/node/bookingeek
   website:
-    build: ./apps/bookingeek-website
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.website
     ports:
       - "3000:3000"
     volumes:
-      - ./apps/bookingeek-website/src:/home/node/bookingeek-website/src
-      - ./apps/bookingeek-website/public:/home/node/bookingeek-website/public
+      - ./:/home/node/bookingeek
 volumes:
   mongo-data_prod:
     external: false
