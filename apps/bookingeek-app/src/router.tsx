@@ -9,6 +9,7 @@ import BusinessInfoView from "./businesses/views/business";
 import UsersManagementView from "./businesses/views/users";
 import AccountManagementView from "./businesses/views/account";
 import NotFoundPage from "./common/pages/not-found";
+import ReservationDetailsView from "./businesses/views/reservation-details";
 
 const PublicRouter = () => (
   <Routes>
@@ -26,7 +27,9 @@ const ProtectedRouter = () => (
   <Routes>
     <Route element={<BusinessPanelPage />}>
       <Route path="/resources" element={<ResourcesManagementView />} />
-      <Route path="/reservations" element={<ReservationsView />} />
+      <Route path="/reservations" element={<ReservationsView />}>
+        <Route path=":id" element={<ReservationDetailsView />} />
+      </Route>
       <Route path="/users" element={<UsersManagementView />} />
       <Route path="/account" element={<AccountManagementView />} />
       <Route path="/business" element={<BusinessInfoView />} />
@@ -40,7 +43,7 @@ export default function Router() {
 
   return (
     <BrowserRouter>
-      {accessToken ? (
+      {"accessToken" ? (
         <ProtectedRouter></ProtectedRouter>
       ) : (
         <PublicRouter></PublicRouter>

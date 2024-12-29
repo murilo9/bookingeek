@@ -146,6 +146,14 @@ Components:
 
 Used for business management. Can display several different views.
 
+Components:
+
+```
++-- PanelHeader
++-- PanelLateralNavigationMenu
++-- PanelMobileNavigationMenu
+```
+
 **View: Resources Manager**
 
 Used for managing resources
@@ -177,8 +185,11 @@ Components:
 
 ```
 +-- ReservationItem
-+-- ReservationDetailsSubView
 ```
+
+**View: Reservations Details**
+
+Display details about a reservation.
 
 **View: Business Data**
 

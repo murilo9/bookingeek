@@ -27,6 +27,9 @@ const StyledIconButton = styled.button<IconButtonProps>`
   padding-inline: 0px;
   cursor: ${(props) => (props.disabled ? "disabled" : "pointer")};
   background: ${background.normal};
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: ${(props) =>
     color[props.variant!][props.disabled ? "disabled" : "normal"]};
   &:hover {
