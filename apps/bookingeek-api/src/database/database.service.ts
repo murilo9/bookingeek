@@ -5,13 +5,14 @@ import {
   Filter,
   FindCursor,
   MongoClient,
+  ObjectId,
   OptionalUnlessRequiredId,
   UpdateFilter,
   WithId,
 } from 'mongodb';
 import { DbCollection } from 'src/database/collection.enum';
-import { PersistentEntity } from './types/persistent-entity';
 import { FromPersistentEntity } from './types/from-persistent-entity';
+import { PersistentEntity } from '@bookingeek/core/common/types';
 
 @Injectable()
 export class DatabaseService {
@@ -66,7 +67,7 @@ export class DatabaseService {
   async insertOne<T>(
     collectionName: DbCollection,
     entity: Omit<T, FromPersistentEntity>,
-  ): Promise<T & PersistentEntity> {
+  ): Promise<T & PersistentEntity<ObjectId>> {
     const collection = this.db.collection<T>(collectionName);
     const created = new Date().getTime();
     const updated = new Date().getTime();
@@ -90,7 +91,7 @@ export class DatabaseService {
       IS_DELETED: false,
       _id: query.insertedId,
     };
-    return entityInserted as T & PersistentEntity;
+    return entityInserted as T & PersistentEntity<ObjectId>;
   }
 
   async updateOne<T>(

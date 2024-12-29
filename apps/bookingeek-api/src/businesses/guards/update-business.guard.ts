@@ -5,7 +5,8 @@ import {
   Inject,
 } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
-import { User } from '../entities/user.entity';
+import { User } from '@bookingeek/core/businesses/types/user';
+import { ObjectId } from 'mongodb';
 
 /**
  * Checks if requesting user belongs to the business.
@@ -19,7 +20,7 @@ export class UpdateBusinessGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context
       .switchToHttp()
-      .getRequest<{ user: User; params: { id: string } }>();
+      .getRequest<{ user: User<ObjectId>; params: { id: string } }>();
     const { user } = request;
     const businessId = request.params.id;
     const userBelongsToBusiness = user.businessId.toString() === businessId;

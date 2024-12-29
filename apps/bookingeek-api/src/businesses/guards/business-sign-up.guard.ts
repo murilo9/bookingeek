@@ -5,9 +5,10 @@ import {
   Inject,
 } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
-import { User } from '../entities/user.entity';
 import { DbCollection } from 'src/database/collection.enum';
 import { BusinessSignUpDto } from '../dto/business-signup.dto';
+import { User } from '@bookingeek/core/businesses/types/user';
+import { ObjectId } from 'mongodb';
 
 /**
  * Checks if a user exists with the specified email.
@@ -23,9 +24,12 @@ export class BusinessSignUpGuard implements CanActivate {
       .switchToHttp()
       .getRequest<{ body: BusinessSignUpDto }>();
     const { adminUserEmail } = request.body;
-    const user = await this.databaseService.findOne<User>(DbCollection.Users, {
-      email: adminUserEmail,
-    });
+    const user = await this.databaseService.findOne<User<ObjectId>>(
+      DbCollection.Users,
+      {
+        email: adminUserEmail,
+      },
+    );
     // Checks if user exists
     if (user) {
       throw new BadRequestException('That email is already registered.');

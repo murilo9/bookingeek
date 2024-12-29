@@ -1,4 +1,4 @@
-import { TimeRange } from 'src/common/types/time-range';
+import { TimeRange } from "../../common/types";
 
 /**
  * Resource's availability rules for a day of the week.

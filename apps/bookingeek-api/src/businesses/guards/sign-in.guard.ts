@@ -7,9 +7,10 @@ import {
 import { compare } from 'bcrypt';
 import { DatabaseService } from '../../database/database.service';
 import { UserPassword } from '../entities/user-password.entity';
-import { User } from '../entities/user.entity';
 import { DbCollection } from 'src/database/collection.enum';
 import { SignInDto } from '../dto/sign-in.dto';
+import { User } from '@bookingeek/core/businesses/types/user';
+import { ObjectId } from 'mongodb';
 
 /**
  * Checks if user exists and password matches email.
@@ -24,11 +25,14 @@ export class SignInGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context
       .switchToHttp()
-      .getRequest<{ body: SignInDto; user?: User }>();
+      .getRequest<{ body: SignInDto; user?: User<ObjectId> }>();
     const { email, password } = request.body;
-    const user = await this.databaseService.findOne<User>(DbCollection.Users, {
-      email,
-    });
+    const user = await this.databaseService.findOne<User<ObjectId>>(
+      DbCollection.Users,
+      {
+        email,
+      },
+    );
     // Checks if user exists
     if (!user) {
       throw new BadRequestException('Wrong e-mail or password.');

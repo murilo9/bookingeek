@@ -1,3 +1,4 @@
+import { User } from '@bookingeek/core/businesses/types/user';
 import {
   CanActivate,
   ExecutionContext,
@@ -6,7 +7,6 @@ import {
 } from '@nestjs/common';
 import { verify } from 'jsonwebtoken';
 import { ObjectId } from 'mongodb';
-import { User } from 'src/businesses/entities/user.entity';
 import { DbCollection } from 'src/database/collection.enum';
 import { DatabaseService } from 'src/database/database.service';
 
@@ -22,13 +22,13 @@ export class IdentityGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<{
-      user?: User;
+      user?: User<ObjectId>;
       headers: { authorization: string };
     }>();
     const { authorization } = request.headers;
     try {
       const { _id } = verify(authorization, 'secret') as { _id: string };
-      const user = await this.databaseService.findOne<User>(
+      const user = await this.databaseService.findOne<User<ObjectId>>(
         DbCollection.Users,
         {
           _id: new ObjectId(_id),
