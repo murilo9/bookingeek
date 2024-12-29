@@ -4,7 +4,7 @@ import {
   ExecutionContext,
   Inject,
 } from '@nestjs/common';
-import { compare } from 'bcrypt';
+import { compareSync } from 'bcryptjs';
 import { DatabaseService } from '../../database/database.service';
 import { UserPassword } from '../entities/user-password.entity';
 import { DbCollection } from 'src/database/collection.enum';
@@ -48,7 +48,7 @@ export class SignInGuard implements CanActivate {
       throw new BadRequestException('Wrong e-mail or password.');
     }
     // Checks if email and password match
-    const match = await compare(password, userPassword.hash);
+    const match = compareSync(password, userPassword.hash);
     if (!match) {
       throw new BadRequestException('Wrong e-mail or password.');
     }

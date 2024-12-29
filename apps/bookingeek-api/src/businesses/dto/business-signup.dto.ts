@@ -23,11 +23,6 @@ export class BusinessSignUpDto {
   @Expose()
   @IsDefined()
   @IsString()
-  @IsNotEmpty()
-  businessField: string;
-  @Expose()
-  @IsDefined()
-  @IsString()
   businessAddress: string;
   @Expose()
   @IsDefined()

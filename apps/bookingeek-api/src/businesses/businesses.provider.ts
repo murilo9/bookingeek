@@ -7,7 +7,7 @@ import { ObjectId } from 'mongodb';
 import { DatabaseService } from 'src/database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
 import { UserPassword } from './entities/user-password.entity';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { UpdateBusinessDto } from './dto/update-business.dto';
 import { Business } from '@bookingeek/core/businesses/types/business';
 import { User } from '@bookingeek/core/businesses/types/user';
@@ -57,9 +57,10 @@ export class BusinessesService {
       userToCreate,
     );
     // Creates business admin user's password
+    const hash = bcrypt.hashSync(businessSignUpDto.adminUserPassword, 13);
     const adminUserPasswordToCreate: Omit<UserPassword, FromPersistentEntity> =
       {
-        hash: bcrypt.hash(businessSignUpDto.adminUserPassword, 13),
+        hash,
         userId: adminUser._id,
       };
     await this.databaseService.insertOne<UserPassword>(
