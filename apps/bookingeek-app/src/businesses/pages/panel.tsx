@@ -3,6 +3,19 @@ import PanelHeader from "../../common/components/panel-header/panel-hedaer";
 import IconButton from "../../common/components/icon-button/icon-button";
 import { useMemo } from "react";
 import BackIcon from "../../common/icons/back";
+import PanelLateralNavigationMenu from "../../common/components/panel-lateral-navigation-menu/panel-lateral-navigation-menu";
+import styled from "styled-components";
+
+const StyledContentWrapper = styled.div`
+  display: flex;
+  max-width: 1440px;
+  margin: auto;
+`;
+
+const StyledViewWrapper = styled.div`
+  flex: 1;
+  padding: 16px;
+`;
 
 const VIEWS: Record<string, string> = {
   resources: "Resources",
@@ -46,9 +59,13 @@ export default function BusinessPanelPage() {
         businessPictureUrl="https://jjsbasicmechanic.sitehenger.com/jjs-logo.png"
       />
 
-      <p>--- outlet start ---</p>
-      <Outlet />
-      <p>--- outlet end ---</p>
+      <StyledContentWrapper>
+        <PanelLateralNavigationMenu />
+
+        <StyledViewWrapper>
+          <Outlet />
+        </StyledViewWrapper>
+      </StyledContentWrapper>
     </>
   );
 }
