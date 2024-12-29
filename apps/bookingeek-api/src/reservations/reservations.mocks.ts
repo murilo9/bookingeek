@@ -1,8 +1,8 @@
 import { ObjectId } from 'mongodb';
-import { Reservation } from './entities/reservation.entity';
+import { Reservation } from '@bookingeek/core/reservations/types/reservation';
 import { RESOURCE_ID_0 } from 'src/resources/resources.mock';
 
-export const RESERVATIONS_MOCK: Array<Reservation> = [
+export const RESERVATIONS_MOCK: Array<Reservation<ObjectId>> = [
   {
     _id: new ObjectId(),
     created: new Date().getTime(),

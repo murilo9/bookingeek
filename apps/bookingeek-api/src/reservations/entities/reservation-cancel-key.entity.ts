@@ -1,7 +1,7 @@
+import { PersistentEntity } from '@bookingeek/core/common/types/persistent-entity';
 import { ObjectId } from 'mongodb';
-import { PersistentEntity } from 'src/database/types/persistent-entity';
 
-export interface ReservationCancelKey extends PersistentEntity {
+export interface ReservationCancelKey extends PersistentEntity<ObjectId> {
   // ID of the reservation this key belongs to
   reservationId: ObjectId;
 }

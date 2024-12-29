@@ -1,10 +1,6 @@
-import { ObjectId } from 'mongodb';
-import { PersistentEntity } from 'src/database/types/persistent-entity';
+import { PersistentEntity } from "@bookingeek/core/common/types/persistent-entity";
 
-/**
- * Represents a business that can create resources.
- */
-export interface Business extends PersistentEntity {
+export interface Business extends PersistentEntity<string> {
   // Business name
   name: string;
   // Business slug
@@ -16,7 +12,7 @@ export interface Business extends PersistentEntity {
   // Business phone number, if any
   phone: string;
   // Business admin user ID (usually the first user created, during sign up)
-  adminUserId: ObjectId;
+  adminUserId: string;
   // Business Stripe connected account ID
   stripeConnectedAccountId: string | null;
   // Information about refunding policy
@@ -24,7 +20,7 @@ export interface Business extends PersistentEntity {
     // Whether the business does refunds or not
     doesRefund: boolean;
     // Refund type
-    refundType: 'partial' | 'total';
+    refundType: "partial" | "total";
     // A short description about how refunds work, to be displayed to customers
     description: string;
   };

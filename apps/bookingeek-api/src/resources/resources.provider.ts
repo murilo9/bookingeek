@@ -1,11 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 import { DatabaseService } from 'src/database/database.service';
-import { Resource } from './entities/resource.entity';
 import { DbCollection } from 'src/database/collection.enum';
-import { RetrieveResourceAvailabilityQuery } from './types/retrieve-resource-availability-query';
 import { getDaysInMonth } from 'date-fns';
-import { DayOfWeekAvailability } from './types/day-of-week-availability';
+import {
+  Resource,
+  RetrieveResourceAvailabilityQuery,
+  DayOfWeekAvailability,
+} from '@bookingeek/core/resources/types';
 
 @Injectable()
 export class ResourcesService {
@@ -14,7 +16,7 @@ export class ResourcesService {
   ) {}
 
   async retrieveResources(businessId: ObjectId) {
-    const resources = await this.databaseService.findMany<Resource>(
+    const resources = await this.databaseService.findMany<Resource<ObjectId>>(
       DbCollection.Resources,
       { businessId },
     );
@@ -25,7 +27,7 @@ export class ResourcesService {
     resourceId: ObjectId,
     query: RetrieveResourceAvailabilityQuery,
   ) {
-    const resource = await this.databaseService.findOne<Resource>(
+    const resource = await this.databaseService.findOne<Resource<ObjectId>>(
       DbCollection.Resources,
       { _id: resourceId },
     );

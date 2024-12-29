@@ -1,14 +1,13 @@
-import { ObjectId } from 'mongodb';
-import { PersistentEntity } from 'src/database/types/persistent-entity';
+import { PersistentEntity } from "../../common/types/persistent-entity";
 
 /**
  * Represents a reservation of a resource by a customer.
  */
-export interface Reservation extends PersistentEntity {
+export interface Reservation<T> extends PersistentEntity<T> {
   // Reservation code number
   code: number;
   // The resource being reserved
-  resourceId: ObjectId;
+  resourceId: T;
   // A "picture" of the resource on the time of the reservation
   resourceJSON: string;
   // Reservation start date's timestamp (used mainly for DB filtering purposes)
@@ -16,7 +15,7 @@ export interface Reservation extends PersistentEntity {
   // Reservation end date's timestamp (used mainly for DB filtering purposes)
   endDateTimestamp: number;
   // Reservation type
-  type: 'date' | 'date-time';
+  type: "date" | "date-time";
   // Reservation start date data
   startDate: {
     year: number;
@@ -41,13 +40,13 @@ export interface Reservation extends PersistentEntity {
   // Extra data fields, if any
   extraFields: Record<string, string | boolean>;
   // Checkout option chosen by the customer
-  checkoutOptionChosen: 'online' | 'in-loco';
+  checkoutOptionChosen: "online" | "in-loco";
   // Reservation's Stripe payment intent ID (if checkout is completed)
   stripePaymentIntentId: string | null;
   // Reservation's payment status
-  paymentStatus: 'pending' | 'processing' | 'success';
+  paymentStatus: "pending" | "processing" | "success";
   // Whether the reservation was cancelled by either the customer or the business
-  cancelledBy: null | 'business' | 'customer';
+  cancelledBy: null | "business" | "customer";
   // Stripe checkout session's client ID, used for rendering the embedded checkout form in the frontend.
   // Only applies if resource's checkoutOptionChosen = 'online'
   checkoutSessionClientId: string | null;

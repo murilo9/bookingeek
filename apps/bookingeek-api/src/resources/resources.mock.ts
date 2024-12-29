@@ -1,5 +1,5 @@
 import { BUSINNES_ID_0 } from 'src/businesses/businesses.mocks';
-import { Resource } from './entities/resource.entity';
+import { Resource } from './entities/resource';
 import { ObjectId } from 'mongodb';
 import { TimeRange } from 'src/common/types/time-range';
 

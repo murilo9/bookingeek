@@ -11,7 +11,7 @@ import { ObjectId } from 'mongodb';
 import { EntityShouldExist } from 'src/common/decorators/entity-should-exist';
 import { DbCollection } from 'src/database/collection.enum';
 import { EntityExistsGuard } from 'src/common/guards/entity-exists.guard';
-import { RetrieveResourceAvailabilityQuery } from './types/retrieve-resource-availability-query';
+import { RetrieveResourceAvailabilityQuery } from '@bookingeek/core/resources/types';
 
 @Controller()
 export class ResourcesController {
@@ -20,7 +20,8 @@ export class ResourcesController {
   ) {}
 
   /**
-   * Retrieves all resources that belongs to a business. Called by anyone.
+   * Retrieves a resource's availability rules for the given month/year.
+   * Defaults to current month/year if not specified.
    */
   @EntityShouldExist('id', DbCollection.Resources, 'resource')
   @UseGuards(EntityExistsGuard)
@@ -35,10 +36,15 @@ export class ResourcesController {
     );
   }
 
+  /**
+   * Retrieves all resources that belongs to a business. Called by anyone.
+   */
   @EntityShouldExist('id', DbCollection.Businesses, 'business')
   @UseGuards(EntityExistsGuard)
-  @Get('business/:id/resources')
-  retrieveBusinessResources(@Param('id') businessId: string) {
-    return this.resourcesService.retrieveResources(new ObjectId(businessId));
+  @Get('resources')
+  retrieveBusinessResources(@Query() query: { businessId: string }) {
+    return this.resourcesService.retrieveResources(
+      new ObjectId(query.businessId),
+    );
   }
 }

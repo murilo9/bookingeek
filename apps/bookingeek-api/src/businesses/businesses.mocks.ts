@@ -1,10 +1,10 @@
 import { ObjectId } from 'mongodb';
-import { Business } from './entities/business.entity';
+import { Business } from '@bookingeek/core/businesses/types/business';
 
 export const BUSINNES_ID_0 = new ObjectId('6770598874a39884cfe9496a');
 export const BUSINNES_ID_1 = new ObjectId('677059a374a39884cfe9496c');
 
-export const BUSINESSES_MOCKS: Array<Business> = [
+export const BUSINESSES_MOCKS: Array<Business<ObjectId>> = [
   {
     _id: BUSINNES_ID_0,
     created: new Date().getTime(),

@@ -4,7 +4,8 @@ import { ConfigService } from '@nestjs/config';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateCheckoutSessionDto } from './dto/create-checkout-session.dto';
 import { DbCollection } from 'src/database/collection.enum';
-import { Reservation } from 'src/reservations/entities/reservation.entity';
+import { Reservation } from '@bookingeek/core/reservations/types/reservation';
+import { ObjectId } from 'mongodb';
 
 // Relevant references: https://stripe.com/docs/connect/enable-payment-acceptance-guide
 
@@ -18,7 +19,7 @@ export class StripeService {
   ) {
     const stripeApiKey = configService.get('STRIPE_KEY');
     this.stripe = new Stripe(stripeApiKey, {
-      apiVersion: '2024-12-18.acacia',
+      apiVersion: '2024-11-20.acacia',
     });
   }
 
@@ -63,10 +64,11 @@ export class StripeService {
   async handleCheckoutSessionEvent(checkoutSession: Stripe.Checkout.Session) {
     console.log('checkoutSession', checkoutSession);
     // Retrieves the reservarion
-    const reservation = await this.databaseService.findOne<Reservation>(
-      DbCollection.Reservations,
-      { stripeCheckoutSessionId: checkoutSession.id },
-    );
+    const reservation = await this.databaseService.findOne<
+      Reservation<ObjectId>
+    >(DbCollection.Reservations, {
+      stripeCheckoutSessionId: checkoutSession.id,
+    });
     // If checkout session status is 'complete'
     if (checkoutSession.status === 'complete') {
       // Updates payment status to 'success'
@@ -75,7 +77,7 @@ export class StripeService {
       reservation.stripePaymentIntentId =
         checkoutSession.payment_intent.toString();
       // Save updates in the DB
-      await this.databaseService.updateOne<Reservation>(
+      await this.databaseService.updateOne<Reservation<ObjectId>>(
         DbCollection.Reservations,
         reservation,
         {

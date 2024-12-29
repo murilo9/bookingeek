@@ -13,7 +13,6 @@ import { BusinessesService } from './businesses.provider';
 import { ValidationPipe } from 'src/common/pipes/validation.pipe';
 import { BusinessSignUpDto } from './dto/business-signup.dto';
 import { SignInDto } from './dto/sign-in.dto';
-import { User } from './entities/user.entity';
 import { SignInGuard } from './guards/sign-in.guard';
 import { BusinessSignUpGuard } from './guards/business-sign-up.guard';
 import { EntityExistsGuard } from 'src/common/guards/entity-exists.guard';
@@ -23,6 +22,7 @@ import { DbCollection } from 'src/database/collection.enum';
 import { UpdateBusinessDto } from './dto/update-business.dto';
 import { IdentityGuard } from 'src/common/guards/identity.guard';
 import { UpdateBusinessGuard } from './guards/update-business.guard';
+import { User } from '@bookingeek/core/businesses/types/user';
 
 @Controller()
 export class BusinessesController {
@@ -49,7 +49,7 @@ export class BusinessesController {
   @UseGuards(SignInGuard)
   signIn(
     @Body(new ValidationPipe(SignInDto)) signInDto: SignInDto,
-    @Req() request: { user: User },
+    @Req() request: { user: User<ObjectId> },
   ) {
     return this.businessService.signIn(request.user);
   }
