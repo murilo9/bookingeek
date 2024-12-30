@@ -26,6 +26,10 @@ const StyledPanelWrapper = styled.div<{ showMenu: boolean }>`
   align-items: flex-end;
   height: ${(props) => (props.showMenu ? "100vh" : "auto")};
   position: ${(props) => (props.showMenu ? "fixed" : "static")};
+
+  @media screen and (min-width: 1024px) {
+    display: none;
+  }
 `;
 
 const StyledWrapperOverlay = styled.div`
@@ -42,10 +46,6 @@ const StyledPanel = styled.div`
   box-shadow: 0px -1px 4px rgba(0, 0, 0, 0.1);
   background: #ffffff;
   width: 100%;
-
-  @media screen and (min-width: 1024px) {
-    display: none;
-  }
 `;
 
 const StyledPanelBar = styled.div`
