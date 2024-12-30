@@ -107,10 +107,6 @@ A note about components: some components are containers (accept children) while 
 
 Displays sign in/up options.
 
-**View: Authentication Landing**
-
-Display the options for sign in/up
-
 **View: Sign Up**
 
 Displays the sign up form

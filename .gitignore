@@ -1,2 +1,3 @@
 node_modules
 mongo-data_prod
+gauth-secret.json
