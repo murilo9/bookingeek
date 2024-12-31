@@ -47,7 +47,11 @@ export class BusinessSignUpDto {
   @IsDefined()
   @IsString()
   @IsIn(['venues', 'services', 'people', 'vehicles'])
-  businessArea: 'venues' | 'services' | 'people' | 'vehicles';
+  businessResourcesType: 'venues' | 'services' | 'people' | 'vehicles';
+  @Expose()
+  @IsDefined()
+  @IsString()
+  businessField: string;
   @Expose()
   @IsDefined()
   @IsBoolean()

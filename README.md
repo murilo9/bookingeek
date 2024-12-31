@@ -103,17 +103,13 @@ Obs: a business may do several refunds to the same reservation, as long as the t
 A page loads all necessary data then renders one or more views. If rendering more than a view, a page will have the implementation of the proper navigation logic.
 A note about components: some components are containers (accept children) while others are "final". Some components are pure/dumb (don't rely on external state other than props) while others are impure/smart (rely on the store).
 
-### Page: Authentication
+### Page: Sign Up
 
-Displays sign in/up options.
+Displays the sign up form.
 
-**View: Sign Up**
+### Page: Sign In
 
-Displays the sign up form
-
-**View: Sign In**
-
-Displays the sign in form
+Displays the sign in form.
 
 ### Page: Business Showcase
 

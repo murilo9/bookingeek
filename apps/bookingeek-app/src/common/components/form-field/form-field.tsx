@@ -1,42 +1,145 @@
 import styled from "styled-components";
 import Input from "../input/input";
-import { FormEventHandler } from "react";
+import Select from "../select/select";
+import RadioFullIcon from "../../icons/radio-full";
+import RadioEmptyIcon from "../../icons/radio-empty";
+import Textarea from "../textarea/textarea";
+import { FormFieldLabel } from "./form-field-label";
+import { FormEvent } from "react";
 
-const StyledFormField = styled.div`
+const StyledFormField = styled.form`
   display: flex;
   flex-direction: column;
   gap: 8px;
 `;
 
-const StyledFormFieldLabel = styled.p`
-  font-size: 14px;
-  font-weight: 500;
+const StyledRadioInputContainer = styled.div`
+  display: flex;
+  gap: 24px;
 `;
 
-type FormFieldProps = {
+const StyledRadioInput = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  svg {
+    cursor: pointer;
+  }
+`;
+
+const StyledFormFieldHelper = styled.p`
+  font-size: 14px;
+  color: #666666;
+  margin-top: 8px;
+`;
+
+type FormFieldProps<T = string> = {
+  // Text displayed above the input
   label: string;
-  value: string;
+  // FIeld value
+  value: string | null;
+  // Input placeholder
   placeholder?: string;
-  type?: "text" | "password";
-  onChange: FormEventHandler;
+  // Input type
+  type?: "text" | "textarea" | "password" | "select" | "radio";
+  // Only applies when type = 'select' or 'radio'
+  options?: Array<{ value: string; label: string }>;
+  // Used to draw icons or button inside the input. Only applies when type != 'radio'
+  inputStartSlot?: JSX.Element;
+  // A helper text displayed bellow the input
+  helperText?: string;
+  // Whether the input should autofocus. Only applies to text-based inputs
+  autofocus?: boolean;
+  // Change handler
+  onChange: (value: T) => void;
+  // Called when user presses Enter key. Only applies if type != 'radio'
+  onSubmit?: () => void;
 };
 
-export default function FormField({
+/**
+ * Renders a form field with label, input (text, select, radio, etc).
+ */
+export default function FormField<T = string>({
   label,
   onChange,
+  onSubmit,
   placeholder,
   value,
   type,
-}: FormFieldProps) {
+  options,
+  helperText,
+  autofocus,
+}: FormFieldProps<T>) {
+  const renderInput = () => {
+    switch (type) {
+      case "select":
+        return (
+          <Select>
+            {(options || []).map((option) => (
+              <option value={option.value} key={value}>
+                {option.label}
+              </option>
+            ))}
+          </Select>
+        );
+      case "radio":
+        return (
+          <StyledRadioInputContainer>
+            {(options || []).map((option) => (
+              <StyledRadioInput
+                onClick={() => onChange(option.value as T)}
+                key={value}
+              >
+                {value === option.value ? (
+                  <RadioFullIcon />
+                ) : (
+                  <RadioEmptyIcon />
+                )}
+                <span>{option.label}</span>
+              </StyledRadioInput>
+            ))}
+          </StyledRadioInputContainer>
+        );
+      case "textarea":
+        return (
+          <Textarea
+            onChange={({ target: { value } }) => onChange(value as T)}
+            value={value || ""}
+            placeholder={placeholder}
+            autoFocus={autofocus}
+          />
+        );
+      case "text":
+      case "password":
+      default:
+        return (
+          <Input
+            onChange={({ target: { value } }) => onChange(value as T)}
+            value={value || ""}
+            placeholder={placeholder}
+            autoFocus={autofocus}
+            type={type || "text"}
+          />
+        );
+    }
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (onSubmit) {
+      onSubmit();
+    }
+  };
+
   return (
-    <StyledFormField>
-      <StyledFormFieldLabel>{label}</StyledFormFieldLabel>
-      <Input
-        onChange={onChange}
-        value={value}
-        placeholder={placeholder}
-        type={type}
-      />
+    <StyledFormField onSubmit={handleSubmit}>
+      <FormFieldLabel>{label}</FormFieldLabel>
+      {/* TODO: input start slots */}
+      {renderInput()}
+      {helperText ? (
+        <StyledFormFieldHelper>{helperText}</StyledFormFieldHelper>
+      ) : null}
     </StyledFormField>
   );
 }

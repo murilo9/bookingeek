@@ -1,11 +1,5 @@
 import styled from "styled-components";
 
-type ButtonProps = {
-  children?: JSX.Element | string | number;
-  disabled?: boolean;
-  variant?: "primary" | "secondary" | "danger";
-};
-
 const background = {
   primary: {
     normal: "#000000",
@@ -33,11 +27,18 @@ const color = {
   danger: { normal: "#FFFFFF", disabled: "#EAB7B7" },
 };
 
+type ButtonProps = {
+  children?: JSX.Element | string | number;
+  disabled?: boolean;
+  variant?: "primary" | "secondary" | "danger";
+  onClick?: () => void;
+};
+
 const StyledButton = styled.button<ButtonProps>`
   font-size: 14px;
   border: none;
-  height: 36px;
-  padding: 0 16px;
+  height: 40px;
+  padding: 0 20px;
   border-radius: 6px;
   cursor: ${(props) => (props.disabled ? "disabled" : "pointer")};
   background: ${(props) =>

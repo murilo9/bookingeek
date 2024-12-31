@@ -17,10 +17,12 @@ const StyledPageContainer = styled.div`
 const StyledImage = styled.img`
   object-fit: cover;
   height: 240px;
+  content: url("/scheduling-mobile.jpg");
 
   @media screen and (min-width: 1024px) {
     height: 100%;
     flex: 1;
+    content: url("/scheduling.jpg");
   }
 `;
 
@@ -101,6 +103,10 @@ const StyledDividerLabel = styled.p`
   height: 16px;
 `;
 
+/**
+ * Page where business' users can sign in.
+ * Render the sign in form.
+ */
 export default function SignInPage() {
   const navigate = useNavigate();
 
