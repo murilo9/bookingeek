@@ -77,6 +77,11 @@ const MENU_ITEMS = [
 export default function PanelLateralNavigationMenu() {
   const { signOut } = useAuth();
 
+  const handleSignOut = () => {
+    signOut();
+    window.location.href = "/";
+  };
+
   return (
     <StyledPanel>
       {MENU_ITEMS.map((item) => (
@@ -87,7 +92,7 @@ export default function PanelLateralNavigationMenu() {
           </StyledMenuItem>
         </Link>
       ))}
-      <StyledMenuItem onClick={signOut}>
+      <StyledMenuItem onClick={handleSignOut}>
         <SignoutIcon />
         <span>Sign Out</span>
       </StyledMenuItem>

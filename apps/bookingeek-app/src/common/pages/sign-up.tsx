@@ -131,12 +131,14 @@ export default function SignUpPage() {
     // TODO: add submit flow
   };
 
+  // Handles Enter key press in a form step
   const handleStepSubmit = () => {
     if (mayGoToNextFormStep()) {
       onNextClick(formStep);
     }
   };
 
+  // Makes the sign up request
   const handleSignUp = async () => {
     setSigningUp(true);
     try {

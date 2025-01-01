@@ -3,6 +3,10 @@ import FormField from "../components/form-field/form-field";
 import Button from "../components/button/button";
 import SocialSignInList from "../components/social-signin-list/social-signin-list";
 import { useNavigate } from "react-router";
+import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
+import { BASE_URL_DEV, SIGNIN_ROUTE } from "../../env";
+import { SignInDto } from "@bookingeek/api/src/businesses/dto";
 
 const StyledPageContainer = styled.div`
   display: flex;
@@ -109,6 +113,34 @@ const StyledDividerLabel = styled.p`
  */
 export default function SignInPage() {
   const navigate = useNavigate();
+  const { signIn } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [signingIn, setSigningIn] = useState(false);
+
+  // Makes the sign in request and set authentication data
+  const handleSignIn = async () => {
+    setSigningIn(true);
+    try {
+      const signInDto: SignInDto = {
+        email,
+        password,
+      };
+      const signUpResponse = await fetch(`${BASE_URL_DEV}${SIGNIN_ROUTE}`, {
+        method: "POST",
+        body: JSON.stringify(signInDto),
+        headers: { "Content-Type": "application/json" },
+      });
+      const res: { access_token: string /*, user: User*/ } =
+        await signUpResponse.json();
+      signIn(res.access_token);
+      window.location.reload();
+    } catch (error) {
+      // TODO: handle error
+      console.log(error);
+      setSigningIn(false);
+    }
+  };
 
   return (
     <StyledPageContainer>
@@ -122,18 +154,21 @@ export default function SignInPage() {
           <StyledSignInFormFields>
             <FormField
               label="E-mail"
-              value=""
               placeholder="E-mail"
-              onChange={() => null}
+              value={email}
+              onChange={setEmail}
             />
             <FormField
               label="Password"
-              value=""
+              type="password"
+              value={password}
               placeholder="Password"
-              onChange={() => null}
+              onChange={setPassword}
             />
           </StyledSignInFormFields>
-          <Button>Sign In</Button>
+          <Button onClick={handleSignIn} disabled={signingIn}>
+            Sign In
+          </Button>
           <StyledSignUpText>
             Don't have an account?{" "}
             <StyledSignUpButton onClick={() => navigate("/signup")}>

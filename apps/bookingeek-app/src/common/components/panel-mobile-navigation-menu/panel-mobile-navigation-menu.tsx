@@ -127,6 +127,11 @@ export default function PanelMobileNavigationMenu() {
   const [showMenu, setShowMenu] = useState(false);
   const { signOut } = useAuth();
 
+  const handleSignOut = () => {
+    signOut();
+    window.location.href = "/";
+  };
+
   // Closes the collapse menu every time active view changes
   useEffect(() => {
     setShowMenu(false);
@@ -146,7 +151,7 @@ export default function PanelMobileNavigationMenu() {
                 </StyledCollsapeMenuItem>
               </Link>
             ))}
-            <StyledCollsapeMenuItem onClick={signOut}>
+            <StyledCollsapeMenuItem onClick={handleSignOut}>
               <SignoutIcon />
               <span>Sign Out</span>
             </StyledCollsapeMenuItem>
