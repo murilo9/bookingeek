@@ -8,6 +8,8 @@ import {
   RetrieveResourceAvailabilityQuery,
   DayOfWeekAvailability,
 } from '@bookingeek/core/resources/types';
+import { FromPersistentEntity } from 'src/database/types/from-persistent-entity';
+import { CreateResourceDto } from './dto/create-resource.dto';
 
 @Injectable()
 export class ResourcesService {
@@ -15,6 +17,9 @@ export class ResourcesService {
     @Inject(DatabaseService) private databaseService: DatabaseService,
   ) {}
 
+  /**
+   * Retrieves all resources that belongs to a business.
+   */
   async retrieveResources(businessId: ObjectId) {
     const resources = await this.databaseService.findMany<Resource<ObjectId>>(
       DbCollection.Resources,
@@ -23,6 +28,10 @@ export class ResourcesService {
     return resources;
   }
 
+  /**
+   * Retrieves a resource's availability rules for the given month/year.
+   * Defaults to current month/year if not specified.
+   */
   async retrieveResourceAvailability(
     resourceId: ObjectId,
     query: RetrieveResourceAvailabilityQuery,
@@ -56,5 +65,52 @@ export class ResourcesService {
 
     // Finally, returns the array of days with availability rules
     return availabilityDaysInMonth;
+  }
+
+  /**
+   * Creates a resource with most fields preset.
+   */
+  async createResource(
+    createResourceDto: CreateResourceDto,
+    businessId: ObjectId,
+  ) {
+    const resourceToCreate: Omit<Resource<ObjectId>, FromPersistentEntity> = {
+      ...createResourceDto,
+      availability: {
+        '0': { available: false, rules: [] },
+        '1': { available: false, rules: [] },
+        '2': { available: false, rules: [] },
+        '3': { available: false, rules: [] },
+        '4': { available: false, rules: [] },
+        '5': { available: false, rules: [] },
+        '6': { available: false, rules: [] },
+      },
+      availabilityType: 'date-time',
+      businessId,
+      customPrices: [],
+      description: '',
+      extraFields: [],
+      minimalReservationAdvance: {
+        amount: 1,
+        unit: 'hours',
+      },
+      minimalReservationDuration: {
+        amount: 1,
+        unit: 'hours',
+      },
+      pictureUrl: {
+        icon: 'todo',
+      },
+      priceInCents: null,
+      priceType: 'hourly',
+      reservationTimeGranularity: 'hour',
+      subtitle: '',
+      unavailability: [],
+    };
+    const resource = await this.databaseService.insertOne<Resource<ObjectId>>(
+      DbCollection.Resources,
+      resourceToCreate,
+    );
+    return resource;
   }
 }

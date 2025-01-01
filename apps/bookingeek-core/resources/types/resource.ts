@@ -10,6 +10,8 @@ import { PersistentEntity } from "../../common/types/persistent-entity";
 export interface Resource<T> extends PersistentEntity<T> {
   // Resource's title
   title: string;
+  // Resource's slug
+  slug: string;
   // Resource's subtitle (can be empty)
   subtitle: string;
   // Resource's description (can be empty)
@@ -20,7 +22,7 @@ export interface Resource<T> extends PersistentEntity<T> {
   businessId: T;
   // Price in cents, per priceType unit
   priceInCents: number | null;
-  // Price unit. Only applies if price != null
+  // Price unit. Only applies if price != null and availabilityType = 'date-time'
   priceType: "hourly" | "30-min" | "15-min" | "10-min" | "5-min";
   // How customers can pay
   checkoutType: "in-loco-online" | "online-only" | "in-loco-only";
