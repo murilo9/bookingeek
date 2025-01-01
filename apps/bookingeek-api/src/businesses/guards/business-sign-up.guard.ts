@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
-import { BusinessSignUpDto } from '../dto/business-signup.dto';
 import { User } from '@bookingeek/core/businesses/types/user';
 import { ObjectId } from 'mongodb';
+import { BusinessSignUpDto } from '../dto';
 
 /**
  * Checks if a user exists with the specified email.

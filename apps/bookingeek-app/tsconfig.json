@@ -6,7 +6,8 @@
   ],
   "compilerOptions": {
     "paths": {
-      "@bookingeek/core": ["../bookingeek-core"]
+      "@bookingeek/core": ["../bookingeek-core"],
+      "@bookingeek/api": ["../bookingeek-api"]
     }
   }
 }

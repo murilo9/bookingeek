@@ -11,18 +11,16 @@ import {
 } from '@nestjs/common';
 import { BusinessesService } from './businesses.provider';
 import { ValidationPipe } from 'src/common/pipes/validation.pipe';
-import { BusinessSignUpDto } from './dto/business-signup.dto';
-import { SignInDto } from './dto/sign-in.dto';
 import { SignInGuard } from './guards/sign-in.guard';
 import { BusinessSignUpGuard } from './guards/business-sign-up.guard';
 import { EntityExistsGuard } from 'src/common/guards/entity-exists.guard';
 import { ObjectId } from 'mongodb';
 import { EntityShouldExist } from 'src/common/decorators/entity-should-exist';
 import { DbCollection } from 'src/database/collection.enum';
-import { UpdateBusinessDto } from './dto/update-business.dto';
 import { IdentityGuard } from 'src/common/guards/identity.guard';
 import { UpdateBusinessGuard } from './guards/update-business.guard';
 import { User } from '@bookingeek/core/businesses/types/user';
+import { BusinessSignUpDto, SignInDto, UpdateBusinessDto } from './dto';
 
 @Controller()
 export class BusinessesController {

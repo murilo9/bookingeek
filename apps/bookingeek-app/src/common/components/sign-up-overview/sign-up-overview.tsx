@@ -11,7 +11,6 @@ const StyledContainer = styled.div`
   flex-direction: column;
   gap: 24px;
   font-size: 14px;
-  flex: 1;
   overflow-y: auto;
   padding: 16px 0;
 `;

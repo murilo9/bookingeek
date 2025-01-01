@@ -20,6 +20,9 @@ import {
   BUSINESS_REFUND_TYPES,
   BusinessRefundType,
 } from "../../businesses/types/business-refund-type";
+import { BusinessSignUpDto } from "@bookingeek/api/src/businesses/dto";
+import { BASE_URL_DEV, SIGNUP_ROUTE } from "../../env";
+import { useAuth } from "../hooks/useAuth";
 
 const StyledPageContainer = styled.div`
   display: flex;
@@ -86,8 +89,11 @@ const STAGE_NAMES: Record<SignUpStages, string> = {
  */
 export default function SignUpPage() {
   const navigate = useNavigate();
+  const { signIn } = useAuth();
   // Defines the form step to be rendered
   const [formStep, setFormStep] = useState(0);
+  // Fetching state of sign up request
+  const [signingUp, setSigningUp] = useState(false);
   // ----- Form fields -----
   const [businessName, setBusinessName] = useState("Joe's Barber");
   const [businessField, setBusinessField] = useState<BusinessField>(
@@ -106,6 +112,8 @@ export default function SignUpPage() {
   const [businessSlug, setBusinessSlug] = useState("joes-barber");
   const [userFullName, setUserFullName] = useState("Joe Smith");
   const [userEmail, setUserEmail] = useState("joe.smith@email.com");
+  const [userPassword, setUserPassword] = useState("joesmith#321");
+  const [userPasswordRepeat, setUserPasswordRepeat] = useState("joesmith#321");
   // ----- End of form fields -----
 
   // Goes to previous form step, if possible
@@ -117,15 +125,48 @@ export default function SignUpPage() {
 
   // Goes to next form step, if possible
   const onNextClick = (currentStep: number) => {
-    if (currentStep < 9) {
+    if (currentStep < 10) {
       setFormStep(currentStep + 1);
     }
     // TODO: add submit flow
   };
 
-  const handleSubmit = () => {
+  const handleStepSubmit = () => {
     if (mayGoToNextFormStep()) {
       onNextClick(formStep);
+    }
+  };
+
+  const handleSignUp = async () => {
+    setSigningUp(true);
+    try {
+      const signUpDto: BusinessSignUpDto = {
+        adminUserEmail: userEmail,
+        adminUserFullName: userFullName,
+        adminUserPassword: userPassword,
+        businessAddress,
+        businessField,
+        businessName,
+        businessPhoneNumber: businessPhone,
+        businessResourcesType: businessResourcesType,
+        businessSlug,
+        doesRefund: businessDoesRefund === "yes",
+        refundDescription,
+        refundType: businessRefundType,
+      };
+      const signUpResponse = await fetch(`${BASE_URL_DEV}${SIGNUP_ROUTE}`, {
+        method: "POST",
+        body: JSON.stringify(signUpDto),
+        headers: { "Content-Type": "application/json" },
+      });
+      const res: { access_token: string /*, user: User*/ } =
+        await signUpResponse.json();
+      signIn(res.access_token);
+      window.location.reload();
+    } catch (error) {
+      // TODO: handle error
+      console.log(error);
+      setSigningUp(false);
     }
   };
 
@@ -149,7 +190,9 @@ export default function SignUpPage() {
       case 8: // User email
         // TODO: add regex to validate email
         return userEmail.length >= 5;
-      case 9:
+      case 9: // User password
+        return userPassword.length >= 8 && userPassword === userPasswordRepeat;
+      case 10: // Overview
         return true;
       default: // Will never fall here
         return false;
@@ -165,7 +208,7 @@ export default function SignUpPage() {
             placeholder="Type here"
             value={businessName}
             onChange={setBusinessName}
-            onSubmit={handleSubmit}
+            onSubmit={handleStepSubmit}
             autofocus
           />
         );
@@ -181,7 +224,7 @@ export default function SignUpPage() {
               value,
             }))}
             onChange={setBusinessField}
-            onSubmit={handleSubmit}
+            onSubmit={handleStepSubmit}
             autofocus
           />
         );
@@ -194,7 +237,7 @@ export default function SignUpPage() {
               helperText="Lave blank if your business does not have a physical address."
               value={businessAddress}
               onChange={setBusinessAddress}
-              onSubmit={handleSubmit}
+              onSubmit={handleStepSubmit}
               autofocus
             />
           </>
@@ -208,7 +251,7 @@ export default function SignUpPage() {
               helperText="Lave blank if your business does not have a phone number."
               value={businessPhone}
               onChange={setBusinessPhone}
-              onSubmit={handleSubmit}
+              onSubmit={handleStepSubmit}
               autofocus
             />
           </>
@@ -231,7 +274,7 @@ export default function SignUpPage() {
                 },
               ]}
               onChange={setBusinessDoesRefund}
-              onSubmit={handleSubmit}
+              onSubmit={handleStepSubmit}
             />
             {businessDoesRefund === "yes" ? (
               <>
@@ -281,7 +324,7 @@ export default function SignUpPage() {
             helperText="It will be used in URLs and may resemble to your business' name."
             value={businessSlug}
             onChange={setBusinessSlug}
-            onSubmit={handleSubmit}
+            onSubmit={handleStepSubmit}
             autofocus
           />
         );
@@ -292,7 +335,7 @@ export default function SignUpPage() {
             placeholder="Type here"
             value={userFullName}
             onChange={setUserFullName}
-            onSubmit={handleSubmit}
+            onSubmit={handleStepSubmit}
             autofocus
           />
         );
@@ -303,11 +346,32 @@ export default function SignUpPage() {
             placeholder="Type here"
             value={userEmail}
             onChange={setUserEmail}
-            onSubmit={handleSubmit}
+            onSubmit={handleStepSubmit}
             autofocus
           />
         );
       case 9:
+        return (
+          <StyledCustomFormContainer>
+            <FormField
+              label="Define a paswword"
+              placeholder="Password"
+              type="password"
+              value={userPassword}
+              onChange={setUserPassword}
+              autofocus
+            />
+            <FormField
+              label="Repeat paswword"
+              placeholder="Password"
+              type="password"
+              value={userPasswordRepeat}
+              onChange={setUserPasswordRepeat}
+              onSubmit={handleStepSubmit}
+            />
+          </StyledCustomFormContainer>
+        );
+      case 10:
         return (
           <SignUpOverview
             {...{
@@ -345,14 +409,15 @@ export default function SignUpPage() {
             </Button>
           ) : null}
           <Button
-            onClick={() => onNextClick(formStep)}
-            disabled={!mayGoToNextFormStep()}
+            onClick={() =>
+              formStep === 10 ? handleSignUp() : onNextClick(formStep)
+            }
+            disabled={!mayGoToNextFormStep() || signingUp}
           >
-            {formStep === 9 ? "Submit" : "Next"}
+            {formStep === 10 ? "Submit" : "Next"}
           </Button>
         </StyledActionsContainer>
       </StyledFormContainer>
-      {formStep}
     </StyledPageContainer>
   );
 }
