@@ -1,1 +1,3 @@
-dedicated docs folder (general business rules, setup, api, app, website)
+- dedicated docs folder (general business rules, setup, api, app, website)
+- remove @bookingeek/core
+- request mockups for Postman/Insomnia (URL & payload JSON)
