@@ -8,7 +8,10 @@ import { DbCollection } from 'src/database/collection.enum';
 import { UserPassword } from './entities/user-password.entity';
 import * as bcrypt from 'bcryptjs';
 import { Business } from '@bookingeek/core/businesses/types/business';
-import { User } from '@bookingeek/core/businesses/types/user';
+import {
+  User,
+  BusinessSignUpResponse,
+} from '@bookingeek/core/businesses/types';
 import { BusinessSignUpDto, UpdateBusinessDto } from './dto';
 
 @Injectable()
@@ -25,7 +28,9 @@ export class BusinessesService {
   /**
    * Registers a new business with an admin user.
    */
-  async businessSignUp(businessSignUpDto: BusinessSignUpDto) {
+  async businessSignUp(
+    businessSignUpDto: BusinessSignUpDto,
+  ): Promise<BusinessSignUpResponse<ObjectId>> {
     // Pre-creates businness
     const businessToCreate: Omit<Business<ObjectId>, FromPersistentEntity> = {
       name: businessSignUpDto.businessName,

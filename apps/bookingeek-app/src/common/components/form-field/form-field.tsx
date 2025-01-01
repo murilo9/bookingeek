@@ -5,9 +5,9 @@ import RadioFullIcon from "../../icons/radio-full";
 import RadioEmptyIcon from "../../icons/radio-empty";
 import Textarea from "../textarea/textarea";
 import { FormFieldLabel } from "./form-field-label";
-import { FormEvent } from "react";
+import { KeyboardEvent } from "react";
 
-const StyledFormField = styled.form`
+const StyledFormField = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -71,6 +71,12 @@ export default function FormField<T = string>({
   helperText,
   autofocus,
 }: FormFieldProps<T>) {
+  const handleKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && onSubmit) {
+      onSubmit();
+    }
+  };
+
   const renderInput = () => {
     switch (type) {
       case "select":
@@ -116,6 +122,7 @@ export default function FormField<T = string>({
         return (
           <Input
             onChange={({ target: { value } }) => onChange(value as T)}
+            onKeyUp={handleKeyUp}
             value={value || ""}
             placeholder={placeholder}
             autoFocus={autofocus}
@@ -125,15 +132,13 @@ export default function FormField<T = string>({
     }
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (onSubmit) {
-      onSubmit();
-    }
-  };
-
   return (
-    <StyledFormField onSubmit={handleSubmit}>
+    <StyledFormField
+      onSubmit={(event) => {
+        console.log(event);
+        event.preventDefault();
+      }}
+    >
       <FormFieldLabel>{label}</FormFieldLabel>
       {/* TODO: input start slots */}
       {renderInput()}

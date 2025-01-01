@@ -5,8 +5,10 @@ import SocialSignInList from "../components/social-signin-list/social-signin-lis
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { BASE_URL_DEV, SIGNIN_ROUTE } from "../../env";
+import { SIGNIN_ROUTE } from "../../env";
 import { SignInDto } from "@bookingeek/api/src/businesses/dto";
+import { BusinessSignUpResponse } from "@bookingeek/core/businesses/types";
+import { makeRequest } from "../helpers/make-request";
 
 const StyledPageContainer = styled.div`
   display: flex;
@@ -107,6 +109,13 @@ const StyledDividerLabel = styled.p`
   height: 16px;
 `;
 
+const StyledErrorLabel = styled.p<{ children: string }>`
+  font-size: 14px;
+  color: #aa3131;
+  opacity: ${(props) => (props.children ? 1 : 0)};
+  content: ${(props) => props.children || "null"};
+`;
+
 /**
  * Page where business' users can sign in.
  * Render the sign in form.
@@ -117,29 +126,25 @@ export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signingIn, setSigningIn] = useState(false);
+  const [erroMessage, setErrorMessage] = useState("");
 
   // Makes the sign in request and set authentication data
   const handleSignIn = async () => {
     setSigningIn(true);
-    try {
-      const signInDto: SignInDto = {
-        email,
-        password,
-      };
-      const signUpResponse = await fetch(`${BASE_URL_DEV}${SIGNIN_ROUTE}`, {
-        method: "POST",
-        body: JSON.stringify(signInDto),
-        headers: { "Content-Type": "application/json" },
-      });
-      const res: { access_token: string /*, user: User*/ } =
-        await signUpResponse.json();
-      signIn(res.access_token);
+    const signInDto: SignInDto = {
+      email,
+      password,
+    };
+    const signUpResponse = await makeRequest.post<
+      BusinessSignUpResponse<string>
+    >(SIGNIN_ROUTE, signInDto);
+    if (signUpResponse.success) {
+      signIn(signUpResponse.success.access_token);
       window.location.reload();
-    } catch (error) {
-      // TODO: handle error
-      console.log(error);
-      setSigningIn(false);
+    } else {
+      console.log(signUpResponse.error?.message);
     }
+    setErrorMessage(signUpResponse.error?.message || "");
   };
 
   return (
@@ -157,6 +162,7 @@ export default function SignInPage() {
               placeholder="E-mail"
               value={email}
               onChange={setEmail}
+              autofocus
             />
             <FormField
               label="Password"
@@ -164,8 +170,10 @@ export default function SignInPage() {
               value={password}
               placeholder="Password"
               onChange={setPassword}
+              onSubmit={handleSignIn}
             />
           </StyledSignInFormFields>
+          <StyledErrorLabel>{erroMessage}</StyledErrorLabel>
           <Button onClick={handleSignIn} disabled={signingIn}>
             Sign In
           </Button>
