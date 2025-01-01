@@ -14,12 +14,12 @@ import { ObjectId } from 'mongodb';
 import { EntityShouldExist } from 'src/common/decorators/entity-should-exist';
 import { DbCollection } from 'src/database/collection.enum';
 import { EntityExistsGuard } from 'src/common/guards/entity-exists.guard';
-import { RetrieveResourceAvailabilityQuery } from '@bookingeek/core/resources/types';
 import { IdentityGuard } from 'src/common/guards/identity.guard';
 import { ValidationPipe } from 'src/common/pipes/validation.pipe';
 import { CreateResourceDto } from './dto/create-resource.dto';
-import { User } from '@bookingeek/core/businesses/types';
 import { CreateResrouceGuard } from './guards/create-resource.guard';
+import { User } from 'src/businesses/types';
+import { RetrieveResourceAvailabilityQuery } from './types';
 
 @Controller()
 export class ResourcesController {

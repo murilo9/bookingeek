@@ -1,4 +1,4 @@
-import { PersistentEntity } from "../../common/types/persistent-entity";
+import { PersistentEntity } from 'src/common/types';
 
 /**
  * Represents a business that can create resources.
@@ -23,7 +23,7 @@ export interface Business<T> extends PersistentEntity<T> {
     // Whether the business does refunds or not
     doesRefund: boolean;
     // Refund type
-    refundType: "partial" | "total";
+    refundType: 'partial' | 'total';
     // A short description about how refunds work, to be displayed to customers
     description: string;
   };

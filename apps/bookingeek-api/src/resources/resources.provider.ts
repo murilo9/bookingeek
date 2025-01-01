@@ -7,7 +7,7 @@ import {
   Resource,
   RetrieveResourceAvailabilityQuery,
   DayOfWeekAvailability,
-} from '@bookingeek/core/resources/types';
+} from './types';
 import { FromPersistentEntity } from 'src/database/types/from-persistent-entity';
 import { CreateResourceDto } from './dto/create-resource.dto';
 

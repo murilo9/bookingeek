@@ -1,4 +1,4 @@
-import { PersistentEntity } from "../../common/types/persistent-entity";
+import { PersistentEntity } from 'src/common/types';
 
 /**
  * Represents a business' employee that can sign in

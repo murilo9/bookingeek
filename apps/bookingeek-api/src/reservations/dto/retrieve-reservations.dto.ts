@@ -1,5 +1,5 @@
-import { Timestamp } from '@bookingeek/core/common/types';
 import { ObjectId } from 'mongodb';
+import { Timestamp } from 'src/common/types';
 
 /**
  * The fields that can be passed in a reservations search query.

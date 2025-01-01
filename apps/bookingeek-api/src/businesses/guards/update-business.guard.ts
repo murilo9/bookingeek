@@ -5,8 +5,8 @@ import {
   Inject,
 } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
-import { User } from '@bookingeek/core/businesses/types/user';
 import { ObjectId } from 'mongodb';
+import { User } from '../types';
 
 /**
  * Checks if requesting user belongs to the business.

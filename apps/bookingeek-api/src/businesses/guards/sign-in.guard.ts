@@ -6,11 +6,11 @@ import {
 } from '@nestjs/common';
 import { compareSync } from 'bcryptjs';
 import { DatabaseService } from '../../database/database.service';
-import { UserPassword } from '../entities/user-password.entity';
+import { UserPassword } from '../types/user-password.entity';
 import { DbCollection } from 'src/database/collection.enum';
-import { User } from '@bookingeek/core/businesses/types/user';
 import { ObjectId } from 'mongodb';
 import { SignInDto } from '../dto';
+import { User } from '../types';
 
 /**
  * Checks if user exists and password matches email.

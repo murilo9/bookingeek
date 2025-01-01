@@ -5,11 +5,11 @@ import {
   Inject,
 } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
-import { User } from '@bookingeek/core/businesses/types/user';
 import { ObjectId } from 'mongodb';
 import { CreateResourceDto } from '../dto/create-resource.dto';
-import { Resource } from '@bookingeek/core/resources/types';
 import { DbCollection } from 'src/database/collection.enum';
+import { User } from 'src/businesses/types';
+import { Resource } from '../types';
 
 /**
  * Checks if a businees with the same title or slug exists.

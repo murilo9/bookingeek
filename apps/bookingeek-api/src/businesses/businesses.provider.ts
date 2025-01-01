@@ -5,14 +5,10 @@ import { FromPersistentEntity } from 'src/database/types/from-persistent-entity'
 import { ObjectId } from 'mongodb';
 import { DatabaseService } from 'src/database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
-import { UserPassword } from './entities/user-password.entity';
+import { UserPassword } from './types/user-password.entity';
 import * as bcrypt from 'bcryptjs';
-import { Business } from '@bookingeek/core/businesses/types/business';
-import {
-  User,
-  BusinessSignUpResponse,
-} from '@bookingeek/core/businesses/types';
 import { BusinessSignUpDto, UpdateBusinessDto } from './dto';
+import { BusinessSignUpResponse, Business, User } from './types';
 
 @Injectable()
 export class BusinessesService {

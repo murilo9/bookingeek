@@ -1,5 +1,5 @@
-import { PersistentEntity } from '@bookingeek/core/common/types';
 import { ObjectId } from 'mongodb';
+import { PersistentEntity } from 'src/common/types';
 
 /**
  * Represents the password of a user, used for signing in.

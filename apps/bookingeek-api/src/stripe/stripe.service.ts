@@ -4,8 +4,8 @@ import { ConfigService } from '@nestjs/config';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateCheckoutSessionDto } from './dto/create-checkout-session.dto';
 import { DbCollection } from 'src/database/collection.enum';
-import { Reservation } from '@bookingeek/core/reservations/types/reservation';
 import { ObjectId } from 'mongodb';
+import { Reservation } from 'src/reservations/types';
 
 // Relevant references: https://stripe.com/docs/connect/enable-payment-acceptance-guide
 

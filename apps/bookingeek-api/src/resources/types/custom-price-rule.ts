@@ -1,4 +1,4 @@
-import { TimeRange } from "../../common/types/time-range";
+import { TimeRange } from '../../common/types/time-range';
 
 /**
  * A resource's (un)availability rule for a custom day (and possibly, times) in the year.

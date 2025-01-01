@@ -12,7 +12,7 @@ import {
 } from 'mongodb';
 import { DbCollection } from 'src/database/collection.enum';
 import { FromPersistentEntity } from './types/from-persistent-entity';
-import { PersistentEntity } from '@bookingeek/core/common/types';
+import { PersistentEntity } from 'src/common/types';
 
 @Injectable()
 export class DatabaseService {

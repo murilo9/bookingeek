@@ -19,8 +19,8 @@ import { EntityShouldExist } from 'src/common/decorators/entity-should-exist';
 import { DbCollection } from 'src/database/collection.enum';
 import { IdentityGuard } from 'src/common/guards/identity.guard';
 import { UpdateBusinessGuard } from './guards/update-business.guard';
-import { User } from '@bookingeek/core/businesses/types/user';
 import { BusinessSignUpDto, SignInDto, UpdateBusinessDto } from './dto';
+import { User } from './types';
 
 @Controller()
 export class BusinessesController {

@@ -12,7 +12,6 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@bookingeek/core": "workspace:bookingeek-core",
     "@bookingeek/api": "workspace:bookingeek-api",
     "@capacitor/android": "^6.2.0",
     "@capacitor/core": "^6.2.0",

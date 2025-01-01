@@ -1,8 +1,8 @@
-import { DayOfWeekAvailability } from "./day-of-week-availability";
-import { ResourcePicture } from "./resource-picture";
-import { ResourceExtraField } from "./resource-extra-field";
-import { CustomPriceRule } from "./custom-price-rule";
-import { PersistentEntity } from "../../common/types/persistent-entity";
+import { DayOfWeekAvailability } from './day-of-week-availability';
+import { ResourcePicture } from './resource-picture';
+import { ResourceExtraField } from './resource-extra-field';
+import { CustomPriceRule } from './custom-price-rule';
+import { PersistentEntity } from '../../common/types/persistent-entity';
 
 /**
  * Represents an entity (service, venue, vehicle, worker, etc) that can be booked.
@@ -23,36 +23,36 @@ export interface Resource<T> extends PersistentEntity<T> {
   // Price in cents, per priceType unit
   priceInCents: number | null;
   // Price unit. Only applies if price != null and availabilityType = 'date-time'
-  priceType: "hourly" | "30-min" | "15-min" | "10-min" | "5-min";
+  priceType: 'hourly' | '30-min' | '15-min' | '10-min' | '5-min';
   // How customers can pay
-  checkoutType: "in-loco-online" | "online-only" | "in-loco-only";
+  checkoutType: 'in-loco-online' | 'online-only' | 'in-loco-only';
   // Extra fields of data to be prompted to customers when making reservations, if any
   extraFields: Array<ResourceExtraField>;
   // Type of availability (date & times or dates only)
-  availabilityType: "date-time" | "date-only";
+  availabilityType: 'date-time' | 'date-only';
   // Type of availability. Only applies if availabilityType = 'date-time'
-  reservationTimeType: "ranges" | "slots";
+  reservationTimeType: 'ranges' | 'slots';
   // Reservation time granularity. Only applies if availabilityType = 'date-time'
-  reservationTimeGranularity: "5-min" | "10-min" | "15-min" | "30-min" | "hour";
+  reservationTimeGranularity: '5-min' | '10-min' | '15-min' | '30-min' | 'hour';
   // Minimal duration of reservations. Only applies if timeType = 'ranges'
   minimalReservationDuration: {
     amount: number;
-    unit: "hours" | "minutes";
+    unit: 'hours' | 'minutes';
   };
   // Minimum advance time for making reservations
   minimalReservationAdvance: {
     amount: number;
-    unit: "weeks" | "days" | "hours" | "minutes";
+    unit: 'weeks' | 'days' | 'hours' | 'minutes';
   };
   // Resource's availability rules
   availability: {
-    "0": DayOfWeekAvailability; // Sunday
-    "1": DayOfWeekAvailability; // Monday
-    "2": DayOfWeekAvailability; // Tuesday
-    "3": DayOfWeekAvailability; // Wednesday
-    "4": DayOfWeekAvailability; // Thursday
-    "5": DayOfWeekAvailability; // Friday
-    "6": DayOfWeekAvailability; // Saturday
+    '0': DayOfWeekAvailability; // Sunday
+    '1': DayOfWeekAvailability; // Monday
+    '2': DayOfWeekAvailability; // Tuesday
+    '3': DayOfWeekAvailability; // Wednesday
+    '4': DayOfWeekAvailability; // Thursday
+    '5': DayOfWeekAvailability; // Friday
+    '6': DayOfWeekAvailability; // Saturday
   };
   // Resource's unavailability rules, if any
   unavailability: Array<CustomPriceRule>;

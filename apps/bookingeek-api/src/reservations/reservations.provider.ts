@@ -3,8 +3,8 @@ import { DatabaseService } from 'src/database/database.service';
 import { RetrieveReservationsDto } from './dto/retrieve-reservations.dto';
 import { DbCollection } from 'src/database/collection.enum';
 import { Filter, ObjectId } from 'mongodb';
-import { Reservation } from '@bookingeek/core/reservations/types/reservation';
-import { Timestamp } from '@bookingeek/core/common/types/timestamp';
+import { Timestamp } from 'src/common/types';
+import { Reservation } from './types';
 
 @Injectable()
 export class ReservationsService {
