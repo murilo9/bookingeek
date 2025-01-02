@@ -11,7 +11,12 @@ import NotFoundPage from "./common/pages/not-found";
 import ReservationDetailsView from "./businesses/views/reservation-details";
 import SignInView from "./common/pages/sign-in";
 import SignUpView from "./common/pages/sign-up";
-import ResourceMenuView from "./businesses/views/resource-menu";
+import ResourceMenuView from "./resources/views/resource-menu";
+import ResourceAvailabilityView from "./resources/views/resource-availability";
+import ResourceBasicInfoView from "./resources/views/resource-basic-info";
+import ResourceCustomPricesView from "./resources/views/resource-custom-prices";
+import ResourceExtraDataFieldsView from "./resources/views/resource-extra-data-fields";
+import ResourceUnavailabilityView from "./resources/views/resource-unavailability";
 
 const PublicRouter = () => (
   <Routes>
@@ -31,6 +36,26 @@ const ProtectedRouter = () => (
     <Route element={<BusinessPanelPage />}>
       <Route path="/resources" element={<ResourcesListView />} />
       <Route path="/resources/:id" element={<ResourceMenuView />} />
+      <Route
+        path="/resources/:id/availability"
+        element={<ResourceAvailabilityView />}
+      />
+      <Route
+        path="/resources/:id/basic-info"
+        element={<ResourceBasicInfoView />}
+      />
+      <Route
+        path="/resources/:id/custom-prices"
+        element={<ResourceCustomPricesView />}
+      />
+      <Route
+        path="/resources/:id/extra-data-fields"
+        element={<ResourceExtraDataFieldsView />}
+      />
+      <Route
+        path="/resources/:id/unavailability"
+        element={<ResourceUnavailabilityView />}
+      />
       <Route path="/reservations" element={<ReservationsView />}>
         <Route path=":id" element={<ReservationDetailsView />} />
       </Route>
