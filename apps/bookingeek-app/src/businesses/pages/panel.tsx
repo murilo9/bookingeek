@@ -1,12 +1,12 @@
 import { Outlet, useNavigate } from "react-router";
-import PanelHeader from "../../common/components/panel-header/panel-hedaer";
+import ViewHeader from "../../common/components/view-header/view-hedaer";
 import IconButton from "../../common/components/icon-button/icon-button";
-import { useMemo } from "react";
 import BackIcon from "../../common/icons/back";
 import PanelLateralNavigationMenu from "../../common/components/panel-lateral-navigation-menu/panel-lateral-navigation-menu";
 import styled from "styled-components";
 import { useActiveView } from "../../common/hooks/useActiveView";
 import PanelMobileNavigationMenu from "../../common/components/panel-mobile-navigation-menu/panel-mobile-navigation-menu";
+import DesktopHeader from "../../common/components/desktop-header/desktop-header";
 
 const StyledContentWrapper = styled.div`
   flex: 1;
@@ -24,7 +24,8 @@ const StyledContentWrapper = styled.div`
 
 const StyledViewWrapper = styled.div`
   flex: 1;
-  padding: 16px;
+  padding: 0px 16px 16px 16px;
+  margin-bottom: 16px;
   overflow-y: auto;
   overflow-x: hidden;
 `;
@@ -42,29 +43,28 @@ export default function BusinessPanelPage() {
     navigate(`/${activeView.route}`);
   };
 
-  const actionButton = useMemo(() => {
-    return location.pathname.split("/").length > 2 ? (
+  const actionButton =
+    location.pathname.split("/").length > 2 ? (
       <IconButton onClick={onGoBackClick}>
         <BackIcon size={20} />
       </IconButton>
     ) : (
       <></>
     );
-  }, [location]);
 
   return (
     <>
-      <PanelHeader
-        viewTitle={activeView.title}
-        startSlot={actionButton}
+      <DesktopHeader
         businessName="Joe's Barber"
         businessPictureUrl="https://jjsbasicmechanic.sitehenger.com/jjs-logo.png"
       />
-
       <StyledContentWrapper>
         <PanelLateralNavigationMenu />
-
         <StyledViewWrapper>
+          <ViewHeader
+            viewTitle={activeView.params[0] || activeView.title}
+            startSlot={actionButton}
+          />
           <Outlet />
         </StyledViewWrapper>
         <PanelMobileNavigationMenu />

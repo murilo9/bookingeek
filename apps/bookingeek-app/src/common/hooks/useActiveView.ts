@@ -8,10 +8,19 @@ const VIEWS: Record<string, string> = {
   users: "Users",
 };
 
-export const useActiveView = () => {
+/**
+ * Retrieves the name of the current view (and list of parameters, if any), based on the URL
+ */
+export const useActiveView = (): {
+  route: string;
+  title: string;
+  params: Array<string>;
+} => {
   const location = useLocation();
-  const route = location.pathname.split("/")[1];
+  const routeList = location.pathname.split("/");
+  const route = routeList[1];
   const title = VIEWS[route];
+  const params = routeList.filter((_, index) => index > 1);
 
-  return { route, title };
+  return { route, title, params };
 };

@@ -141,31 +141,32 @@ Used for business management. Can display several different views.
 Components:
 
 ```
-+-- PanelHeader
++-- DesktopHeader
++-- MobileHeader
 +-- PanelLateralNavigationMenu
 +-- PanelMobileNavigationMenu
 ```
 
-**View: Resources Manager**
+**View: Resources Management**
 
 Used for managing resources
 
 Components:
 
 ```
-+-- ResourcesList
++-- ResourcesListView
 +---- ResourceItem
-+-- ResourceMenu
-+-- ResourceBasicInfoSubView
++-- ResourceMenuView
++-- ResourceBasicInfoView
 +---- ResourceItem
-+-- ResourceExtraDataFieldsSubView
++-- ResourceExtraDataFieldsView
 +---- ExtraDataFieldForm
-+-- ResourceScheduleTypeSubView
-+-- ResourceAvailabilitySubView
++-- ResourceScheduleTypeView
++-- ResourceAvailabilityView
 +---- DayOfWeekAvailabilityForm
-+-- ResourceUnavailabilitySubView
++-- ResourceUnavailabilityView
 +---- DateUnavailabilityForm
-+-- ResourceCustomPricesSubView
++-- ResourceCustomPricesView
 +---- DateUnavailabilityForm (with price)
 ```
 

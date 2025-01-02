@@ -4,7 +4,7 @@ import { useGetResourcesQuery } from "../../resources/resources-api";
 /**
  * Lists the business' resources.
  */
-export default function ResourcesManagementView() {
+export default function ResourcesListView() {
   const { user } = useAuth();
   const { data } = useGetResourcesQuery(user!.businessId);
 

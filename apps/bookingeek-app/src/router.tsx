@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import { useAuth } from "./common/hooks/useAuth";
 import BusinessPanelPage from "./businesses/pages/panel";
 import BusinessShowcasePage from "./businesses/pages/showcase";
-import ResourcesManagementView from "./businesses/views/resources";
+import ResourcesListView from "./businesses/views/resources-list";
 import ReservationsView from "./businesses/views/reservations";
 import BusinessInfoView from "./businesses/views/business";
 import UsersManagementView from "./businesses/views/users";
@@ -11,6 +11,7 @@ import NotFoundPage from "./common/pages/not-found";
 import ReservationDetailsView from "./businesses/views/reservation-details";
 import SignInView from "./common/pages/sign-in";
 import SignUpView from "./common/pages/sign-up";
+import ResourceMenuView from "./businesses/views/resource-menu";
 
 const PublicRouter = () => (
   <Routes>
@@ -28,7 +29,8 @@ const PublicRouter = () => (
 const ProtectedRouter = () => (
   <Routes>
     <Route element={<BusinessPanelPage />}>
-      <Route path="/resources" element={<ResourcesManagementView />} />
+      <Route path="/resources" element={<ResourcesListView />} />
+      <Route path="/resources/:id" element={<ResourceMenuView />} />
       <Route path="/reservations" element={<ReservationsView />}>
         <Route path=":id" element={<ReservationDetailsView />} />
       </Route>
