@@ -47,10 +47,9 @@ export class ResourcesController {
   /**
    * Retrieves all resources that belongs to a business. Called by anyone.
    */
-  @EntityShouldExist('id', DbCollection.Businesses, 'business')
-  @UseGuards(EntityExistsGuard)
   @Get('resources')
   retrieveBusinessResources(@Query() query: { businessId: string }) {
+    console.log(query);
     return this.resourcesService.retrieveResources(
       new ObjectId(query.businessId),
     );
