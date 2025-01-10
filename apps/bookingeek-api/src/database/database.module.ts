@@ -10,7 +10,6 @@ import { DatabaseService } from './database.service';
     }),
   ],
   providers: [
-    DatabaseService, // This is REQUEST scoped
     {
       provide: DatabaseService,
       useFactory: async (configService: ConfigService) => {

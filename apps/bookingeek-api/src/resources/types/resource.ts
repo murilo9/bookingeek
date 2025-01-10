@@ -4,6 +4,13 @@ import { ResourceExtraField } from './resource-extra-field';
 import { CustomPriceRule } from './custom-price-rule';
 import { PersistentEntity } from '../../common/types/persistent-entity';
 
+export type ResorucePriceType =
+  | 'hourly'
+  | '30-min'
+  | '15-min'
+  | '10-min'
+  | '5-min';
+
 /**
  * Represents an entity (service, venue, vehicle, worker, etc) that can be booked.
  */
@@ -17,13 +24,13 @@ export interface Resource<T> extends PersistentEntity<T> {
   // Resource's description (can be empty)
   description: string;
   // Resource's picture data (icon or image)
-  pictureUrl: ResourcePicture;
+  picture: ResourcePicture;
   // The business this resource belongs to
   businessId: T;
   // Price in cents, per priceType unit
   priceInCents: number | null;
   // Price unit. Only applies if price != null and availabilityType = 'date-time'
-  priceType: 'hourly' | '30-min' | '15-min' | '10-min' | '5-min';
+  priceType: ResorucePriceType;
   // How customers can pay
   checkoutType: 'in-loco-online' | 'online-only' | 'in-loco-only';
   // Extra fields of data to be prompted to customers when making reservations, if any

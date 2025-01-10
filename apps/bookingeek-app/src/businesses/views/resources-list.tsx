@@ -1,5 +1,13 @@
+import styled from "styled-components";
 import { useAuth } from "../../common/hooks/useAuth";
+import ResourceItem from "../../resources/components/resource-item/resource-item";
 import { useGetResourcesQuery } from "../../resources/resources-api";
+
+const StyledResourcesList = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+`;
 
 /**
  * Lists the business' resources.
@@ -10,10 +18,26 @@ export default function ResourcesListView() {
 
   // TODO: loading state if data does not exist. Check isFetching and isLoading from useGetResourcesQuery as well
   return (
-    <>
-      <h2>Resources Management View</h2>
-      <p>Resources will be listed here in order to be managed</p>
-      {data?.map((business) => <p>{business.title}</p>)}
-    </>
+    <StyledResourcesList>
+      {data?.map(
+        ({
+          picture,
+          priceInCents,
+          priceType,
+          title,
+          description,
+          subtitle,
+        }) => (
+          <ResourceItem
+            picture={picture}
+            priceInCents={priceInCents}
+            priceType={priceType}
+            title={title}
+            description={description}
+            subtitle={subtitle}
+          />
+        )
+      )}
+    </StyledResourcesList>
   );
 }

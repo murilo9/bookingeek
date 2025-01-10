@@ -98,8 +98,9 @@ export class ResourcesService {
         amount: 1,
         unit: 'hours',
       },
-      pictureUrl: {
-        icon: 'todo',
+      picture: {
+        icon: 'TODO',
+        src: [''],
       },
       priceInCents: null,
       priceType: 'hourly',

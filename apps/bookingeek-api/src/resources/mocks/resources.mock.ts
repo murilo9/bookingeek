@@ -63,7 +63,7 @@ export function RESOURCES_MOCK<T>(
         amount: 1,
         unit: 'hours',
       },
-      pictureUrl: {
+      picture: {
         icon: '',
         src: [''],
       },
@@ -125,7 +125,7 @@ export function RESOURCES_MOCK<T>(
         amount: 1,
         unit: 'hours',
       },
-      pictureUrl: {
+      picture: {
         icon: '',
         src: [''],
       },
