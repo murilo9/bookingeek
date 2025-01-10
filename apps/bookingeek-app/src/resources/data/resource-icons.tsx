@@ -1,11 +1,11 @@
 import { ResourceIconName } from "@bookingeek/api/src/resources/types/resource-picture";
-import BedIcon from "../../common/icons/bed";
-import BuildingIcon from "../../common/icons/building";
-import CarIcon from "../../common/icons/car";
-import PlaceIcon from "../../common/icons/place";
-import ServiceIcon from "../../common/icons/service";
-import UserIcon from "../../common/icons/user";
-import TableIcon from "../../common/icons/table";
+import BedIcon from "../../common/icons/bed/bed";
+import BuildingIcon from "../../common/icons/building/building";
+import CarIcon from "../../common/icons/car/car";
+import PlaceIcon from "../../common/icons/place/place";
+import ServiceIcon from "../../common/icons/service/service";
+import UserIcon from "../../common/icons/user/user";
+import TableIcon from "../../common/icons/table/table";
 
 const renderIcon = (color: string, size: number) =>
   ({

@@ -1,20 +1,20 @@
 import styled from "styled-components";
 import { useActiveView } from "../../hooks/useActiveView";
-import ResourcesIcon from "../../icons/resources";
-import ReservationIcon from "../../icons/reservation";
-import ReservationOutlinedIcon from "../../icons/reservation-outlined";
-import ResourcesOutlinedIcon from "../../icons/resources-outlined";
-import MenuIcon from "../../icons/menu";
+import MenuIcon from "../../icons/menu/menu";
 import { Link, useNavigate } from "react-router";
-import InfoIcon from "../../icons/info";
-import InfoOutlinedIcon from "../../icons/info-outlined";
-import KeyIcon from "../../icons/key";
-import KeyOutlinedIcon from "../../icons/key-outlined";
-import UsersIcon from "../../icons/users";
-import UsersOutlinedIcon from "../../icons/users-outlined";
+import InfoIcon from "../../icons/info/info";
+import KeyOutlinedIcon from "../../icons/key-outlined/key-outlined";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import SignoutIcon from "../../icons/signout";
+import InfoOutlinedIcon from "../../icons/info-outlined/info-outlined";
+import KeyIcon from "../../icons/key/key";
+import ReservationOutlinedIcon from "../../icons/reservation-outlined/reservation-outlined";
+import ReservationIcon from "../../icons/reservations/reservation";
+import ResourcesOutlinedIcon from "../../icons/resources-outlined/resources-outlined";
+import ResourcesIcon from "../../icons/resources/resources";
+import SignoutIcon from "../../icons/signout/signout";
+import UsersOutlinedIcon from "../../icons/users-outlined/users-outlined";
+import UsersIcon from "../../icons/users/users";
 
 const StyledPanelWrapper = styled.div<{ showMenu: boolean }>`
   left: 0;

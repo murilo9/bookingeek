@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router";
 import ViewHeader from "../../common/components/view-header/view-hedaer";
 import IconButton from "../../common/components/icon-button/icon-button";
-import BackIcon from "../../common/icons/back";
+import BackIcon from "../../common/icons/back/back";
 import PanelLateralNavigationMenu from "../../common/components/panel-lateral-navigation-menu/panel-lateral-navigation-menu";
 import styled from "styled-components";
 import { useActiveView } from "../../common/hooks/useActiveView";

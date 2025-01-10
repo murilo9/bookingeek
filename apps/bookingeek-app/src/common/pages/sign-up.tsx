@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import IconButton from "../components/icon-button/icon-button";
-import CloseIcon from "../icons/close";
+import CloseIcon from "../icons/close/close";
 import Button from "../components/button/button";
 import { useNavigate } from "react-router";
 import { useState } from "react";

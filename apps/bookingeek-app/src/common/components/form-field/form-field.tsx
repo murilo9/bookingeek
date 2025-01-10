@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import Input from "../input/input";
 import Select from "../select/select";
-import RadioFullIcon from "../../icons/radio-full";
-import RadioEmptyIcon from "../../icons/radio-empty";
 import Textarea from "../textarea/textarea";
 import { FormFieldLabel } from "./form-field-label";
 import { KeyboardEvent } from "react";
+import RadioEmptyIcon from "../../icons/radio-empty/radio-empty";
+import RadioFullIcon from "../../icons/radio-full/radio-full";
 
 const StyledFormField = styled.div`
   display: flex;

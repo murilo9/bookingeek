@@ -1,17 +1,17 @@
 import styled from "styled-components";
-import ResourcesOutlinedIcon from "../../icons/resources-outlined";
 import { Link } from "react-router";
-import ResourcesIcon from "../../icons/resources";
-import ReservationOutlinedIcon from "../../icons/reservation-outlined";
-import ReservationIcon from "../../icons/reservation";
-import SignoutIcon from "../../icons/signout";
-import InfoIcon from "../../icons/info";
-import InfoOutlinedIcon from "../../icons/info-outlined";
-import UsersIcon from "../../icons/users";
-import UsersOutlinedIcon from "../../icons/users-outlined";
-import KeyIcon from "../../icons/key";
-import KeyOutlinedIcon from "../../icons/key-outlined";
+import InfoIcon from "../../icons/info/info";
+import KeyOutlinedIcon from "../../icons/key-outlined/key-outlined";
 import { useAuth } from "../../hooks/useAuth";
+import InfoOutlinedIcon from "../../icons/info-outlined/info-outlined";
+import KeyIcon from "../../icons/key/key";
+import ReservationOutlinedIcon from "../../icons/reservation-outlined/reservation-outlined";
+import ReservationIcon from "../../icons/reservations/reservation";
+import ResourcesOutlinedIcon from "../../icons/resources-outlined/resources-outlined";
+import ResourcesIcon from "../../icons/resources/resources";
+import SignoutIcon from "../../icons/signout/signout";
+import UsersOutlinedIcon from "../../icons/users-outlined/users-outlined";
+import UsersIcon from "../../icons/users/users";
 
 const StyledPanel = styled.div`
   display: none;
