@@ -37,10 +37,13 @@ export default function BusinessPanelPage() {
   // 3. If an error occurs while loading data, renders error view passing the code error (maybe in the query string?)
   const navigate = useNavigate();
   const activeView = useActiveView();
+  const currentPath = window.location.pathname;
 
-  // Goes back in the views hierarchy
+  // Goes back in the views hierarchy (removes last part of current URL path)
   const onGoBackClick = () => {
-    navigate(`/${activeView.route}`);
+    const pathList = currentPath.split("/");
+    const newPath = pathList.slice(0, pathList.length - 1).join("/");
+    navigate(newPath);
   };
 
   const actionButton =

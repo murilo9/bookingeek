@@ -64,7 +64,7 @@ export function RESOURCES_MOCK<T>(
         unit: 'hours',
       },
       picture: {
-        icon: '',
+        icon: 'user',
         src: [''],
       },
       priceInCents: 4000,
@@ -126,8 +126,7 @@ export function RESOURCES_MOCK<T>(
         unit: 'hours',
       },
       picture: {
-        icon: '',
-        src: [''],
+        icon: 'user',
       },
       priceInCents: 4000,
       priceType: 'hourly',

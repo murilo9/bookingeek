@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useAuth } from "../../common/hooks/useAuth";
 import ResourceItem from "../../resources/components/resource-item/resource-item";
 import { useGetResourcesQuery } from "../../resources/resources-api";
+import { useNavigate } from "react-router";
 
 const StyledResourcesList = styled.div`
   display: flex;
@@ -15,6 +16,7 @@ const StyledResourcesList = styled.div`
 export default function ResourcesListView() {
   const { user } = useAuth();
   const { data } = useGetResourcesQuery(user!.businessId);
+  const navigate = useNavigate();
 
   // TODO: loading state if data does not exist. Check isFetching and isLoading from useGetResourcesQuery as well
   return (
@@ -27,6 +29,7 @@ export default function ResourcesListView() {
           title,
           description,
           subtitle,
+          _id,
         }) => (
           <ResourceItem
             picture={picture}
@@ -35,6 +38,7 @@ export default function ResourcesListView() {
             title={title}
             description={description}
             subtitle={subtitle}
+            onClick={() => navigate(`/resources/${_id}`)}
           />
         )
       )}

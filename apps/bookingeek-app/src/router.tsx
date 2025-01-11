@@ -17,6 +17,7 @@ import ResourceBasicInfoView from "./resources/views/resource-basic-info";
 import ResourceCustomPricesView from "./resources/views/resource-custom-prices";
 import ResourceExtraDataFieldsView from "./resources/views/resource-extra-data-fields";
 import ResourceUnavailabilityView from "./resources/views/resource-unavailability";
+import ResourceScheduleTypeView from "./resources/views/resource-schedule-type";
 
 const PublicRouter = () => (
   <Routes>
@@ -43,6 +44,10 @@ const ProtectedRouter = () => (
       <Route
         path="/resources/:id/basic-info"
         element={<ResourceBasicInfoView />}
+      />
+      <Route
+        path="/resources/:id/schedule-type"
+        element={<ResourceScheduleTypeView />}
       />
       <Route
         path="/resources/:id/custom-prices"

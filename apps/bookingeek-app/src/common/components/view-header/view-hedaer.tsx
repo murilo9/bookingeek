@@ -12,6 +12,10 @@ const StyledHeader = styled.div`
   justify-content: space-between;
   max-width: 1440px;
   margin: auto;
+
+  @media screen and (min-width: 1024px) {
+    height: 72px;
+  }
 `;
 
 // Groups header's startSlot and title
