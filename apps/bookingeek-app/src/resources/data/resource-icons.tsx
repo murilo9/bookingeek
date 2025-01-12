@@ -1,4 +1,4 @@
-import { ResourceIconName } from "@bookingeek/api/src/resources/types/resource-picture";
+import { ResourceIconName } from "@bookingeek/api/src/resources/types";
 import BedIcon from "../../common/icons/bed/bed";
 import BuildingIcon from "../../common/icons/building/building";
 import CarIcon from "../../common/icons/car/car";
@@ -7,7 +7,7 @@ import ServiceIcon from "../../common/icons/service/service";
 import UserIcon from "../../common/icons/user/user";
 import TableIcon from "../../common/icons/table/table";
 
-const renderIcon = (color: string, size: number) =>
+export const RESOURCE_ICON = (color: string, size: number) =>
   ({
     bed: <BedIcon color={color} size={size} />,
     building: <BuildingIcon color={color} size={size} />,
@@ -18,10 +18,10 @@ const renderIcon = (color: string, size: number) =>
     table: <TableIcon color={color} size={size} />,
   }) as Record<ResourceIconName, JSX.Element>;
 
-export const RESOURCE_ICON = (
+export const renderResourceIcon = (
   icon: ResourceIconName,
   color = "inherit",
   size = 24
 ): JSX.Element => {
-  return renderIcon(color, size)[icon];
+  return RESOURCE_ICON(color, size)[icon];
 };

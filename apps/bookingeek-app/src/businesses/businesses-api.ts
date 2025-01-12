@@ -1,9 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL_DEV } from "../env";
+import { appApi } from "../store";
 
-export const businessesApi = createApi({
-  reducerPath: "businessesApi",
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL_DEV }),
+export const businessesApi = appApi.injectEndpoints({
   endpoints: (builder) => ({
     getBusinessById: builder.query<
       /*TODO: add business type here*/ { _id: string },
@@ -12,6 +9,7 @@ export const businessesApi = createApi({
       query: (id) => `businesses/${id}`,
     }),
   }),
+  overrideExisting: false,
 });
 
 export const { useGetBusinessByIdQuery } = businessesApi;

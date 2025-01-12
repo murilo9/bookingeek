@@ -5,6 +5,7 @@ import {
   Inject,
   Param,
   Post,
+  Put,
   Query,
   Req,
   UseGuards,
@@ -20,6 +21,7 @@ import { CreateResourceDto } from './dto/create-resource.dto';
 import { CreateResrouceGuard } from './guards/create-resource.guard';
 import { User } from 'src/businesses/types';
 import { RetrieveResourceAvailabilityQuery } from './types';
+import { UpdateResourceDto } from './dto/update-resource.dto';
 
 @Controller()
 export class ResourcesController {
@@ -68,6 +70,19 @@ export class ResourcesController {
     return this.resourcesService.createResource(
       createResourceDto,
       request.user.businessId,
+    );
+  }
+
+  @UseGuards(IdentityGuard)
+  @Put('resources/:id')
+  updateResource(
+    @Param('id') resourceId: string,
+    @Body(new ValidationPipe(UpdateResourceDto))
+    updateResourceDto: UpdateResourceDto,
+  ) {
+    return this.resourcesService.updateResource(
+      new ObjectId(resourceId),
+      updateResourceDto,
     );
   }
 }

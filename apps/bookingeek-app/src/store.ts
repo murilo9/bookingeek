@@ -1,23 +1,28 @@
 import { configureStore } from "@reduxjs/toolkit";
 // Or from '@reduxjs/toolkit/query/react'
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { businessesApi } from "./businesses/businesses-api";
+import {
+  createApi,
+  fetchBaseQuery,
+  setupListeners,
+} from "@reduxjs/toolkit/query/react";
 import { useDispatch, useSelector } from "react-redux";
-import { resourcesApi } from "./resources/resources-api";
+import { BASE_URL_DEV } from "./env";
+
+export const appApi = createApi({
+  tagTypes: ["Resource", "Post"],
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL_DEV }),
+  endpoints: () => ({}),
+});
 
 export const store = configureStore({
   reducer: {
-    // Add the generated reducers as specific top-level slices
-    [businessesApi.reducerPath]: businessesApi.reducer,
-    [resourcesApi.reducerPath]: resourcesApi.reducer,
+    // Add the generated reducer as a specific top-level slice
+    [appApi.reducerPath]: appApi.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([
-      businessesApi.middleware,
-      resourcesApi.middleware,
-    ]),
+    getDefaultMiddleware().concat([appApi.middleware]),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

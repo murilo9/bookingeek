@@ -2,9 +2,14 @@ export { Resource } from './resource';
 export { CustomPriceRule } from './custom-price-rule';
 export { DayOfWeekAvailability } from './day-of-week-availability';
 export { ResourceExtraField } from './resource-extra-field';
-export {
-  ResourceIconPicture,
-  ResourcePicture,
-  ResourceUrlPicture,
-} from './resource-picture';
+export { ResourcePicture, ResourceIconName } from './resource-picture';
 export { RetrieveResourceAvailabilityQuery } from './retrieve-resource-availability-query';
+export { RESOURCE_PRICE_TYPES, ResorucePriceType } from './resource-price-type';
+export {
+  RESOURCE_CHECKOUT_TYPES,
+  ResourceCheckoutType,
+} from './resource-checkout-type';
+export {
+  RESOURCE_RESERVATION_ADVANCE_UNITS,
+  ResourceReservationAdvanceUnit,
+} from './resource-reservation-advance-unit';

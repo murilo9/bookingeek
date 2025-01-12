@@ -4,12 +4,13 @@ import { DatabaseService } from 'src/database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
 import { getDaysInMonth } from 'date-fns';
 import {
-  Resource,
   RetrieveResourceAvailabilityQuery,
   DayOfWeekAvailability,
 } from './types';
 import { FromPersistentEntity } from 'src/database/types/from-persistent-entity';
 import { CreateResourceDto } from './dto/create-resource.dto';
+import { UpdateResourceDto } from './dto/update-resource.dto';
+import { Resource } from './types/resource';
 
 @Injectable()
 export class ResourcesService {
@@ -100,10 +101,11 @@ export class ResourcesService {
       },
       picture: {
         icon: 'user',
+        src: [],
       },
       priceInCents: null,
       priceType: 'hourly',
-      reservationTimeGranularity: 'hour',
+      reservationTimeGranularity: 'hourly',
       subtitle: '',
       unavailability: [],
     };
@@ -112,5 +114,23 @@ export class ResourcesService {
       resourceToCreate,
     );
     return resource;
+  }
+
+  /**
+   * Updates a resource.
+   */
+  async updateResource(resourceId: ObjectId, resourceDto: UpdateResourceDto) {
+    const resourceToUpdate = await this.databaseService.findOne<
+      Resource<ObjectId>
+    >(DbCollection.Resources, { _id: resourceId });
+    Object.entries(resourceDto).forEach(([key, value]) => {
+      resourceToUpdate[key] = value;
+    });
+    await this.databaseService.updateOne<Resource<ObjectId>>(
+      DbCollection.Resources,
+      resourceToUpdate,
+      { _id: resourceId },
+    );
+    return resourceToUpdate;
   }
 }

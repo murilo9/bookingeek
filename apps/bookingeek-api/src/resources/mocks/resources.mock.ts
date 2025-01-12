@@ -1,6 +1,6 @@
 import { TimeRange } from 'src/common/types';
-import { Resource } from '../types';
 import { BUSINNES_ID_0 } from 'src/businesses/mocks/businesses.mocks';
+import { Resource } from '../types/resource';
 
 const basicAvailabilityRule: TimeRange = {
   startInMinutesPastMidnight: 60 * 8,
@@ -70,7 +70,7 @@ export function RESOURCES_MOCK<T>(
       priceInCents: 4000,
       priceType: 'hourly',
       subtitle: 'Barber',
-      reservationTimeGranularity: 'hour',
+      reservationTimeGranularity: 'hourly',
       reservationTimeType: 'ranges',
       title: 'Joe',
       unavailability: [],
@@ -127,11 +127,12 @@ export function RESOURCES_MOCK<T>(
       },
       picture: {
         icon: 'user',
+        src: [],
       },
       priceInCents: 4000,
       priceType: 'hourly',
       subtitle: 'Barber',
-      reservationTimeGranularity: 'hour',
+      reservationTimeGranularity: 'hourly',
       reservationTimeType: 'ranges',
       title: 'Jylan',
       unavailability: [],

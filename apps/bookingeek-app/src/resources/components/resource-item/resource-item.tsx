@@ -1,11 +1,7 @@
-import {
-  ResourceIconPicture,
-  ResourcePicture,
-  ResourceUrlPicture,
-} from "@bookingeek/api/src/resources/types";
-import { ResorucePriceType } from "@bookingeek/api/src/resources/types/resource";
+import { ResourcePicture } from "@bookingeek/api/src/resources/types";
+import { ResorucePriceType } from "@bookingeek/api/src/resources/types";
 import styled from "styled-components";
-import { RESOURCE_ICON } from "../../data/resource-icons";
+import { renderResourceIcon } from "../../data/resource-icons";
 
 const StyledResourceItem = styled.div`
   display: flex;
@@ -109,13 +105,13 @@ export default function ResourceItem({
   subtitle,
   onClick,
 }: ResourceItemProps) {
-  const iconPicture = picture as ResourceIconPicture;
-  const urlPicture = picture as ResourceUrlPicture;
   const renderPicture = () =>
-    urlPicture.src ? (
-      <StyledResourcePicture src={urlPicture.src[0]} />
+    picture.src.length ? (
+      <StyledResourcePicture src={picture.src[0]} />
     ) : (
-      <StyledResourceIcon>{RESOURCE_ICON(iconPicture.icon)}</StyledResourceIcon>
+      <StyledResourceIcon>
+        {renderResourceIcon(picture.icon)}
+      </StyledResourceIcon>
     );
 
   const priceValue = priceInCents ? (priceInCents / 100).toFixed(2) : "FREE";

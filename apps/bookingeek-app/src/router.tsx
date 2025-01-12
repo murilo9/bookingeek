@@ -18,6 +18,7 @@ import ResourceCustomPricesView from "./resources/views/resource-custom-prices";
 import ResourceExtraDataFieldsView from "./resources/views/resource-extra-data-fields";
 import ResourceUnavailabilityView from "./resources/views/resource-unavailability";
 import ResourceScheduleTypeView from "./resources/views/resource-schedule-type";
+import ResourceProvider from "./resources/components/resource-loader/resource-provider";
 
 const PublicRouter = () => (
   <Routes>
@@ -36,33 +37,20 @@ const ProtectedRouter = () => (
   <Routes>
     <Route element={<BusinessPanelPage />}>
       <Route path="/resources" element={<ResourcesListView />} />
-      <Route path="/resources/:id" element={<ResourceMenuView />} />
-      <Route
-        path="/resources/:id/availability"
-        element={<ResourceAvailabilityView />}
-      />
-      <Route
-        path="/resources/:id/basic-info"
-        element={<ResourceBasicInfoView />}
-      />
-      <Route
-        path="/resources/:id/schedule-type"
-        element={<ResourceScheduleTypeView />}
-      />
-      <Route
-        path="/resources/:id/custom-prices"
-        element={<ResourceCustomPricesView />}
-      />
-      <Route
-        path="/resources/:id/extra-data-fields"
-        element={<ResourceExtraDataFieldsView />}
-      />
-      <Route
-        path="/resources/:id/unavailability"
-        element={<ResourceUnavailabilityView />}
-      />
+      <Route path="/resources/:resourceId" element={<ResourceProvider />}>
+        <Route index element={<ResourceMenuView />} />
+        <Route path="availability" element={<ResourceAvailabilityView />} />
+        <Route path="basic-info" element={<ResourceBasicInfoView />} />
+        <Route path="schedule-type" element={<ResourceScheduleTypeView />} />
+        <Route path="custom-prices" element={<ResourceCustomPricesView />} />
+        <Route
+          path="extra-data-fields"
+          element={<ResourceExtraDataFieldsView />}
+        />
+        <Route path="unavailability" element={<ResourceUnavailabilityView />} />
+      </Route>
       <Route path="/reservations" element={<ReservationsView />}>
-        <Route path=":id" element={<ReservationDetailsView />} />
+        <Route path=":reservationId" element={<ReservationDetailsView />} />
       </Route>
       <Route path="/users" element={<UsersManagementView />} />
       <Route path="/account" element={<AccountManagementView />} />

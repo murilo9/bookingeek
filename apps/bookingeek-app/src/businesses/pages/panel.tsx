@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { useActiveView } from "../../common/hooks/useActiveView";
 import PanelMobileNavigationMenu from "../../common/components/panel-mobile-navigation-menu/panel-mobile-navigation-menu";
 import DesktopHeader from "../../common/components/desktop-header/desktop-header";
+import { useGetResourcesQuery } from "../../resources/resources-api";
+import { useAuth } from "../../common/hooks/useAuth";
 
 const StyledContentWrapper = styled.div`
   flex: 1;
@@ -28,16 +30,19 @@ const StyledViewWrapper = styled.div`
   margin-bottom: 16px;
   overflow-y: auto;
   overflow-x: hidden;
+  max-width: 640px;
 `;
 
 export default function BusinessPanelPage() {
   // TODO:
-  // 1. Display loading view while loading all data to the store
-  // 2. Once all data is loaded successfully, render Outlet
+  // 1. Display loading view while loading all data to the store [done]
+  // 2. Once all data is loaded successfully, render Outlet [done]
   // 3. If an error occurs while loading data, renders error view passing the code error (maybe in the query string?)
   const navigate = useNavigate();
   const activeView = useActiveView();
   const currentPath = window.location.pathname;
+  const { user } = useAuth();
+  const resourcesLoaded = useGetResourcesQuery(user!.businessId).data;
 
   // Goes back in the views hierarchy (removes last part of current URL path)
   const onGoBackClick = () => {
@@ -55,7 +60,7 @@ export default function BusinessPanelPage() {
       <></>
     );
 
-  return (
+  return resourcesLoaded ? (
     <>
       <DesktopHeader
         businessName="Joe's Barber"
@@ -73,5 +78,8 @@ export default function BusinessPanelPage() {
         <PanelMobileNavigationMenu />
       </StyledContentWrapper>
     </>
+  ) : (
+    // TODO: add skeleton loader
+    "Loading..."
   );
 }

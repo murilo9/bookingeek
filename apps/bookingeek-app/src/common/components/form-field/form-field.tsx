@@ -10,7 +10,7 @@ import RadioFullIcon from "../../icons/radio-full/radio-full";
 const StyledFormField = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 `;
 
 const StyledRadioInputContainer = styled.div`
@@ -31,20 +31,24 @@ const StyledRadioInput = styled.div`
 const StyledFormFieldHelper = styled.p`
   font-size: 14px;
   color: #666666;
-  margin-top: 8px;
+  margin-top: 4px;
 `;
 
 type FormFieldProps<T = string> = {
   // Text displayed above the input
   label: string;
-  // FIeld value
+  // Field value
   value: string | null;
+  // Description displayed between the labe and the input
+  description?: string;
   // Input placeholder
   placeholder?: string;
   // Input type
   type?: "text" | "textarea" | "password" | "select" | "radio";
   // Only applies when type = 'select' or 'radio'
   options?: Array<{ value: string; label: string }>;
+  // Children that will be rendered bellow the content
+  children?: JSX.Element | Array<JSX.Element> | string | null;
   // Used to draw icons or button inside the input. Only applies when type != 'radio'
   inputStartSlot?: JSX.Element;
   // A helper text displayed bellow the input
@@ -70,6 +74,8 @@ export default function FormField<T = string>({
   options,
   helperText,
   autofocus,
+  children,
+  description,
 }: FormFieldProps<T>) {
   const handleKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && onSubmit) {
@@ -92,19 +98,21 @@ export default function FormField<T = string>({
       case "radio":
         return (
           <StyledRadioInputContainer>
-            {(options || []).map((option) => (
-              <StyledRadioInput
-                onClick={() => onChange(option.value as T)}
-                key={value}
-              >
-                {value === option.value ? (
-                  <RadioFullIcon />
-                ) : (
-                  <RadioEmptyIcon />
-                )}
-                <span>{option.label}</span>
-              </StyledRadioInput>
-            ))}
+            {options?.length
+              ? options.map((option) => (
+                  <StyledRadioInput
+                    onClick={() => onChange(option.value as T)}
+                    key={option.value}
+                  >
+                    {value === option.value ? (
+                      <RadioFullIcon />
+                    ) : (
+                      <RadioEmptyIcon />
+                    )}
+                    <span>{option.label}</span>
+                  </StyledRadioInput>
+                ))
+              : null}
           </StyledRadioInputContainer>
         );
       case "textarea":
@@ -139,12 +147,18 @@ export default function FormField<T = string>({
         event.preventDefault();
       }}
     >
-      <FormFieldLabel>{label}</FormFieldLabel>
+      <div>
+        <FormFieldLabel>{label}</FormFieldLabel>
+        {description ? (
+          <StyledFormFieldHelper>{description}</StyledFormFieldHelper>
+        ) : null}
+      </div>
       {/* TODO: input start slots */}
       {renderInput()}
       {helperText ? (
         <StyledFormFieldHelper>{helperText}</StyledFormFieldHelper>
       ) : null}
+      {children}
     </StyledFormField>
   );
 }

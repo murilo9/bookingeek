@@ -3,13 +3,9 @@ import { ResourcePicture } from './resource-picture';
 import { ResourceExtraField } from './resource-extra-field';
 import { CustomPriceRule } from './custom-price-rule';
 import { PersistentEntity } from '../../common/types/persistent-entity';
-
-export type ResorucePriceType =
-  | 'hourly'
-  | '30-min'
-  | '15-min'
-  | '10-min'
-  | '5-min';
+import { ResorucePriceType } from './resource-price-type';
+import { ResourceCheckoutType } from './resource-checkout-type';
+import { ResourceReservationAdvanceUnit } from './resource-reservation-advance-unit';
 
 /**
  * Represents an entity (service, venue, vehicle, worker, etc) that can be booked.
@@ -32,7 +28,7 @@ export interface Resource<T> extends PersistentEntity<T> {
   // Price unit. Only applies if price != null and availabilityType = 'date-time'
   priceType: ResorucePriceType;
   // How customers can pay
-  checkoutType: 'in-loco-online' | 'online-only' | 'in-loco-only';
+  checkoutType: ResourceCheckoutType;
   // Extra fields of data to be prompted to customers when making reservations, if any
   extraFields: Array<ResourceExtraField>;
   // Type of availability (date & times or dates only)
@@ -40,7 +36,7 @@ export interface Resource<T> extends PersistentEntity<T> {
   // Type of availability. Only applies if availabilityType = 'date-time'
   reservationTimeType: 'ranges' | 'slots';
   // Reservation time granularity. Only applies if availabilityType = 'date-time'
-  reservationTimeGranularity: '5-min' | '10-min' | '15-min' | '30-min' | 'hour';
+  reservationTimeGranularity: ResorucePriceType;
   // Minimal duration of reservations. Only applies if timeType = 'ranges'
   minimalReservationDuration: {
     amount: number;
@@ -49,7 +45,7 @@ export interface Resource<T> extends PersistentEntity<T> {
   // Minimum advance time for making reservations
   minimalReservationAdvance: {
     amount: number;
-    unit: 'weeks' | 'days' | 'hours' | 'minutes';
+    unit: ResourceReservationAdvanceUnit;
   };
   // Resource's availability rules
   availability: {
