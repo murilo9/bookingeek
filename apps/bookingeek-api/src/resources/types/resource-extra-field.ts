@@ -1,11 +1,11 @@
 import { Expose } from 'class-transformer';
 import {
-  IsArray,
   IsDefined,
-  IsIn,
-  IsNotEmpty,
-  IsOptional,
   IsString,
+  IsNotEmpty,
+  IsIn,
+  IsOptional,
+  IsArray,
 } from 'class-validator';
 
 /**

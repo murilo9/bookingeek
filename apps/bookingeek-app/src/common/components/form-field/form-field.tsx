@@ -28,10 +28,21 @@ const StyledRadioInput = styled.div`
   }
 `;
 
-const StyledFormFieldHelper = styled.p`
+const StyledFormFieldDescription = styled.p`
   font-size: 14px;
   color: #666666;
   margin-top: 4px;
+`;
+
+const StyledFormFieldHelper = styled.p<{ error?: boolean }>`
+  font-size: 14px;
+  color: ${(props) => (props.error ? "#ff0000" : "#666666")};
+  margin-top: 8px;
+  margin-left: 8px;
+`;
+
+const StyledFormFieldLabel = styled(FormFieldLabel)`
+  font-weight: 600;
 `;
 
 type FormFieldProps<T = string> = {
@@ -55,6 +66,8 @@ type FormFieldProps<T = string> = {
   helperText?: string;
   // Whether the input should autofocus. Only applies to text-based inputs
   autofocus?: boolean;
+  // Makes the input outline and helper text red.
+  error?: boolean;
   // Change handler
   onChange: (value: T) => void;
   // Called when user presses Enter key. Only applies if type != 'radio'
@@ -68,6 +81,7 @@ export default function FormField<T = string>({
   label,
   onChange,
   onSubmit,
+  error,
   placeholder,
   value,
   type,
@@ -87,7 +101,7 @@ export default function FormField<T = string>({
     switch (type) {
       case "select":
         return (
-          <Select>
+          <Select error={error}>
             {(options || []).map((option) => (
               <option value={option.value} key={value}>
                 {option.label}
@@ -105,9 +119,9 @@ export default function FormField<T = string>({
                     key={option.value}
                   >
                     {value === option.value ? (
-                      <RadioFullIcon />
+                      <RadioFullIcon size={20} />
                     ) : (
-                      <RadioEmptyIcon />
+                      <RadioEmptyIcon size={20} />
                     )}
                     <span>{option.label}</span>
                   </StyledRadioInput>
@@ -135,6 +149,7 @@ export default function FormField<T = string>({
             placeholder={placeholder}
             autoFocus={autofocus}
             type={type || "text"}
+            error={error}
           />
         );
     }
@@ -148,17 +163,21 @@ export default function FormField<T = string>({
       }}
     >
       <div>
-        <FormFieldLabel>{label}</FormFieldLabel>
+        <StyledFormFieldLabel>{label}</StyledFormFieldLabel>
         {description ? (
-          <StyledFormFieldHelper>{description}</StyledFormFieldHelper>
+          <StyledFormFieldDescription>{description}</StyledFormFieldDescription>
         ) : null}
       </div>
       {/* TODO: input start slots */}
-      {renderInput()}
-      {helperText ? (
-        <StyledFormFieldHelper>{helperText}</StyledFormFieldHelper>
-      ) : null}
-      {children}
+      <div>
+        {renderInput()}
+        {helperText ? (
+          <StyledFormFieldHelper error={error}>
+            {helperText}
+          </StyledFormFieldHelper>
+        ) : null}
+        {children}
+      </div>
     </StyledFormField>
   );
 }

@@ -1,22 +1,43 @@
 import styled from "styled-components";
 import FormField from "../../common/components/form-field/form-field";
 import { useState } from "react";
-import {
-  ResourceCheckoutType,
-  ResourceIconName,
-} from "@bookingeek/api/src/resources/types";
+
 import { useOutletContext } from "react-router";
 import { RESOURCE_ICON } from "../data/resource-icons";
 import IconButton from "../../common/components/icon-button/icon-button";
 import Input from "../../common/components/input/input";
 import Select from "../../common/components/select/select";
-import { RESOURCE_PRICE_TYPES } from "@bookingeek/api/src/resources/types";
-import { Resource } from "@bookingeek/api/src/resources/types/resource";
+import {
+  Resource,
+  ResourceCheckoutType,
+  ResourceIconName,
+} from "@bookingeek/api/src/resources/types";
+import ResourceItem from "../components/resource-item/resource-item";
+import { onFormatCurrency } from "../../common/helpers/on-format-currency";
+import { isPriceValid } from "../../common/helpers/is-price-valid";
+import Button from "../../common/components/button/button";
+import { useFormComparator } from "../../common/hooks/useFormComparator";
+import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
+import { useUpdateResourceMutation } from "../resources-api";
+
+const RESOURCE_CHECKOUT_TYPES: Record<string, string> = {
+  "in-loco-online": "In-loco & online",
+  "in-loco-only": "In-loco only",
+  "online-only": "Online only",
+};
+const RESOURCE_PRICE_TYPES: Record<string, string> = {
+  hourly: "hour",
+  "30-min": "30 min",
+  "15-min": "15 min",
+  "10-min": "10 min",
+  "5-min": "5 min",
+};
 
 const StyledForm = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  max-width: 640px;
 `;
 
 const StyledIconList = styled.div`
@@ -29,19 +50,35 @@ const StyledIconButton = styled(IconButton)<{ selected: boolean }>`
   width: 40px;
   height: 40px;
   background: ${(props) => (props.selected ? "#c6c6c6" : "none")};
+  &:hover {
+    background: ${(props) => (props.selected ? "#c6c6c6" : "#f8f8f8")};
+  }
 `;
 
 const StyledPriceInputGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 8px;
+  margin-top: 20px;
+`;
+
+const StyledTitleLabel = styled.p`
+  font-weight: 600;
+  font-size: 16px;
+`;
+
+const StyledErrorHelperText = styled.p`
+  margin-left: 8px;
   margin-top: 8px;
+  font-size: 14px;
+  color: #ff0000;
 `;
 
 export default function ResourceBasicInfoView() {
   const resource = useOutletContext<Resource<string>>();
-  const [pictureType, setPictureType] = useState<"icon" | "pictures">(
-    resource.picture.icon ? "icon" : "pictures"
+  const [updateResource, updateData] = useUpdateResourceMutation();
+  const [pictureType, setPictureType] = useState<"icon" | "picture">(
+    resource.picture.icon ? "icon" : "picture"
   );
   const [resourceIcon, setResourceIcon] = useState<ResourceIconName>(
     resource.picture.icon
@@ -55,6 +92,38 @@ export default function ResourceBasicInfoView() {
   const [checkoutType, setCheckoutType] = useState<ResourceCheckoutType>(
     resource.checkoutType
   );
+  const [title, setTitle] = useState(resource.title);
+  const [subtitle, setSubtitle] = useState(resource.subtitle);
+  const [description, setDescription] = useState(resource.description);
+  const [slug, setSlug] = useState(resource.slug);
+  const priceIsValid = isPriceValid(priceString);
+  const slugIsValid = new RegExp(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).test(slug);
+  const isSaving = updateData.isLoading;
+  const { formChanged } = useFormComparator({
+    pictureType,
+    resourceIcon,
+    hasPrice,
+    priceString,
+    checkoutType,
+    title,
+    subtitle,
+    description,
+    slug,
+  });
+
+  const onSaveClick = async () => {
+    const dto: UpdateResourceDto = {
+      ...resource,
+      picture: { icon: resourceIcon, src: [] },
+      priceInCents: hasPrice ? Number(priceString) * 100 : null,
+      checkoutType,
+      title,
+      subtitle,
+      description,
+      slug,
+    };
+    await updateResource({ dto, id: resource._id });
+  };
 
   return (
     <StyledForm>
@@ -65,13 +134,14 @@ export default function ResourceBasicInfoView() {
         value={pictureType}
         options={[
           { label: "Icon", value: "icon" },
-          { label: "Pictures", value: "pictures" },
+          { label: "Picture", value: "picture" },
         ]}
       >
         <StyledIconList>
           {Object.entries(RESOURCE_ICON("inherit", 24)).map(
             ([iconName, icon]) => (
               <StyledIconButton
+                key={iconName}
                 selected={resourceIcon === iconName}
                 onClick={() => setResourceIcon(iconName as ResourceIconName)}
               >
@@ -97,16 +167,67 @@ export default function ResourceBasicInfoView() {
             {/* TODO: price string formatter */}
             <Input
               value={priceString}
-              onChange={({ target: { value } }) => setPriceString(value)}
+              onChange={({ target: { value } }) =>
+                onFormatCurrency(value.trim(), setPriceString)
+              }
+              error={!priceIsValid}
             />
             <Select>
               {Object.entries(RESOURCE_PRICE_TYPES).map(([type, label]) => (
-                <option value={type}>{label}</option>
+                <option value={type} key={type}>
+                  {label}
+                </option>
               ))}
             </Select>
+            {!priceIsValid ? (
+              <StyledErrorHelperText>
+                Invalid price (must have two decimal digits)
+              </StyledErrorHelperText>
+            ) : null}
           </StyledPriceInputGrid>
         ) : null}
       </FormField>
+      <FormField
+        label="Checkout Options"
+        type="radio"
+        value={checkoutType}
+        onChange={setCheckoutType}
+        options={Object.entries(RESOURCE_CHECKOUT_TYPES).map(
+          ([value, label]) => ({ value, label })
+        )}
+      />
+      <FormField label="Title" value={title} onChange={setTitle} />
+      <FormField label="Subtitle" value={subtitle} onChange={setSubtitle} />
+      <FormField
+        label="Description"
+        type="textarea"
+        value={title}
+        onChange={setDescription}
+      />
+      <FormField
+        label="Slug"
+        description="Used in URLs"
+        helperText={
+          slugIsValid ? `https://bookingeek.com/r/${slug}` : "Invalid slug"
+        }
+        value={slug}
+        onChange={setSlug}
+        error={!slugIsValid}
+      />
+      <StyledTitleLabel>Preview</StyledTitleLabel>
+      <ResourceItem
+        picture={{ icon: resourceIcon, src: [] }}
+        priceInCents={Number(priceString) * 100}
+        priceType={resource.priceType}
+        title={title}
+        subtitle={subtitle}
+        description={description}
+      />
+      <div>
+        <Button onClick={onSaveClick} disabled={!formChanged || isSaving}>
+          Save Changes
+        </Button>
+      </div>
     </StyledForm>
   );
 }

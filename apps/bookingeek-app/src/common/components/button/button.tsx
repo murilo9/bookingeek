@@ -5,7 +5,7 @@ const background = {
     normal: "#000000",
     hover: "#161616",
     active: "#282828",
-    disabled: "#181818",
+    disabled: "#262626",
   },
   secondary: {
     normal: "#E8E8E8",

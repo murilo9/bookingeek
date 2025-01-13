@@ -1,4 +1,7 @@
 import { useLocation } from "react-router";
+import { useGetResourcesQuery } from "../../resources/resources-api";
+import { useAuth } from "./useAuth";
+import { Resource } from "@bookingeek/api/src/resources/types";
 
 const VIEWS: Record<string, string> = {
   resources: "Resources",
@@ -15,12 +18,20 @@ export const useActiveView = (): {
   route: string;
   title: string;
   params: Array<string>;
+  selectedResource?: Resource<string>;
 } => {
+  const { user } = useAuth();
+  const { data } = useGetResourcesQuery(user!.businessId);
   const location = useLocation();
   const routeList = location.pathname.split("/");
   const route = routeList[1];
+  const entityId = routeList[2];
+  const selectedResource =
+    route === "resources"
+      ? data?.find((resource) => resource._id === entityId)
+      : undefined;
   const title = VIEWS[route];
   const params = routeList.filter((_, index) => index > 1);
 
-  return { route, title, params };
+  return { route, title, params, selectedResource };
 };

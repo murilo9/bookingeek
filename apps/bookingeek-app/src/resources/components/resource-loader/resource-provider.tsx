@@ -15,7 +15,6 @@ export default function ResourceProvider() {
   const resource = data?.find(
     (resourceItem) => resourceItem._id === resourceId
   );
-  console.log("data", resourceId);
 
   if (isLoading || isFetching) {
     return "Loading resource...";

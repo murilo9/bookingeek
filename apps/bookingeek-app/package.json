@@ -17,6 +17,8 @@
     "@capacitor/core": "^6.2.0",
     "@capacitor/ios": "^6.2.0",
     "@reduxjs/toolkit": "^2.5.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "date-fns": "^4.1.0",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",

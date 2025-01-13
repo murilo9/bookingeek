@@ -1,11 +1,11 @@
 import { DayOfWeekAvailability } from './day-of-week-availability';
-import { ResourcePicture } from './resource-picture';
 import { ResourceExtraField } from './resource-extra-field';
 import { CustomPriceRule } from './custom-price-rule';
 import { PersistentEntity } from '../../common/types/persistent-entity';
 import { ResorucePriceType } from './resource-price-type';
 import { ResourceCheckoutType } from './resource-checkout-type';
-import { ResourceReservationAdvanceUnit } from './resource-reservation-advance-unit';
+import { ResourcePicture } from '.';
+import { MinimalReservationAdvance } from './minimal-reservation-advance';
 
 /**
  * Represents an entity (service, venue, vehicle, worker, etc) that can be booked.
@@ -43,10 +43,7 @@ export interface Resource<T> extends PersistentEntity<T> {
     unit: 'hours' | 'minutes';
   };
   // Minimum advance time for making reservations
-  minimalReservationAdvance: {
-    amount: number;
-    unit: ResourceReservationAdvanceUnit;
-  };
+  minimalReservationAdvance: MinimalReservationAdvance;
   // Resource's availability rules
   availability: {
     '0': DayOfWeekAvailability; // Sunday

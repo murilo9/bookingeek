@@ -1,10 +1,10 @@
 import { Expose } from 'class-transformer';
 import {
-  IsArray,
   IsDefined,
-  IsIn,
-  IsNotEmpty,
   IsString,
+  IsNotEmpty,
+  IsIn,
+  IsArray,
 } from 'class-validator';
 
 export type ResourceIconName =

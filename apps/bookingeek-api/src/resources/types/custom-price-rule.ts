@@ -1,12 +1,12 @@
 import { Expose, Type } from 'class-transformer';
-import { TimeRange } from '../../common/types/time-range';
 import {
-  IsArray,
   IsDefined,
-  IsIn,
   IsNumber,
+  IsIn,
+  IsArray,
   ValidateNested,
 } from 'class-validator';
+import { TimeRangeDto } from 'src/common/dto/time-range.dto';
 
 /**
  * A resource's (un)availability rule for a custom day (and possibly, times) in the year.
@@ -27,7 +27,7 @@ export class CustomPriceRule {
   @IsDefined()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => TimeRange)
+  @Type(() => TimeRangeDto)
   // Rule times. Only applies if resource's availabilityType = 'date-time'
-  times: Array<TimeRange>;
+  times: Array<TimeRangeDto>;
 }

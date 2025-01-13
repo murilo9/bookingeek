@@ -30,7 +30,6 @@ const StyledViewWrapper = styled.div`
   margin-bottom: 16px;
   overflow-y: auto;
   overflow-x: hidden;
-  max-width: 640px;
 `;
 
 export default function BusinessPanelPage() {
@@ -70,7 +69,11 @@ export default function BusinessPanelPage() {
         <PanelLateralNavigationMenu />
         <StyledViewWrapper>
           <ViewHeader
-            viewTitle={activeView.params[0] || activeView.title}
+            viewTitle={
+              activeView.selectedResource?.title ||
+              activeView.params[0] ||
+              activeView.title
+            }
             startSlot={actionButton}
           />
           <Outlet />

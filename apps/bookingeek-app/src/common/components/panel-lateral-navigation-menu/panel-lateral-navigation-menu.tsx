@@ -85,7 +85,7 @@ export default function PanelLateralNavigationMenu() {
   return (
     <StyledPanel>
       {MENU_ITEMS.map((item) => (
-        <Link to={item.href}>
+        <Link to={item.href} key={item.title}>
           <StyledMenuItem>
             {item.icon}
             {item.title}

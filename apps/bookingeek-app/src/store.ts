@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 // Or from '@reduxjs/toolkit/query/react'
 import {
   createApi,
@@ -10,7 +11,18 @@ import { BASE_URL_DEV } from "./env";
 
 export const appApi = createApi({
   tagTypes: ["Resource", "Post"],
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL_DEV }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL_DEV,
+    prepareHeaders: (headers) => {
+      const accessToken = Cookies.get("access_token");
+      // If we have a token set in state, let's assume that we should be passing it.
+      if (accessToken) {
+        headers.set("authorization", accessToken);
+      }
+
+      return headers;
+    },
+  }),
   endpoints: () => ({}),
 });
 

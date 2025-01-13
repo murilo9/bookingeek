@@ -1,9 +1,10 @@
 import { Expose, Type } from 'class-transformer';
 import {
-  DayOfWeekAvailability,
-  ResourcePicture,
-  ResourceExtraField,
   CustomPriceRule,
+  DayOfWeekAvailability,
+  ResourceCheckoutType,
+  ResourceExtraField,
+  ResourcePicture,
 } from '../types';
 import { ResorucePriceType } from '../types';
 import {
@@ -16,6 +17,7 @@ import {
   ValidateIf,
   ValidateNested,
 } from 'class-validator';
+import { MinimalReservationAdvance } from '../types/minimal-reservation-advance';
 
 class ResourceWeekAvailabilityDto {
   '0': DayOfWeekAvailability; // Sunday
@@ -27,14 +29,9 @@ class ResourceWeekAvailabilityDto {
   '6': DayOfWeekAvailability; // Saturday
 }
 
-class MinimalReservationDuration {
+class MinimalReservationDurationDto {
   amount: number;
   unit: 'hours' | 'minutes';
-}
-
-class MinimalReservationAdvance {
-  amount: number;
-  unit: 'weeks' | 'days' | 'hours' | 'minutes';
 }
 
 export class UpdateResourceDto {
@@ -68,15 +65,14 @@ export class UpdateResourceDto {
   priceInCents: number | null;
   @Expose()
   @IsDefined()
-  @IsArray()
-  @IsString({ each: true })
+  @IsString()
   @IsIn(['hourly', '30-min', '15-min', '10-min', '5-min'])
   priceType: ResorucePriceType;
   @Expose()
   @IsDefined()
   @IsString()
   @IsIn(['in-loco-online', 'online-only', 'in-loco-only'])
-  checkoutType: 'in-loco-online' | 'online-only' | 'in-loco-only';
+  checkoutType: ResourceCheckoutType;
   @Expose()
   @IsDefined()
   @IsArray()
@@ -97,12 +93,17 @@ export class UpdateResourceDto {
   @IsDefined()
   @IsString()
   @IsIn(['5-min', '10-min', '15-min', '30-min', 'hour'])
-  reservationTimeGranularity: '5-min' | '10-min' | '15-min' | '30-min' | 'hour';
+  reservationTimeGranularity:
+    | '5-min'
+    | '10-min'
+    | '15-min'
+    | '30-min'
+    | 'hourly';
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => MinimalReservationDuration)
-  minimalReservationDuration: MinimalReservationDuration;
+  @Type(() => MinimalReservationDurationDto)
+  minimalReservationDuration: MinimalReservationDurationDto;
   @Expose()
   @IsDefined()
   @ValidateNested()

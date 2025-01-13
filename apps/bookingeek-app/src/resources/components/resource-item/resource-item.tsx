@@ -83,7 +83,7 @@ const PRICE_TYPE: Record<ResorucePriceType, string> = {
   "15-min": "15 min",
   "30-min": "30 min",
   "5-min": "5 min",
-  hourly: "hour",
+  hourly: "hourly",
 };
 
 type ResourceItemProps = {

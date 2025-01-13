@@ -8,6 +8,7 @@
     "paths": {
       "@bookingeek/core": ["../bookingeek-core"],
       "@bookingeek/api": ["../bookingeek-api"]
-    }
+    },
+    "experimentalDecorators": true
   }
 }

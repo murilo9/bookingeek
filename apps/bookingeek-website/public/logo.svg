@@ -1,7 +1,7 @@
 <svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M153 87H190C199.389 87 207 94.6112 207 104V136C207 145.389 199.389 153 190 153H153C143.611 153 136 145.389 136 136V135.043V110.737V104C136 94.6112 143.611 87 153 87Z" stroke="black" stroke-width="12"/>
-<path d="M50 87H87C96.3888 87 104 94.6112 104 104V136C104 145.389 96.3888 153 87 153H50C40.6112 153 33 145.389 33 136V135.043V110.737V104C33 94.6112 40.6112 87 50 87Z" stroke="black" stroke-width="12"/>
-<line x1="99" y1="112" x2="139" y2="112" stroke="black" stroke-width="12"/>
-<line x1="72.1051" y1="116.196" x2="39.1962" y2="97.1962" stroke="black" stroke-width="12" stroke-linecap="round"/>
-<line x1="168.196" y1="117.804" x2="201.105" y2="98.8038" stroke="black" stroke-width="12" stroke-linecap="round"/>
+<path d="M153 87H190C199.389 87 207 94.6112 207 104V136C207 145.389 199.389 153 190 153H153C143.611 153 136 145.389 136 136V135.043V110.737V104C136 94.6112 143.611 87 153 87Z" stroke="black" strokeWidth="12"/>
+<path d="M50 87H87C96.3888 87 104 94.6112 104 104V136C104 145.389 96.3888 153 87 153H50C40.6112 153 33 145.389 33 136V135.043V110.737V104C33 94.6112 40.6112 87 50 87Z" stroke="black" strokeWidth="12"/>
+<line x1="99" y1="112" x2="139" y2="112" stroke="black" strokeWidth="12"/>
+<line x1="72.1051" y1="116.196" x2="39.1962" y2="97.1962" stroke="black" strokeWidth="12" strokeLinecap="round"/>
+<line x1="168.196" y1="117.804" x2="201.105" y2="98.8038" stroke="black" strokeWidth="12" strokeLinecap="round"/>
 </svg>
