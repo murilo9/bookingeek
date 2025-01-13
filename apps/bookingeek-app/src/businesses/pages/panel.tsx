@@ -9,6 +9,12 @@ import PanelMobileNavigationMenu from "../../common/components/panel-mobile-navi
 import DesktopHeader from "../../common/components/desktop-header/desktop-header";
 import { useGetResourcesQuery } from "../../resources/resources-api";
 import { useAuth } from "../../common/hooks/useAuth";
+import { useAppDispatch, useAppSelector } from "../../store";
+import {
+  selectToastNotification,
+  toastNotificationCleared,
+} from "../../common/common-slice";
+import Toast from "../../common/components/toast/toast";
 
 const StyledContentWrapper = styled.div`
   flex: 1;
@@ -33,10 +39,8 @@ const StyledViewWrapper = styled.div`
 `;
 
 export default function BusinessPanelPage() {
-  // TODO:
-  // 1. Display loading view while loading all data to the store [done]
-  // 2. Once all data is loaded successfully, render Outlet [done]
-  // 3. If an error occurs while loading data, renders error view passing the code error (maybe in the query string?)
+  const dispatch = useAppDispatch();
+  const toastNotification = useAppSelector(selectToastNotification);
   const navigate = useNavigate();
   const activeView = useActiveView();
   const currentPath = window.location.pathname;
@@ -50,6 +54,12 @@ export default function BusinessPanelPage() {
     navigate(newPath);
   };
 
+  // Dismisses the toast notification
+  const onToastNotificationDismiss = () => {
+    dispatch(toastNotificationCleared());
+  };
+
+  // Action button of view header
   const actionButton =
     location.pathname.split("/").length > 2 ? (
       <IconButton onClick={onGoBackClick}>
@@ -80,6 +90,13 @@ export default function BusinessPanelPage() {
         </StyledViewWrapper>
         <PanelMobileNavigationMenu />
       </StyledContentWrapper>
+      {toastNotification ? (
+        <Toast
+          message={toastNotification.message}
+          type={toastNotification.type}
+          onClose={onToastNotificationDismiss}
+        />
+      ) : null}
     </>
   ) : (
     // TODO: add skeleton loader

@@ -19,6 +19,8 @@ import Button from "../../common/components/button/button";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
 import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
 import { useUpdateResourceMutation } from "../resources-api";
+import { useAppDispatch } from "../../store";
+import { toastNotificationShown } from "../../common/common-slice";
 
 const RESOURCE_CHECKOUT_TYPES: Record<string, string> = {
   "in-loco-online": "In-loco & online",
@@ -75,6 +77,7 @@ const StyledErrorHelperText = styled.p`
 `;
 
 export default function ResourceBasicInfoView() {
+  const dispatch = useAppDispatch();
   const resource = useOutletContext<Resource<string>>();
   const [updateResource, updateData] = useUpdateResourceMutation();
   const [pictureType, setPictureType] = useState<"icon" | "picture">(
@@ -123,6 +126,12 @@ export default function ResourceBasicInfoView() {
       slug,
     };
     await updateResource({ dto, id: resource._id });
+    dispatch(
+      toastNotificationShown({
+        message: "Resource updated successfully.",
+        type: "info",
+      })
+    );
   };
 
   return (

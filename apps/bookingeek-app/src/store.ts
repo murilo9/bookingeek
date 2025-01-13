@@ -7,6 +7,7 @@ import {
   setupListeners,
 } from "@reduxjs/toolkit/query/react";
 import { useDispatch, useSelector } from "react-redux";
+import commonReducer from "./common/common-slice";
 import { BASE_URL_DEV } from "./env";
 
 export const appApi = createApi({
@@ -28,6 +29,7 @@ export const appApi = createApi({
 
 export const store = configureStore({
   reducer: {
+    common: commonReducer,
     // Add the generated reducer as a specific top-level slice
     [appApi.reducerPath]: appApi.reducer,
   },
