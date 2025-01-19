@@ -15,6 +15,7 @@ import {
   toastNotificationCleared,
 } from "../../common/common-slice";
 import Toast from "../../common/components/toast/toast";
+import { useEffect } from "react";
 
 const StyledContentWrapper = styled.div`
   flex: 1;
@@ -46,6 +47,13 @@ export default function BusinessPanelPage() {
   const currentPath = window.location.pathname;
   const { user } = useAuth();
   const resourcesLoaded = useGetResourcesQuery(user!.businessId).data;
+
+  // Dismisses toast after 6 seconds
+  useEffect(() => {
+    if (toastNotification) {
+      setInterval(onToastNotificationDismiss, 6000);
+    }
+  }, [toastNotification]);
 
   // Goes back in the views hierarchy (removes last part of current URL path)
   const onGoBackClick = () => {

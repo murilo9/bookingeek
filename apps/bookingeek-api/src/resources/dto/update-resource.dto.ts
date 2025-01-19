@@ -6,7 +6,6 @@ import {
   ResourceExtraField,
   ResourcePicture,
 } from '../types';
-import { ResorucePriceType } from '../types';
 import {
   IsArray,
   IsDefined,
@@ -18,20 +17,46 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { MinimalReservationAdvance } from '../types/minimal-reservation-advance';
+import { MinimalReservationDuration } from '../types/minimal-reservation-duration';
+import { DayOfWeekName } from '../../common/types';
+import { ReservationTimeGranularity } from '../types/reservartion-time-granularity';
 
-class ResourceWeekAvailabilityDto {
-  '0': DayOfWeekAvailability; // Sunday
-  '1': DayOfWeekAvailability; // Monday
-  '2': DayOfWeekAvailability; // Tuesday
-  '3': DayOfWeekAvailability; // Wednesday
-  '4': DayOfWeekAvailability; // Thursday
-  '5': DayOfWeekAvailability; // Friday
-  '6': DayOfWeekAvailability; // Saturday
-}
-
-class MinimalReservationDurationDto {
-  amount: number;
-  unit: 'hours' | 'minutes';
+export class ResourceWeekAvailability {
+  @Expose()
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => DayOfWeekAvailability)
+  sunday: DayOfWeekAvailability;
+  @Expose()
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => DayOfWeekAvailability)
+  monday: DayOfWeekAvailability;
+  @Expose()
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => DayOfWeekAvailability)
+  tuesday: DayOfWeekAvailability;
+  @Expose()
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => DayOfWeekAvailability)
+  wednesday: DayOfWeekAvailability;
+  @Expose()
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => DayOfWeekAvailability)
+  thursday: DayOfWeekAvailability;
+  @Expose()
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => DayOfWeekAvailability)
+  friday: DayOfWeekAvailability;
+  @Expose()
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => DayOfWeekAvailability)
+  saturday: DayOfWeekAvailability;
 }
 
 export class UpdateResourceDto {
@@ -65,9 +90,9 @@ export class UpdateResourceDto {
   priceInCents: number | null;
   @Expose()
   @IsDefined()
-  @IsString()
-  @IsIn(['hourly', '30-min', '15-min', '10-min', '5-min'])
-  priceType: ResorucePriceType;
+  @IsNumber()
+  @IsIn([5, 10, 15, 30, 60])
+  priceTypeMinutes: ReservationTimeGranularity;
   @Expose()
   @IsDefined()
   @IsString()
@@ -91,19 +116,14 @@ export class UpdateResourceDto {
   reservationTimeType: 'ranges' | 'slots';
   @Expose()
   @IsDefined()
-  @IsString()
-  @IsIn(['5-min', '10-min', '15-min', '30-min', 'hour'])
-  reservationTimeGranularity:
-    | '5-min'
-    | '10-min'
-    | '15-min'
-    | '30-min'
-    | 'hourly';
+  @IsNumber()
+  @IsIn([5, 10, 15, 30, 60])
+  reservationTimeGranularityMinutes: ReservationTimeGranularity;
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => MinimalReservationDurationDto)
-  minimalReservationDuration: MinimalReservationDurationDto;
+  @Type(() => MinimalReservationDuration)
+  minimalReservationDuration: MinimalReservationDuration;
   @Expose()
   @IsDefined()
   @ValidateNested()
@@ -112,8 +132,8 @@ export class UpdateResourceDto {
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => ResourceWeekAvailabilityDto)
-  availability: ResourceWeekAvailabilityDto;
+  @Type(() => ResourceWeekAvailability)
+  availability: Record<DayOfWeekName, DayOfWeekAvailability>;
   @Expose()
   @IsDefined()
   @IsArray()

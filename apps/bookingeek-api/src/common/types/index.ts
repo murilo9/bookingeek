@@ -4,3 +4,4 @@ export { TimeString } from './time-string';
 export { Timestamp } from './timestamp';
 export { RequestErrorResponse } from './request-error-response';
 export { RequestResponse } from './request-response';
+export { DayOfWeekName } from './day-of-week-name';

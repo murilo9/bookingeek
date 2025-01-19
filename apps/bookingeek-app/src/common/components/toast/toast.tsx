@@ -4,15 +4,30 @@ import IconButton from "../icon-button/icon-button";
 import CloseIcon from "../../icons/close/close";
 
 const COLORS = {
-  info: {
-    border: "#dddddd",
+  neutral: {
+    border: "#cacaca",
     background: "#f4f4f4",
-    text: "inherit",
+    text: "#222222",
+  },
+  info: {
+    border: "#99ddff",
+    background: "#ddedff",
+    text: "#2f89ff",
+  },
+  success: {
+    border: "#3BC559",
+    background: "#DDFFDF",
+    text: "#099612",
+  },
+  warning: {
+    border: "#C5993B",
+    background: "#FFF1DD",
+    text: "#963F09",
   },
   error: {
-    border: "#ff9999",
-    background: "#ffdddd",
-    text: "#ff7777",
+    border: "#FF9999",
+    background: "#FFDDDD",
+    text: "#FF4444",
   },
 };
 

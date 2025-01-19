@@ -78,13 +78,13 @@ export class ResourcesService {
     const resourceToCreate: Omit<Resource<ObjectId>, FromPersistentEntity> = {
       ...createResourceDto,
       availability: {
-        '0': { available: false, rules: [] },
-        '1': { available: false, rules: [] },
-        '2': { available: false, rules: [] },
-        '3': { available: false, rules: [] },
-        '4': { available: false, rules: [] },
-        '5': { available: false, rules: [] },
-        '6': { available: false, rules: [] },
+        sunday: { available: false, rules: [] },
+        monday: { available: false, rules: [] },
+        tuesday: { available: false, rules: [] },
+        wednesday: { available: false, rules: [] },
+        thursday: { available: false, rules: [] },
+        friday: { available: false, rules: [] },
+        saturday: { available: false, rules: [] },
       },
       availabilityType: 'date-time',
       businessId,
@@ -104,8 +104,8 @@ export class ResourcesService {
         src: [],
       },
       priceInCents: null,
-      priceType: 'hourly',
-      reservationTimeGranularity: 'hourly',
+      priceTypeMinutes: 60,
+      reservationTimeGranularityMinutes: 60,
       subtitle: '',
       unavailability: [],
     };
@@ -123,9 +123,19 @@ export class ResourcesService {
     const resourceToUpdate = await this.databaseService.findOne<
       Resource<ObjectId>
     >(DbCollection.Resources, { _id: resourceId });
+    // If reservationTimeType changed, clear all availability rules
+    if (
+      resourceDto.reservationTimeType !== resourceToUpdate.reservationTimeType
+    ) {
+      Object.keys(resourceDto.availability).forEach((dayOfWeek) => {
+        resourceDto.availability[dayOfWeek].rules = [];
+      });
+    }
+    // Applies DTO's changes to resource
     Object.entries(resourceDto).forEach(([key, value]) => {
       resourceToUpdate[key] = value;
     });
+    // Persist changes in the database
     await this.databaseService.updateOne<Resource<ObjectId>>(
       DbCollection.Resources,
       resourceToUpdate,

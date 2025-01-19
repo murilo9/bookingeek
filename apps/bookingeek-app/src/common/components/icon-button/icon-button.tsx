@@ -24,7 +24,6 @@ const StyledIconButton = styled.button<IconButtonProps>`
   height: 32px;
   width: 32px;
   border-radius: 32px;
-  padding-inline: 0px;
   cursor: ${(props) => (props.disabled ? "disabled" : "pointer")};
   background: ${background.normal};
   display: flex;

@@ -16,6 +16,7 @@ const StyledSelect = styled.select<{ error?: boolean }>`
   background: none;
   color: #222222;
   font-size: 14px;
+  font-weight: 500;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   &:hover {
@@ -30,6 +31,7 @@ const StyledSelect = styled.select<{ error?: boolean }>`
 
 type SelectProps = {
   children?: JSX.Element | Array<JSX.Element>;
+  value?: string | number;
   onChange?: ChangeEventHandler<HTMLSelectElement>;
 };
 

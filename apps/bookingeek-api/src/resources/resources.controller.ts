@@ -73,7 +73,8 @@ export class ResourcesController {
     );
   }
 
-  @UseGuards(IdentityGuard)
+  @EntityShouldExist('id', DbCollection.Resources, 'resource')
+  @UseGuards(IdentityGuard, EntityExistsGuard)
   @Put('resources/:id')
   updateResource(
     @Param('id') resourceId: string,

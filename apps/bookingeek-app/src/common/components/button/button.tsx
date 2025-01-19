@@ -36,6 +36,7 @@ type ButtonProps = {
 
 const StyledButton = styled.button<ButtonProps>`
   font-size: 14px;
+  font-weight: 600;
   border: none;
   height: 40px;
   padding: 0 20px;

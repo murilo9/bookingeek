@@ -20,31 +20,31 @@ export function RESOURCES_MOCK<T>(
       updated: new Date().getTime(),
       IS_DELETED: false,
       availability: {
-        '0': {
+        sunday: {
           available: true,
           rules: [],
         },
-        '1': {
+        monday: {
           available: true,
           rules: [basicAvailabilityRule],
         },
-        '2': {
+        tuesday: {
           available: true,
           rules: [basicAvailabilityRule],
         },
-        '3': {
+        wednesday: {
           available: true,
           rules: [basicAvailabilityRule],
         },
-        '4': {
+        thursday: {
           available: true,
           rules: [basicAvailabilityRule],
         },
-        '5': {
+        friday: {
           available: true,
           rules: [basicAvailabilityRule],
         },
-        '6': {
+        saturday: {
           available: true,
           rules: [],
         },
@@ -68,9 +68,9 @@ export function RESOURCES_MOCK<T>(
         src: [''],
       },
       priceInCents: 4000,
-      priceType: 'hourly',
+      priceTypeMinutes: 60,
       subtitle: 'Barber',
-      reservationTimeGranularity: 'hourly',
+      reservationTimeGranularityMinutes: 60,
       reservationTimeType: 'ranges',
       title: 'Joe',
       unavailability: [],
@@ -82,31 +82,31 @@ export function RESOURCES_MOCK<T>(
       updated: new Date().getTime(),
       IS_DELETED: false,
       availability: {
-        '0': {
+        sunday: {
           available: true,
           rules: [],
         },
-        '1': {
+        monday: {
           available: true,
           rules: [basicAvailabilityRule],
         },
-        '2': {
+        tuesday: {
           available: true,
           rules: [basicAvailabilityRule],
         },
-        '3': {
+        wednesday: {
           available: true,
           rules: [basicAvailabilityRule],
         },
-        '4': {
+        thursday: {
           available: true,
           rules: [basicAvailabilityRule],
         },
-        '5': {
+        friday: {
           available: true,
           rules: [basicAvailabilityRule],
         },
-        '6': {
+        saturday: {
           available: true,
           rules: [],
         },
@@ -130,9 +130,9 @@ export function RESOURCES_MOCK<T>(
         src: [],
       },
       priceInCents: 4000,
-      priceType: 'hourly',
+      priceTypeMinutes: 60,
       subtitle: 'Barber',
-      reservationTimeGranularity: 'hourly',
+      reservationTimeGranularityMinutes: 60,
       reservationTimeType: 'ranges',
       title: 'Jylan',
       unavailability: [],

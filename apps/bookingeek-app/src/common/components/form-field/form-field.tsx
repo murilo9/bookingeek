@@ -45,17 +45,25 @@ const StyledFormFieldLabel = styled(FormFieldLabel)`
   font-weight: 600;
 `;
 
-type FormFieldProps<T = string> = {
+const StyledFormFieldGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 12px;
+`;
+
+type FormFieldProps<ValueType = string, InputValueType = string> = {
   // Text displayed above the input
   label: string;
   // Field value
-  value: string | null;
+  value: ValueType;
+  // Only applies for 'select-value' field type
+  inputValue?: InputValueType;
   // Description displayed between the labe and the input
   description?: string;
   // Input placeholder
   placeholder?: string;
   // Input type
-  type?: "text" | "textarea" | "password" | "select" | "radio";
+  type?: "text" | "textarea" | "password" | "select" | "radio" | "select-value";
   // Only applies when type = 'select' or 'radio'
   options?: Array<{ value: string; label: string }>;
   // Children that will be rendered bellow the content
@@ -69,7 +77,9 @@ type FormFieldProps<T = string> = {
   // Makes the input outline and helper text red.
   error?: boolean;
   // Change handler
-  onChange: (value: T) => void;
+  onChange: (value: ValueType) => void;
+  // Inpout value change handler. Only applies for 'select-value' field type
+  onInputValueChange?: (value: InputValueType) => void;
   // Called when user presses Enter key. Only applies if type != 'radio'
   onSubmit?: () => void;
 };
@@ -77,20 +87,22 @@ type FormFieldProps<T = string> = {
 /**
  * Renders a form field with label, input (text, select, radio, etc).
  */
-export default function FormField<T = string>({
+export default function FormField<ValueType = string, InputValueType = string>({
   label,
   onChange,
   onSubmit,
+  onInputValueChange,
   error,
   placeholder,
   value,
+  inputValue,
   type,
   options,
   helperText,
   autofocus,
   children,
   description,
-}: FormFieldProps<T>) {
+}: FormFieldProps<ValueType, InputValueType>) {
   const handleKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && onSubmit) {
       onSubmit();
@@ -103,11 +115,36 @@ export default function FormField<T = string>({
         return (
           <Select error={error}>
             {(options || []).map((option) => (
-              <option value={option.value} key={value}>
+              <option value={option.value} key={value as string}>
                 {option.label}
               </option>
             ))}
           </Select>
+        );
+      case "select-value":
+        return (
+          <StyledFormFieldGrid>
+            <Input
+              onChange={({ target: { value } }) =>
+                onInputValueChange
+                  ? onInputValueChange(value as InputValueType)
+                  : null
+              }
+              onKeyUp={handleKeyUp}
+              value={inputValue as string}
+              placeholder={placeholder}
+              autoFocus={autofocus}
+              type={type || "text"}
+              error={error}
+            />
+            <Select error={error}>
+              {(options || []).map((option) => (
+                <option value={option.value} key={value as string}>
+                  {option.label}
+                </option>
+              ))}
+            </Select>
+          </StyledFormFieldGrid>
         );
       case "radio":
         return (
@@ -115,7 +152,7 @@ export default function FormField<T = string>({
             {options?.length
               ? options.map((option) => (
                   <StyledRadioInput
-                    onClick={() => onChange(option.value as T)}
+                    onClick={() => onChange(option.value as ValueType)}
                     key={option.value}
                   >
                     {value === option.value ? (
@@ -132,8 +169,8 @@ export default function FormField<T = string>({
       case "textarea":
         return (
           <Textarea
-            onChange={({ target: { value } }) => onChange(value as T)}
-            value={value || ""}
+            onChange={({ target: { value } }) => onChange(value as ValueType)}
+            value={value as string}
             placeholder={placeholder}
             autoFocus={autofocus}
           />
@@ -143,9 +180,9 @@ export default function FormField<T = string>({
       default:
         return (
           <Input
-            onChange={({ target: { value } }) => onChange(value as T)}
+            onChange={({ target: { value } }) => onChange(value as ValueType)}
             onKeyUp={handleKeyUp}
-            value={value || ""}
+            value={value as string}
             placeholder={placeholder}
             autoFocus={autofocus}
             type={type || "text"}

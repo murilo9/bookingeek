@@ -19,8 +19,7 @@ import Button from "../../common/components/button/button";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
 import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
 import { useUpdateResourceMutation } from "../resources-api";
-import { useAppDispatch } from "../../store";
-import { toastNotificationShown } from "../../common/common-slice";
+import { useHandleRequestResponse } from "../../common/hooks/handle-request-response";
 
 const RESOURCE_CHECKOUT_TYPES: Record<string, string> = {
   "in-loco-online": "In-loco & online",
@@ -36,6 +35,7 @@ const RESOURCE_PRICE_TYPES: Record<string, string> = {
 };
 
 const StyledForm = styled.div`
+  padding: 8px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -77,8 +77,8 @@ const StyledErrorHelperText = styled.p`
 `;
 
 export default function ResourceBasicInfoView() {
-  const dispatch = useAppDispatch();
   const resource = useOutletContext<Resource<string>>();
+  const handleRequestCall = useHandleRequestResponse();
   const [updateResource, updateData] = useUpdateResourceMutation();
   const [pictureType, setPictureType] = useState<"icon" | "picture">(
     resource.picture.icon ? "icon" : "picture"
@@ -87,7 +87,7 @@ export default function ResourceBasicInfoView() {
     resource.picture.icon
   );
   const [hasPrice, setHasPrice] = useState<"yes" | "no">(
-    resource.priceInCents === null ? "yes" : "no"
+    resource.priceInCents === null ? "no" : "yes"
   );
   const [priceString, setPriceString] = useState(
     resource.priceInCents ? (resource.priceInCents / 100).toFixed(2) : "0.00"
@@ -125,13 +125,8 @@ export default function ResourceBasicInfoView() {
       description,
       slug,
     };
-    await updateResource({ dto, id: resource._id });
-    dispatch(
-      toastNotificationShown({
-        message: "Resource updated successfully.",
-        type: "info",
-      })
-    );
+    const updateRequest = await updateResource({ dto, id: resource._id });
+    handleRequestCall(updateRequest, "Changes saved successfully.");
   };
 
   return (
@@ -227,7 +222,7 @@ export default function ResourceBasicInfoView() {
       <ResourceItem
         picture={{ icon: resourceIcon, src: [] }}
         priceInCents={Number(priceString) * 100}
-        priceType={resource.priceType}
+        priceType={resource.priceTypeMinutes}
         title={title}
         subtitle={subtitle}
         description={description}

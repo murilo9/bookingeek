@@ -65,7 +65,8 @@ Components:
 +---- ExtraDataFieldForm
 +-- ResourceScheduleTypeView
 +-- ResourceAvailabilityView
-+---- DayOfWeekAvailabilityForm
++---- AvailabilityRangeRuleForm
++---- AvailabilitySlotRuleForm
 +-- ResourceUnavailabilityView
 +---- DateUnavailabilityForm
 +-- ResourceCustomPricesView
