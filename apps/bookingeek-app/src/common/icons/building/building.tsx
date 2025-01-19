@@ -1,4 +1,4 @@
-import { IconProps } from "../types/icon-props";
+import { IconProps } from "../../types/icon-props";
 
 export default function BuildingIcon({ color, size }: IconProps) {
   const computedSize = size || 24;
