@@ -15,7 +15,7 @@ import Button from "../../common/components/button/button";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
 import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
 import { useUpdateResourceMutation } from "../resources-api";
-import { useHandleRequestResponse } from "../../common/hooks/handle-request-response";
+import { useHandleRequestCall } from "../../common/hooks/handle-request-call";
 import AvailabilityRangeRuleForm from "../components/availability-range-rule-form/availability-range-rule-form";
 
 const StyledForm = styled.div`
@@ -64,7 +64,7 @@ const StyledDayOfWeekAvailabilityFieldLabel = styled.p<{ active?: boolean }>`
 `;
 
 export default function ResourceAvailabilityView() {
-  const handleRequestCall = useHandleRequestResponse();
+  const handleRequestCall = useHandleRequestCall();
   const resource = useOutletContext<Resource<string>>();
   const [availabilityForm, setAvailabilityForm] = useState(
     deepCopy(resource.availability)

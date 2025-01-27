@@ -7,6 +7,10 @@ import {
   IsOptional,
   IsArray,
 } from 'class-validator';
+import {
+  RESOURCE_EXTRA_FIELD_OPTIONS,
+  ResourceExtraFieldType,
+} from './resource-extra-field-type';
 
 /**
  * An extra field of data to be prompted to users while making a reservation.
@@ -21,9 +25,9 @@ export class ResourceExtraField {
   @Expose()
   @IsDefined()
   @IsString()
-  @IsIn(['text', 'text-long', 'options-radio', 'options-select', 'checkbox'])
+  @IsIn(Object.values(RESOURCE_EXTRA_FIELD_OPTIONS))
   // Field type
-  type: 'text' | 'text-long' | 'options-radio' | 'options-select' | 'checkbox';
+  type: ResourceExtraFieldType;
   @Expose()
   @IsOptional()
   @IsArray()

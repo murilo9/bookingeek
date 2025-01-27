@@ -31,6 +31,8 @@ type ButtonProps = {
   children?: JSX.Element | string | number;
   disabled?: boolean;
   variant?: "primary" | "secondary" | "danger";
+  startSlot?: JSX.Element;
+  endSlot?: JSX.Element;
   onClick?: () => void;
 };
 
@@ -41,6 +43,9 @@ const StyledButton = styled.button<ButtonProps>`
   height: 40px;
   padding: 0 20px;
   border-radius: 6px;
+  display: inline-flex;
+  overflow: hidden;
+  align-items: center;
   cursor: ${(props) => (props.disabled ? "disabled" : "pointer")};
   background: ${(props) =>
     props.disabled
@@ -58,6 +63,26 @@ const StyledButton = styled.button<ButtonProps>`
   }
 `;
 
+const StyledStartSlot = styled.div`
+  display: flex;
+  margin-right: 12px;
+`;
+
+const StyledEndSlot = styled.div`
+  display: flex;
+  margin-left: 12px;
+`;
+
 export default function Button(props: ButtonProps) {
-  return <StyledButton {...props} variant={props.variant || "primary"} />;
+  return (
+    <StyledButton {...props} variant={props.variant || "primary"}>
+      <>
+        {props.startSlot ? (
+          <StyledStartSlot>{props.startSlot}</StyledStartSlot>
+        ) : null}
+        {props.children}
+        {props.endSlot ? <StyledEndSlot>{props.endSlot}</StyledEndSlot> : null}
+      </>
+    </StyledButton>
+  );
 }

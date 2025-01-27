@@ -3,3 +3,4 @@
 - error messages at sign up form (validation already exists)
 - check for duplicated rules at resource availability view
 - implement copy/paste rules feature
+- extra data fields limits

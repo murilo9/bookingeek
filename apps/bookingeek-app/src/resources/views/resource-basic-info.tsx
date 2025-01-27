@@ -19,7 +19,7 @@ import Button from "../../common/components/button/button";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
 import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
 import { useUpdateResourceMutation } from "../resources-api";
-import { useHandleRequestResponse } from "../../common/hooks/handle-request-response";
+import { useHandleRequestCall } from "../../common/hooks/handle-request-call";
 
 const RESOURCE_CHECKOUT_TYPES: Record<string, string> = {
   "in-loco-online": "In-loco & online",
@@ -78,7 +78,7 @@ const StyledErrorHelperText = styled.p`
 
 export default function ResourceBasicInfoView() {
   const resource = useOutletContext<Resource<string>>();
-  const handleRequestCall = useHandleRequestResponse();
+  const handleRequestCall = useHandleRequestCall();
   const [updateResource, updateData] = useUpdateResourceMutation();
   const [pictureType, setPictureType] = useState<"icon" | "picture">(
     resource.picture.icon ? "icon" : "picture"

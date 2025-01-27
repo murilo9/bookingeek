@@ -7,7 +7,7 @@ type RequestResult =
   | { data: unknown; error?: undefined }
   | { data?: undefined; error: FetchBaseQueryError | SerializedError };
 
-export const useHandleRequestResponse = () => {
+export const useHandleRequestCall = () => {
   const dispatch = useAppDispatch();
 
   const func = async (requestResult: RequestResult, successMessage: string) => {
@@ -17,7 +17,7 @@ export const useHandleRequestResponse = () => {
         toastNotificationShown({
           message:
             "There was an error while doing this operation. Please try again.",
-          type: "info",
+          type: "success",
         })
       );
     } else {

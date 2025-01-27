@@ -8,7 +8,7 @@ import FormField from "../../common/components/form-field/form-field";
 import Button from "../../common/components/button/button";
 import { useUpdateResourceMutation } from "../resources-api";
 import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
-import { useHandleRequestResponse } from "../../common/hooks/handle-request-response";
+import { useHandleRequestCall } from "../../common/hooks/handle-request-call";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
 import { ReservationTimeGranularity } from "@bookingeek/api/src/resources/types/reservartion-time-granularity";
 
@@ -74,7 +74,7 @@ const RESERVATION_TIME_GRANULARITY_OPTIONS = [
 ];
 
 export default function ResourceScheduleTypeView() {
-  const handleRequestCall = useHandleRequestResponse();
+  const handleRequestCall = useHandleRequestCall();
   const resource = useOutletContext<Resource<string>>();
   const [updateResource, updateData] = useUpdateResourceMutation();
   const isSaving = updateData.isLoading;
