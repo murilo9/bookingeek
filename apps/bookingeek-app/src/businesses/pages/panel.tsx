@@ -16,6 +16,7 @@ import {
 } from "../../common/common-slice";
 import Toast from "../../common/components/toast/toast";
 import { useEffect } from "react";
+import { useGetBusinessByIdQuery } from "../businesses-api";
 
 const StyledContentWrapper = styled.div`
   flex: 1;
@@ -47,6 +48,7 @@ export default function BusinessPanelPage() {
   const currentPath = window.location.pathname;
   const { user } = useAuth();
   const resourcesLoaded = useGetResourcesQuery(user!.businessId).data;
+  const businessData = useGetBusinessByIdQuery(user?.businessId || "null");
 
   // Dismisses toast after 6 seconds
   useEffect(() => {
@@ -54,6 +56,12 @@ export default function BusinessPanelPage() {
       setInterval(onToastNotificationDismiss, 6000);
     }
   }, [toastNotification]);
+
+  // Set page title
+  useEffect(() => {
+    if (businessData?.data)
+      document.title = `${businessData.data.name} - Bookingeek`;
+  }, [businessData]);
 
   // Goes back in the views hierarchy (removes last part of current URL path)
   const onGoBackClick = () => {
