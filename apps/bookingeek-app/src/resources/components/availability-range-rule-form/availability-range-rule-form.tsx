@@ -1,11 +1,12 @@
 import { TimeRange } from "@bookingeek/api/src/common/types";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IconButton from "../../../common/components/icon-button/icon-button";
 import Select from "../../../common/components/select/select";
 import { getUtcTimeString } from "../../../common/helpers/getUtcTimeString";
 import DeleteIcon from "../../../common/icons/delete/delete";
 import { ReservationTimeGranularity } from "@bookingeek/api/src/resources/types";
+import { COLORS } from "../../../common/data/colors";
 
 const StyledForm = styled.div`
   display: flex;
@@ -31,6 +32,8 @@ type AvailabilityDayOfWeekFormProps = {
   reservationTimeGranularityMinutes: ReservationTimeGranularity;
   reservationTimeType: "ranges" | "slots";
   onRemoveClick: () => void;
+  onChange: (value: TimeRange) => void;
+  customDeleteIcon?: JSX.Element;
 };
 
 // Retrives a list of times based on the time granularity
@@ -71,6 +74,8 @@ export default function AvailabilityRangeRuleForm({
   reservationTimeGranularityMinutes,
   reservationTimeType,
   onRemoveClick,
+  onChange,
+  customDeleteIcon,
 }: AvailabilityDayOfWeekFormProps) {
   const [startTime, setStartTime] = useState(
     timeRange.startInMinutesPastMidnight
@@ -79,6 +84,18 @@ export default function AvailabilityRangeRuleForm({
   const possibleTimes = getTimeList(reservationTimeGranularityMinutes);
   const possibleSlots = getSlotsList(reservationTimeGranularityMinutes);
   const ruleIsInvalid = startTime >= endTime;
+
+  // Emmits the onChange events every time startTime or endTime change
+  useEffect(() => {
+    const startTimeChanged = startTime !== timeRange.startInMinutesPastMidnight;
+    const endTimeChanged = endTime !== timeRange.endInMinutesPastMidnight;
+    if (startTimeChanged || endTimeChanged) {
+      onChange({
+        startInMinutesPastMidnight: startTime,
+        endInMinutesPastMidnight: endTime,
+      });
+    }
+  }, []);
 
   // Updates both startTime and endTime for a time slot change
   const handleTimeSlotChange = (newStartTime: number) => {
@@ -141,7 +158,7 @@ export default function AvailabilityRangeRuleForm({
       <StyledGrid>
         {renderInputField()}
         <IconButton onClick={onRemoveClick}>
-          <DeleteIcon color="#ff0000" size={20} />
+          {customDeleteIcon || <DeleteIcon color={COLORS.danger} size={20} />}
         </IconButton>
       </StyledGrid>
       {ruleIsInvalid ? (

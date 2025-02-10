@@ -6,7 +6,7 @@ import {
   IsArray,
   ValidateNested,
 } from 'class-validator';
-import { TimeRangeDto } from 'src/common/dto/time-range.dto';
+import { TimeRangeDto } from '../../common/dto/time-range.dto';
 
 /**
  * A resource's (un)availability rule for a custom day (and possibly, times) in the year.

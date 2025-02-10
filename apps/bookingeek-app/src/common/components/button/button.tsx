@@ -46,6 +46,8 @@ const StyledButton = styled.button<ButtonProps>`
   display: inline-flex;
   overflow: hidden;
   align-items: center;
+  justify-content: center;
+  gap: 12px;
   cursor: ${(props) => (props.disabled ? "disabled" : "pointer")};
   background: ${(props) =>
     props.disabled
@@ -65,13 +67,13 @@ const StyledButton = styled.button<ButtonProps>`
 
 const StyledStartSlot = styled.div`
   display: flex;
-  margin-right: 12px;
 `;
 
 const StyledEndSlot = styled.div`
   display: flex;
-  margin-left: 12px;
 `;
+
+const StyledTextSlot = styled.span``;
 
 export default function Button(props: ButtonProps) {
   return (
@@ -80,7 +82,7 @@ export default function Button(props: ButtonProps) {
         {props.startSlot ? (
           <StyledStartSlot>{props.startSlot}</StyledStartSlot>
         ) : null}
-        {props.children}
+        <StyledTextSlot>{props.children}</StyledTextSlot>
         {props.endSlot ? <StyledEndSlot>{props.endSlot}</StyledEndSlot> : null}
       </>
     </StyledButton>
