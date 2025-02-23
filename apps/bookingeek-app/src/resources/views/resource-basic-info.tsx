@@ -133,7 +133,7 @@ export default function ResourceBasicInfoView() {
     <StyledForm>
       <FormField
         label="Image"
-        type="radio"
+        type="options-radio"
         onChange={setPictureType}
         value={pictureType}
         options={[
@@ -157,7 +157,7 @@ export default function ResourceBasicInfoView() {
       </FormField>
       <FormField
         label="Base Price"
-        type="radio"
+        type="options-radio"
         options={[
           { label: "Yes", value: "yes" },
           { label: "No", value: "no" },
@@ -193,7 +193,7 @@ export default function ResourceBasicInfoView() {
       </FormField>
       <FormField
         label="Checkout Options"
-        type="radio"
+        type="options-radio"
         value={checkoutType}
         onChange={setCheckoutType}
         options={Object.entries(RESOURCE_CHECKOUT_TYPES).map(
@@ -204,7 +204,7 @@ export default function ResourceBasicInfoView() {
       <FormField label="Subtitle" value={subtitle} onChange={setSubtitle} />
       <FormField
         label="Description"
-        type="textarea"
+        type="text-long"
         value={title}
         onChange={setDescription}
       />
@@ -222,7 +222,7 @@ export default function ResourceBasicInfoView() {
       <ResourceItem
         picture={{ icon: resourceIcon, src: [] }}
         priceInCents={Number(priceString) * 100}
-        priceType={resource.priceTypeMinutes}
+        priceTypeMinutes={resource.priceTypeMinutes}
         title={title}
         subtitle={subtitle}
         description={description}

@@ -19,18 +19,25 @@ const background = {
     active: "#881818",
     disabled: "#9B2727",
   },
+  warning: {
+    normal: "#AA7131",
+    hover: "#A76A2C",
+    active: "#885918",
+    disabled: "#A76A2C",
+  },
 };
 
 const color = {
   primary: { normal: "#FFFFFF", disabled: "#AAAAAA" },
   secondary: { normal: "#222222", disabled: "#666666" },
   danger: { normal: "#FFFFFF", disabled: "#EAB7B7" },
+  warning: { normal: "#FFFFFF", disabled: "#EAD8B7" },
 };
 
 type ButtonProps = {
   children?: JSX.Element | string | number;
   disabled?: boolean;
-  variant?: "primary" | "secondary" | "danger";
+  variant?: "primary" | "secondary" | "danger" | "warning";
   startSlot?: JSX.Element;
   endSlot?: JSX.Element;
   onClick?: () => void;

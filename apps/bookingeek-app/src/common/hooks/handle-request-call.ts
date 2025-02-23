@@ -17,7 +17,7 @@ export const useHandleRequestCall = () => {
         toastNotificationShown({
           message:
             "There was an error while doing this operation. Please try again.",
-          type: "success",
+          type: "error",
         })
       );
     } else {

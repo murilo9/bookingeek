@@ -15,7 +15,8 @@ const StyledFormField = styled.div`
 
 const StyledRadioInputContainer = styled.div`
   display: flex;
-  gap: 24px;
+  flex-direction: column;
+  gap: 12px;
 `;
 
 const StyledRadioInput = styled.div`
@@ -51,6 +52,14 @@ const StyledFormFieldGrid = styled.div`
   column-gap: 12px;
 `;
 
+export type FormFieldType =
+  | "text"
+  | "text-long"
+  | "password"
+  | "options-radio"
+  | "options-select"
+  | "options-select-value";
+
 type FormFieldProps<ValueType = string, InputValueType = string> = {
   // Text displayed above the input
   label: string;
@@ -63,9 +72,9 @@ type FormFieldProps<ValueType = string, InputValueType = string> = {
   // Input placeholder
   placeholder?: string;
   // Input type
-  type?: "text" | "textarea" | "password" | "select" | "radio" | "select-value";
+  type?: FormFieldType;
   // Only applies when type = 'select' or 'radio'
-  options?: Array<{ value: string; label: string }>;
+  options?: Array<{ value: string | number; label: string }>;
   // Children that will be rendered bellow the content
   children?: JSX.Element | Array<JSX.Element> | string | null;
   // Used to draw icons or button inside the input. Only applies when type != 'radio'
@@ -82,6 +91,8 @@ type FormFieldProps<ValueType = string, InputValueType = string> = {
   onInputValueChange?: (value: InputValueType) => void;
   // Called when user presses Enter key. Only applies if type != 'radio'
   onSubmit?: () => void;
+  // Called when a text (only) input fires a onblur event
+  onBlur?: () => void;
 };
 
 /**
@@ -92,6 +103,7 @@ export default function FormField<ValueType = string, InputValueType = string>({
   onChange,
   onSubmit,
   onInputValueChange,
+  onBlur,
   error,
   placeholder,
   value,
@@ -111,7 +123,7 @@ export default function FormField<ValueType = string, InputValueType = string>({
 
   const renderInput = () => {
     switch (type) {
-      case "select":
+      case "options-select":
         return (
           <Select error={error}>
             {(options || []).map((option) => (
@@ -121,7 +133,7 @@ export default function FormField<ValueType = string, InputValueType = string>({
             ))}
           </Select>
         );
-      case "select-value":
+      case "options-select-value":
         return (
           <StyledFormFieldGrid>
             <Input
@@ -146,7 +158,7 @@ export default function FormField<ValueType = string, InputValueType = string>({
             </Select>
           </StyledFormFieldGrid>
         );
-      case "radio":
+      case "options-radio":
         return (
           <StyledRadioInputContainer>
             {options?.length
@@ -166,10 +178,11 @@ export default function FormField<ValueType = string, InputValueType = string>({
               : null}
           </StyledRadioInputContainer>
         );
-      case "textarea":
+      case "text-long":
         return (
           <Textarea
             onChange={({ target: { value } }) => onChange(value as ValueType)}
+            onBlur={onBlur}
             value={value as string}
             placeholder={placeholder}
             autoFocus={autofocus}
@@ -182,6 +195,7 @@ export default function FormField<ValueType = string, InputValueType = string>({
           <Input
             onChange={({ target: { value } }) => onChange(value as ValueType)}
             onKeyUp={handleKeyUp}
+            onBlur={onBlur}
             value={value as string}
             placeholder={placeholder}
             autoFocus={autofocus}

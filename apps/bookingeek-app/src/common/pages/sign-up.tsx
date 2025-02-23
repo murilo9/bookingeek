@@ -220,7 +220,7 @@ export default function SignUpPage() {
             label="What's your business field?"
             placeholder="Type here"
             value={businessField}
-            type="select"
+            type="options-select"
             options={Object.entries(BUSINESS_FIELDS).map(([value, label]) => ({
               label,
               value,
@@ -264,7 +264,7 @@ export default function SignUpPage() {
             <FormField<"yes" | "no">
               label="Does your business offer refunds for cancelled reservations?"
               value={businessDoesRefund}
-              type="radio"
+              type="options-radio"
               options={[
                 {
                   label: "Yes",
@@ -282,7 +282,7 @@ export default function SignUpPage() {
               <>
                 <FormField<"total" | "partial">
                   label="What kind of refunds does it offer?"
-                  type="radio"
+                  type="options-radio"
                   options={Object.entries(BUSINESS_REFUND_TYPES).map(
                     ([value, label]) => ({ value, label })
                   )}
@@ -291,7 +291,7 @@ export default function SignUpPage() {
                 />
                 <FormField
                   label="Add a short description of how your refunding policy works. It will be displayed to customers."
-                  type="textarea"
+                  type="text-long"
                   placeholder="Type here"
                   value={refundDescription}
                   onChange={setRefundDescription}

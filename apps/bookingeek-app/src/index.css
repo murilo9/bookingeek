@@ -60,3 +60,10 @@ p {
 ::-webkit-scrollbar-thumb:hover {
   background: #999999;
 }
+
+/* Disables nasty Chrome's double-tap zooming */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}

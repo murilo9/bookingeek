@@ -9,14 +9,14 @@ import IconButton from "../../common/components/icon-button/icon-button";
 import AddIcon from "../../common/icons/add/add";
 import Checkbox from "../../common/components/checkbox/checkbox";
 import { useState } from "react";
-import { DayOfWeekName } from "@bookingeek/api/src/common/types";
+import { DayOfWeekName, TimeRange } from "@bookingeek/api/src/common/types";
 import { deepCopy } from "../../common/helpers/deep-copy";
 import Button from "../../common/components/button/button";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
 import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
 import { useUpdateResourceMutation } from "../resources-api";
 import { useHandleRequestCall } from "../../common/hooks/handle-request-call";
-import AvailabilityRangeRuleForm from "../components/availability-range-rule-form/availability-range-rule-form";
+import AvailabilityTimeRuleForm from "../components/availability-range-rule-form/availability-time-rule-form";
 
 const StyledForm = styled.div`
   padding: 8px;
@@ -116,6 +116,20 @@ export default function ResourceAvailabilityView() {
     setAvailabilityForm(updatedAvailability);
   };
 
+  // Updates a time range inside a day of week in availabiltyForm
+  const onAvailabilityRangeRuleChange = (
+    dayOfWeekName: DayOfWeekName,
+    ruleIndex: number,
+    timeRange: TimeRange
+  ) => {
+    const availabilityDayToUpdate = availabilityForm[dayOfWeekName];
+    availabilityDayToUpdate.rules.splice(ruleIndex, 1, timeRange);
+    setAvailabilityForm({
+      ...availabilityForm,
+      [dayOfWeekName]: availabilityDayToUpdate,
+    });
+  };
+
   // Separate render for availability rules
   const renderAvailabilityRules = (
     availability: DayOfWeekAvailability,
@@ -123,7 +137,7 @@ export default function ResourceAvailabilityView() {
   ) =>
     availability.rules.length ? (
       availability.rules.map((rule, ruleIndex) => (
-        <AvailabilityRangeRuleForm
+        <AvailabilityTimeRuleForm
           key={ruleIndex}
           timeRange={rule}
           reservationTimeGranularityMinutes={
@@ -133,6 +147,9 @@ export default function ResourceAvailabilityView() {
             onRemoveRuleClick(dayOfWeek as DayOfWeekName, ruleIndex)
           }
           reservationTimeType={resource.reservationTimeType}
+          onChange={(timeRange) =>
+            onAvailabilityRangeRuleChange(dayOfWeek, ruleIndex, timeRange)
+          }
         />
       ))
     ) : (

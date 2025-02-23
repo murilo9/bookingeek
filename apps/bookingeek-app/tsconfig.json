@@ -9,6 +9,7 @@
       "@bookingeek/core": ["../bookingeek-core"],
       "@bookingeek/api": ["../bookingeek-api"]
     },
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "strict": true
   }
 }

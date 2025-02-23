@@ -158,7 +158,7 @@ export default function ResourceScheduleTypeView() {
           <FormField<ReservationTimeGranularity>
             label="Time Granularity"
             description="Set the minimal time unit for a booking's duration"
-            type="select"
+            type="options-select"
             value={reservationTimeGranularityMinutes}
             onChange={setReservationTimeGranularityMinutes}
             options={RESERVATION_TIME_GRANULARITY_OPTIONS}

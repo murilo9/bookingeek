@@ -7,7 +7,10 @@ import IconButton from "../icon-button/icon-button";
 const StyledPickerContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px;
+  width: 100%;
+  max-width: 320px;
 `;
 
 const StyledPickerHeader = styled.div`
@@ -15,11 +18,12 @@ const StyledPickerHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: 16px;
+  width: 100%;
 `;
 
 type CalendarPickerProps = {
   // Selected date
-  value: Date;
+  value: Date | null;
   // Change handler
   onChange: (value: Date) => void;
   // If defined, these dates will be outlined and only them can be selected
@@ -34,12 +38,16 @@ export default function CalendarPicker({
   availableDates,
   onChange,
 }: CalendarPickerProps) {
-  const [displayMonth, setDisplayMonth] = useState(value.getMonth());
-  const [displayYear, setDisplayYear] = useState(value.getFullYear());
+  const [displayMonth, setDisplayMonth] = useState(
+    value?.getMonth() || new Date().getMonth()
+  );
+  const [displayYear, setDisplayYear] = useState(
+    value?.getFullYear() || new Date().getFullYear()
+  );
 
   // Whether active day should be highlighted in the calendar
   const valueIsInView =
-    value.getMonth() === displayMonth && value.getFullYear() === displayYear;
+    value?.getMonth() === displayMonth && value?.getFullYear() === displayYear;
 
   // Handles a change in the selected date and calls the onChange handler
   const handleChange = (day: number) => {

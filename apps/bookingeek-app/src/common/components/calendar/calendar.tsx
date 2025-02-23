@@ -11,7 +11,7 @@ type DayProps = {
 
 const StyledDay = styled.div<DayProps>`
   width: 36px;
-  height: 36px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;

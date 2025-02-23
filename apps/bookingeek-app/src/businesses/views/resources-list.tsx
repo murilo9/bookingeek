@@ -25,7 +25,7 @@ export default function ResourcesListView() {
         ({
           picture,
           priceInCents,
-          priceType,
+          priceTypeMinutes,
           title,
           description,
           subtitle,
@@ -34,7 +34,7 @@ export default function ResourcesListView() {
           <ResourceItem
             picture={picture}
             priceInCents={priceInCents}
-            priceType={priceType}
+            priceTypeMinutes={priceTypeMinutes}
             title={title}
             description={description}
             subtitle={subtitle}

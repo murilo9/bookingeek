@@ -1,5 +1,7 @@
-import { ResourcePicture } from "@bookingeek/api/src/resources/types";
-import { ResorucePriceType } from "@bookingeek/api/src/resources/types";
+import {
+  ReservationTimeGranularity,
+  ResourcePicture,
+} from "@bookingeek/api/src/resources/types";
 import styled from "styled-components";
 import { renderResourceIcon } from "../../data/resource-icons";
 
@@ -78,12 +80,12 @@ const StyledPriceValue = styled.span`
   font-weight: 600;
 `;
 
-const PRICE_TYPE: Record<ResorucePriceType, string> = {
-  "10-min": "10 min",
-  "15-min": "15 min",
-  "30-min": "30 min",
-  "5-min": "5 min",
-  hourly: "hourly",
+const PRICE_TYPE: Record<string, string> = {
+  "5": "5 min",
+  "10": "10 min",
+  "15": "15 min",
+  "30": "30 min",
+  "60": "hourly",
 };
 
 type ResourceItemProps = {
@@ -92,14 +94,14 @@ type ResourceItemProps = {
   description?: string;
   picture: ResourcePicture;
   priceInCents: number | null;
-  priceType: ResorucePriceType;
+  priceTypeMinutes: ReservationTimeGranularity;
   onClick?: () => void;
 };
 
 export default function ResourceItem({
   picture,
   priceInCents,
-  priceType,
+  priceTypeMinutes,
   title,
   description,
   subtitle,
@@ -129,7 +131,9 @@ export default function ResourceItem({
           <StyledPriceUnit>{priceValue === "FREE" ? "" : "$"}</StyledPriceUnit>
           <StyledPriceValue>{priceValue}</StyledPriceValue>
         </StyledPriceLabel>
-        <p>{priceValue === "FREE" ? "" : PRICE_TYPE[priceType]}</p>
+        <p>
+          {priceValue === "FREE" ? "" : PRICE_TYPE[String(priceTypeMinutes)]}
+        </p>
       </StyledPriceContainer>
     </StyledResourceItem>
   );

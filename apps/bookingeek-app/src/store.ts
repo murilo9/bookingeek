@@ -11,7 +11,7 @@ import commonReducer from "./common/common-slice";
 import { BASE_URL_DEV } from "./env";
 
 export const appApi = createApi({
-  tagTypes: ["Resource", "Post"],
+  tagTypes: ["Resource", "Post", "Reservation"],
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL_DEV,
     prepareHeaders: (headers) => {

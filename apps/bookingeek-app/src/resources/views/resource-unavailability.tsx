@@ -14,7 +14,7 @@ import { COLORS } from "../../common/data/colors";
 import CloseIcon from "../../common/icons/close/close";
 import Input from "../../common/components/input/input";
 import { MONTHS } from "../../common/data/months";
-import AvailabilityRangeRuleForm from "../components/availability-range-rule-form/availability-range-rule-form";
+import AvailabilityRangeRuleForm from "../components/availability-range-rule-form/availability-time-rule-form";
 import { TimeRange } from "@bookingeek/api/src/common/types";
 import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
 import { useUpdateResourceMutation } from "../resources-api";
@@ -118,6 +118,7 @@ export default function ResourceUnavailabilityView() {
             now.getHours() * 60 + resource.reservationTimeGranularityMinutes,
         },
       ],
+      priceInCents: 0,
     });
     setUnavailabilityRules(updatedUnvavailabilityRules);
   };

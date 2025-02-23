@@ -7,6 +7,7 @@ import { getUtcTimeString } from "../../../common/helpers/getUtcTimeString";
 import DeleteIcon from "../../../common/icons/delete/delete";
 import { ReservationTimeGranularity } from "@bookingeek/api/src/resources/types";
 import { COLORS } from "../../../common/data/colors";
+import { getTimesList } from "../../helpers/get-times-list";
 
 const StyledForm = styled.div`
   display: flex;
@@ -36,21 +37,6 @@ type AvailabilityDayOfWeekFormProps = {
   customDeleteIcon?: JSX.Element;
 };
 
-// Retrives a list of times based on the time granularity
-const getTimeList = (
-  reservationTimeGranularity: ReservationTimeGranularity
-) => {
-  const times: Array<{ minutesPastMidnight: number }> = [];
-  let currentMinutes = 0;
-  do {
-    times.push({
-      minutesPastMidnight: currentMinutes,
-    });
-    currentMinutes += reservationTimeGranularity;
-  } while (currentMinutes < 60 * 24);
-  return times;
-};
-
 const getSlotsList = (
   reservationTimeGranularity: ReservationTimeGranularity
 ) => {
@@ -67,9 +53,9 @@ const getSlotsList = (
 };
 
 /**
- * A form for a single time range availability rule
+ * A form for a single time range/slot availability rule
  */
-export default function AvailabilityRangeRuleForm({
+export default function AvailabilityTimeRuleForm({
   timeRange,
   reservationTimeGranularityMinutes,
   reservationTimeType,
@@ -81,7 +67,7 @@ export default function AvailabilityRangeRuleForm({
     timeRange.startInMinutesPastMidnight
   );
   const [endTime, setEndTime] = useState(timeRange.endInMinutesPastMidnight);
-  const possibleTimes = getTimeList(reservationTimeGranularityMinutes);
+  const possibleTimes = getTimesList(reservationTimeGranularityMinutes);
   const possibleSlots = getSlotsList(reservationTimeGranularityMinutes);
   const ruleIsInvalid = startTime >= endTime;
 
@@ -95,7 +81,7 @@ export default function AvailabilityRangeRuleForm({
         endInMinutesPastMidnight: endTime,
       });
     }
-  }, []);
+  }, [startTime, endTime]);
 
   // Updates both startTime and endTime for a time slot change
   const handleTimeSlotChange = (newStartTime: number) => {

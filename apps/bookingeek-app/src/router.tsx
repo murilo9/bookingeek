@@ -8,7 +8,7 @@ import BusinessInfoView from "./businesses/views/business";
 import UsersManagementView from "./businesses/views/users";
 import AccountManagementView from "./businesses/views/account";
 import NotFoundPage from "./common/pages/not-found";
-import ReservationDetailsView from "./businesses/views/reservation-details";
+import BusinessReservationDetailsView from "./businesses/views/business-reservation-details";
 import SignInView from "./common/pages/sign-in";
 import SignUpView from "./common/pages/sign-up";
 import ResourceMenuView from "./resources/views/resource-menu";
@@ -19,6 +19,7 @@ import ResourceExtraDataFieldsView from "./resources/views/resource-extra-data-f
 import ResourceUnavailabilityView from "./resources/views/resource-unavailability";
 import ResourceScheduleTypeView from "./resources/views/resource-schedule-type";
 import ResourceProvider from "./resources/components/resource-loader/resource-provider";
+import ReservationDetailsPage from "./reservations/pages/reservation";
 
 const PublicRouter = () => (
   <Routes>
@@ -27,6 +28,10 @@ const PublicRouter = () => (
       <Route path=":businessId" element={<BusinessShowcasePage />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Route>
+    <Route
+      path="/reservation/:reservationId"
+      element={<ReservationDetailsPage />}
+    />
     <Route path="signup" element={<SignUpView />} />
     <Route path="/" element={<SignInView />} />
     <Route path="*" element={<NotFoundPage />} />
@@ -50,8 +55,12 @@ const ProtectedRouter = () => (
         <Route path="unavailability" element={<ResourceUnavailabilityView />} />
       </Route>
       <Route path="/reservations" element={<ReservationsView />}>
-        <Route path=":reservationId" element={<ReservationDetailsView />} />
+        <Route
+          path=":reservationId"
+          element={<BusinessReservationDetailsView />}
+        />
       </Route>
+
       <Route path="/users" element={<UsersManagementView />} />
       <Route path="/account" element={<AccountManagementView />} />
       <Route path="/business" element={<BusinessInfoView />} />

@@ -17,24 +17,23 @@ Displays the sign in form.
 
 Displays business' resources so customers can make reservations
 
-**View: Reservation Form**
-
-Displays each step of a reservation form
-
 Components:
 
 ```
++-- BusinessOverview
 +-- ReservationOverview
-+-- ResourceSelectStep
-+---- ResourceItem
++-- ResourceItem
 +-- DateSelectStep
 +---- Calendar
 +---- TimeSelectForm
 +-- ExtraDataStep
 +-- ConfirmationStep
 +-- CheckoutStep
-+-- DoneStep
 ```
+
+### Page: Reservation Done
+
+Shows a message saying that the reservation is done.
 
 ### Page: Business Panel
 
