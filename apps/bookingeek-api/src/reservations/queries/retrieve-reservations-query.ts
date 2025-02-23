@@ -1,16 +1,14 @@
 import { Expose } from 'class-transformer';
-import {
-  IsOptional,
-  IsDefined,
-  IsString,
-  IsNotEmpty,
-  IsNumberString,
-} from 'class-validator';
+import { IsOptional, IsString, IsNumberString } from 'class-validator';
 
 /**
  * The possible query string paramters passed to the ReservationsController:retrieveReservations route.
  */
 export class RetrieveReservationsQuery {
+  @Expose()
+  @IsOptional()
+  @IsString()
+  _id?: string;
   @Expose()
   @IsOptional()
   @IsNumberString()
@@ -22,11 +20,10 @@ export class RetrieveReservationsQuery {
   // End date timestamp
   end_date?: string;
   @Expose()
-  @IsDefined()
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
   // Business ID
-  business_id: string;
+  business_id?: string;
   @Expose()
   @IsOptional()
   @IsString()

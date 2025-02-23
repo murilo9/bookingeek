@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ObjectId } from 'mongodb';
+import { Filter, ObjectId } from 'mongodb';
 import { DatabaseService } from 'src/database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
 import { getDaysInMonth } from 'date-fns';
@@ -21,10 +21,10 @@ export class ResourcesService {
   /**
    * Retrieves all resources that belongs to a business.
    */
-  async retrieveResources(businessId: ObjectId) {
+  async retrieveResources(query: Filter<Resource<ObjectId>>) {
     const resources = await this.databaseService.findMany<Resource<ObjectId>>(
       DbCollection.Resources,
-      { businessId },
+      query,
     );
     return resources;
   }

@@ -30,4 +30,8 @@ export class CustomPriceRule {
   @Type(() => TimeRangeDto)
   // Rule times. Only applies if resource's availabilityType = 'date-time'
   times: Array<TimeRangeDto>;
+  @Expose()
+  @IsDefined()
+  @IsNumber()
+  priceInCents: number;
 }

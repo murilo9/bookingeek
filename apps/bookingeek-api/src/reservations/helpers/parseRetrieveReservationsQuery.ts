@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { RetrieveReservationsDto } from '../dto/retrieve-reservations.dto';
-import { RetrieveReservationsQuery } from '../types/retrieve-reservations-query';
+import { RetrieveReservationsQuery } from '../queries/retrieve-reservations-query';
 
 /**
  * Parses a query string object into a RetrieveReservationsDto object.

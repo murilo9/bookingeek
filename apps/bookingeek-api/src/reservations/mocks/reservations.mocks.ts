@@ -12,7 +12,7 @@ export function RESERVATIONS_MOCK<T>(
       IS_DELETED: false,
       cancelledBy: null,
       checkoutOptionChosen: 'online',
-      checkoutSessionClientId: 'checkout-session-client-id',
+      checkoutSessionClientSecret: 'checkout-session-client-id',
       code: 1,
       customerData: {
         email: 'david.smith@email.com',
@@ -47,7 +47,7 @@ export function RESERVATIONS_MOCK<T>(
       IS_DELETED: false,
       cancelledBy: null,
       checkoutOptionChosen: 'online',
-      checkoutSessionClientId: 'checkout-session-client-id',
+      checkoutSessionClientSecret: 'checkout-session-client-id',
       code: 2,
       customerData: {
         email: 'marcus.johnson@email.com',

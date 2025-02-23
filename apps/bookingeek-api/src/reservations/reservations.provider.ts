@@ -1,46 +1,112 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { RetrieveReservationsDto } from './dto/retrieve-reservations.dto';
 import { DbCollection } from 'src/database/collection.enum';
 import { Filter, ObjectId } from 'mongodb';
-import { Timestamp } from 'src/common/types';
 import { Reservation } from './types';
+import { CreateReservationDto } from './dto/create-reservation.dto';
+import { FromPersistentEntity } from 'src/database/types/from-persistent-entity';
+import { setMinutes } from 'date-fns';
+import { Resource } from 'src/resources/types';
+import { StripeService } from 'src/stripe/stripe.service';
+import { Business } from 'src/businesses/types';
+import { getReservationPriceTotal } from './helpers/get-reservation-price-total';
 
 @Injectable()
 export class ReservationsService {
   constructor(
     @Inject(DatabaseService) private databaseService: DatabaseService,
+    @Inject(StripeService) private stripeService: StripeService,
   ) {}
 
-  async retrieveReservations(query: RetrieveReservationsDto) {
-    // Business ID will always be present in the dbQuery
-    const dbQuery: Filter<Reservation<ObjectId>> = {
-      buisnessId: new ObjectId(query.businessId),
-    };
-    // Fills dbQuery's "resourceId" attribute
-    if (query.resourceIds) {
-      dbQuery.resourceId = {
-        $in: query.resourceIds,
-      };
-    }
-    // Start filling dbQuery's "created" attribute
-    const createdQuery: Filter<{ startDate: Timestamp; endDate: Timestamp }> =
-      {};
-    if (query.startDateTimestamp) {
-      createdQuery.$gte = query.startDateTimestamp;
-    }
-    if (query.endDateTimestamp) {
-      createdQuery.$lte = query.endDateTimestamp;
-    }
-    // If createdQUery was filled at all, adds it to the dbQuery
-    if (Object.keys(createdQuery).length) {
-      dbQuery.created = createdQuery;
-    }
-    console.log('dbQuery', dbQuery);
+  async retrieveReservations(query: Filter<Reservation<ObjectId>>) {
     // Searches the database
     const reservations = await this.databaseService.findMany<
       Reservation<ObjectId>
-    >(DbCollection.Reservations, dbQuery);
+    >(DbCollection.Reservations, query);
     return reservations;
+  }
+
+  async createReservation(createReservationDto: CreateReservationDto) {
+    const {
+      checkoutOptionChosen,
+      customerData,
+      endDate,
+      endTimeInMinutesPastMidnight,
+      extraFields,
+      startDate,
+      startTimeInMinutesPastMidnight,
+    } = createReservationDto;
+    const resourceId = new ObjectId(createReservationDto.resourceId);
+    const resource = await this.databaseService.findOne<Resource<ObjectId>>(
+      DbCollection.Resources,
+      { _id: resourceId },
+    );
+    const business = await this.databaseService.findOne<Business<ObjectId>>(
+      DbCollection.Businesses,
+      { _id: resource.businessId },
+    );
+    let startDateObj = new Date(
+      `${startDate.year}-${startDate.month + 1}-${startDate.day} 00:00:00`,
+    );
+    startDateObj = setMinutes(startDateObj, startTimeInMinutesPastMidnight);
+    let endDateObj = new Date(
+      `${endDate.year}-${endDate.month + 1}-${endDate.day} 00:00:00`,
+    );
+    endDateObj = setMinutes(startDateObj, startTimeInMinutesPastMidnight);
+    const reservationToCreate: Omit<
+      Reservation<ObjectId>,
+      FromPersistentEntity
+    > = {
+      cancelledBy: null,
+      checkoutOptionChosen,
+      checkoutSessionClientSecret: null,
+      code: 0,
+      customerData,
+      endDate,
+      endDateTimestamp: endDateObj.getTime(),
+      startDate,
+      endTimeInMinutesPastMidnight,
+      extraFields,
+      paymentStatus: 'pending',
+      refundedAmountInCents: 0,
+      resourceId,
+      resourceJSON: JSON.stringify(resource),
+      startDateTimestamp: startDateObj.getTime(),
+      startTimeInMinutesPastMidnight,
+      stripePaymentIntentId: null,
+      type: resource.availabilityType,
+    };
+    // If online checkout was chosen, creates Stripe checkout session
+    if (checkoutOptionChosen === 'online') {
+      const totalPriceInCents = getReservationPriceTotal(
+        reservationToCreate,
+        resource,
+      );
+      const stripeCheckoutSession =
+        await this.stripeService.createCheckoutSession({
+          businessConnectedAccountId: business.stripeConnectedAccountId,
+          lineItems: [
+            {
+              quantity: 1,
+              price_data: {
+                currency: 'USD',
+                product_data: {
+                  name: resource.title,
+                },
+                unit_amount: totalPriceInCents,
+              },
+            },
+          ],
+          platformFeeInCents: Math.round(totalPriceInCents / 10),
+        });
+      reservationToCreate.stripePaymentIntentId = stripeCheckoutSession.id;
+      reservationToCreate.checkoutSessionClientSecret =
+        stripeCheckoutSession.client_secret;
+    }
+    // Inserts the reservation in the database
+    const reservation = await this.databaseService.insertOne<
+      Reservation<ObjectId>
+    >(DbCollection.Reservations, reservationToCreate);
+    return reservation;
   }
 }

@@ -22,6 +22,8 @@ import { CreateResrouceGuard } from './guards/create-resource.guard';
 import { User } from 'src/businesses/types';
 import { RetrieveResourceAvailabilityQuery } from './types';
 import { UpdateResourceDto } from './dto/update-resource.dto';
+import { RetrieveResourcesQuery } from './queries/retrieve-resources-query';
+import { ParseResourcesQueryPipe } from './pipes/parse-resources-query.pipe';
 
 @Controller()
 export class ResourcesController {
@@ -50,10 +52,12 @@ export class ResourcesController {
    * Retrieves all resources that belongs to a business. Called by anyone.
    */
   @Get('resources')
-  retrieveBusinessResources(@Query() query: { businessId: string }) {
-    console.log(query);
+  retrieveBusinessResources(
+    @Query(new ValidationPipe(RetrieveResourcesQuery))
+    query: RetrieveResourcesQuery,
+  ) {
     return this.resourcesService.retrieveResources(
-      new ObjectId(query.businessId),
+      new ParseResourcesQueryPipe().transform(query),
     );
   }
 
