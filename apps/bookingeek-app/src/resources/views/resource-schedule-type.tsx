@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import ButtonRadio from "../../common/components/button-radio/button-radio";
 import { useState } from "react";
-import { Resource } from "@bookingeek/api/src/resources/types";
 import { useOutletContext } from "react-router";
 import RadioCard from "../../common/components/radio-card/radio-card";
 import FormField from "../../common/components/form-field/form-field";
 import Button from "../../common/components/button/button";
 import { useUpdateResourceMutation } from "../resources-api";
-import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
 import { useHandleRequestCall } from "../../common/hooks/handle-request-call";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
-import { ReservationTimeGranularity } from "@bookingeek/api/src/resources/types/reservartion-time-granularity";
+import {
+  Resource,
+  UpdateResourceDto,
+  ReservationTimeGranularity,
+} from "@bookingeek/core";
 
 const StyledForm = styled.div`
   padding: 8px;
@@ -167,7 +169,7 @@ export default function ResourceScheduleTypeView() {
             <FormField
               label="Minimal Reservation Duration"
               description="Set the minimal duration for a reservation"
-              type="select-value"
+              type={"options-select-value"}
               value={minimalReservationDurationAmount}
               onChange={setMinimalReservationDurationAmount}
               inputValue={minimalReservationDurationUnit}
@@ -178,7 +180,7 @@ export default function ResourceScheduleTypeView() {
         </>
       ) : null}
       <FormField<"weeks" | "days" | "hours" | "minutes">
-        type="select-value"
+        type={"options-select-value"}
         label="Minimal Advance Time"
         description="Set the minimal time a booking has to be made in advance"
         value={minimalReservationAdvanceUnit}

@@ -6,10 +6,8 @@ import {
 } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { ObjectId } from 'mongodb';
-import { CreateResourceDto } from '../dto/create-resource.dto';
 import { DbCollection } from 'src/database/collection.enum';
-import { User } from 'src/businesses/types';
-import { Resource } from '../types/resource';
+import { User, CreateResourceDto, Resource } from '@bookingeek/core';
 
 /**
  * Checks if a businees with the same title or slug exists.

@@ -1,4 +1,4 @@
-import { Business } from '../types';
+import { Business } from '@bookingeek/core';
 
 export const BUSINNES_ID_0 = '6770598874a39884cfe9496a';
 export const BUSINNES_ID_1 = '677059a374a39884cfe9496c';

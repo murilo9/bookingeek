@@ -7,19 +7,19 @@ import { RESOURCE_ICON } from "../data/resource-icons";
 import IconButton from "../../common/components/icon-button/icon-button";
 import Input from "../../common/components/input/input";
 import Select from "../../common/components/select/select";
-import {
-  Resource,
-  ResourceCheckoutType,
-  ResourceIconName,
-} from "@bookingeek/api/src/resources/types";
 import ResourceItem from "../components/resource-item/resource-item";
 import { onFormatCurrency } from "../../common/helpers/on-format-currency";
 import { isPriceValid } from "../../common/helpers/is-price-valid";
 import Button from "../../common/components/button/button";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
-import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
 import { useUpdateResourceMutation } from "../resources-api";
 import { useHandleRequestCall } from "../../common/hooks/handle-request-call";
+import {
+  Resource,
+  ResourceIconName,
+  ResourceCheckoutType,
+  UpdateResourceDto,
+} from "@bookingeek/core";
 
 const RESOURCE_CHECKOUT_TYPES: Record<string, string> = {
   "in-loco-online": "In-loco & online",

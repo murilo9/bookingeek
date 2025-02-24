@@ -1,5 +1,5 @@
+import { Reservation } from '@bookingeek/core';
 import { RESOURCE_ID_0 } from 'src/resources/mocks/resources.mock';
-import { Reservation } from '../types';
 
 export function RESERVATIONS_MOCK<T>(
   Id: new (id?: string) => T,

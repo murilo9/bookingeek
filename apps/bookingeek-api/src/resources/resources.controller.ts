@@ -17,13 +17,15 @@ import { DbCollection } from 'src/database/collection.enum';
 import { EntityExistsGuard } from 'src/common/guards/entity-exists.guard';
 import { IdentityGuard } from 'src/common/guards/identity.guard';
 import { ValidationPipe } from 'src/common/pipes/validation.pipe';
-import { CreateResourceDto } from './dto/create-resource.dto';
 import { CreateResrouceGuard } from './guards/create-resource.guard';
-import { User } from 'src/businesses/types';
-import { RetrieveResourceAvailabilityQuery } from './types';
-import { UpdateResourceDto } from './dto/update-resource.dto';
-import { RetrieveResourcesQuery } from './queries/retrieve-resources-query';
 import { ParseResourcesQueryPipe } from './pipes/parse-resources-query.pipe';
+import {
+  CreateResourceDto,
+  RetrieveResourceAvailabilityQuery,
+  RetrieveResourcesQuery,
+  UpdateResourceDto,
+  User,
+} from '@bookingeek/core';
 
 @Controller()
 export class ResourcesController {

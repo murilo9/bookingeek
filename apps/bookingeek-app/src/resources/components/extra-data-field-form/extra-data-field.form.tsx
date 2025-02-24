@@ -4,15 +4,15 @@ import DeleteIcon from "../../../common/icons/delete/delete";
 import { FormFieldLabel } from "../../../common/components/form-field/form-field-label";
 import Input from "../../../common/components/input/input";
 import Select from "../../../common/components/select/select";
-import {
-  RESOURCE_EXTRA_FIELD_OPTIONS,
-  ResourceExtraFieldType,
-} from "@bookingeek/api/src/resources/types/resource-extra-field-type";
-import { ResourceExtraField } from "@bookingeek/api/src/resources/types";
 import { useEffect, useState } from "react";
 import Button from "../../../common/components/button/button";
 import AddIcon from "../../../common/icons/add/add";
 import CloseIcon from "../../../common/icons/close/close";
+import {
+  RESOURCE_EXTRA_FIELD_OPTIONS,
+  ResourceExtraField,
+  ResourceExtraFieldType,
+} from "@bookingeek/core";
 
 const StyledForm = styled.div`
   display: flex;

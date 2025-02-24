@@ -1,0 +1,67 @@
+// {
+//   "compilerOptions": {
+//     "module": "CommonJS",
+//     "declaration": true,
+//     "removeComments": true,
+//     "moduleResolution": "Node",
+//     "esModuleInterop": true,
+//     "emitDecoratorMetadata": true,
+//     "experimentalDecorators": true,
+//     "allowSyntheticDefaultImports": true,
+//     "lib": ["ES2017"],
+//     "target": "ES6",
+//     "sourceMap": true,
+//     "outDir": "./dist",
+//     "incremental": true,
+//     "skipLibCheck": true,
+//     "strictNullChecks": false,
+//     "noImplicitAny": false,
+//     "strictBindCallApply": false,
+//     "forceConsistentCasingInFileNames": false,
+//     "noFallthroughCasesInSwitch": false,
+//     "strict": true
+//   },
+//   "include": ["src"]
+// }
+// {
+//   "compilerOptions": {
+//     "declaration": true,
+//     "strict": true,
+//     "moduleResolution": "Node",
+//     "target": "ESNext",
+//     "module": "ESNext",
+//     "esModuleInterop": true,
+//     "emitDecoratorMetadata": true,
+//     "experimentalDecorators": true,
+//     "allowSyntheticDefaultImports": true,
+//     "importHelpers": true,
+//     "outDir": "dist",
+//     "sourceMap": true,
+//     "strictPropertyInitialization": false,
+//     "lib": ["ESNext", "DOM"]
+//   },
+//   "include": ["src"]
+// }
+{
+  "compilerOptions": {
+    "target": "ESNext", // Use the latest ECMAScript features
+    "module": "ESNext", // Output ES Modules (ESM)
+    "moduleResolution": "node", // Resolve modules the same way Node.js does
+    "lib": ["ESNext", "DOM"], // Include the necessary libraries for both Node and browser environments
+    "declaration": true, // Generate .d.ts declaration files
+    "declarationMap": true, // Generate declaration map files for better debugging
+    "sourceMap": true, // Generate source maps for easier debugging
+    "outDir": "./dist", // Output directory for compiled files
+    "esModuleInterop": true, // Enable interop between CommonJS and ESM
+    "skipLibCheck": true, // Skip library type checking to speed up compilation
+    "resolveJsonModule": true, // Allow importing .json files
+    "experimentalDecorators": true, // Enable experimental decorators for class-transformer and class-validator
+    "emitDecoratorMetadata": true // Enable metadata reflection for decorators
+  },
+  "include": [
+    "src/**/*.ts" // Include all .ts files in the src directory
+  ],
+  "exclude": [
+    "node_modules" // Exclude node_modules
+  ]
+}

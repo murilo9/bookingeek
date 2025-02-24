@@ -2,14 +2,16 @@ import { Inject, Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
 import { Filter, ObjectId } from 'mongodb';
-import { Reservation } from './types';
-import { CreateReservationDto } from './dto/create-reservation.dto';
-import { FromPersistentEntity } from 'src/database/types/from-persistent-entity';
 import { setMinutes } from 'date-fns';
-import { Resource } from 'src/resources/types';
 import { StripeService } from 'src/stripe/stripe.service';
-import { Business } from 'src/businesses/types';
-import { getReservationPriceTotal } from './helpers/get-reservation-price-total';
+import {
+  Resource,
+  Business,
+  FromPersistentEntity,
+  getReservationPriceTotal,
+  Reservation,
+  CreateReservationDto,
+} from '@bookingeek/core';
 
 @Injectable()
 export class ReservationsService {

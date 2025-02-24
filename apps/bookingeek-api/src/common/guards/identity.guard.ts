@@ -1,3 +1,4 @@
+import { User } from '@bookingeek/core';
 import {
   CanActivate,
   ExecutionContext,
@@ -6,7 +7,6 @@ import {
 } from '@nestjs/common';
 import { verify } from 'jsonwebtoken';
 import { ObjectId } from 'mongodb';
-import { User } from 'src/businesses/types';
 import { DbCollection } from 'src/database/collection.enum';
 import { DatabaseService } from 'src/database/database.service';
 

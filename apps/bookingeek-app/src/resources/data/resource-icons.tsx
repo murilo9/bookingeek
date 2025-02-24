@@ -5,7 +5,7 @@ import PlaceIcon from "../../common/icons/place/place";
 import ServiceIcon from "../../common/icons/service/service";
 import UserIcon from "../../common/icons/user/user";
 import TableIcon from "../../common/icons/table/table";
-import { ResourceIconName } from "@bookingeek/api/src/resources/types";
+import { ResourceIconName } from "@bookingeek/core";
 
 export const RESOURCE_ICON = (color: string, size: number) =>
   ({

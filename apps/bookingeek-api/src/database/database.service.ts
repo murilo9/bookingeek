@@ -11,8 +11,7 @@ import {
   WithId,
 } from 'mongodb';
 import { DbCollection } from 'src/database/collection.enum';
-import { FromPersistentEntity } from './types/from-persistent-entity';
-import { PersistentEntity } from 'src/common/types';
+import { PersistentEntity, FromPersistentEntity } from '@bookingeek/core';
 
 @Injectable()
 export class DatabaseService {

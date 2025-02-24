@@ -1,6 +1,6 @@
-import { Business } from "@bookingeek/api/src/businesses/types";
 import styled from "styled-components";
 import { DEFAULT_BUSINESS_PICTURE_URL } from "../../common/data/constants";
+import { Business } from "@bookingeek/core";
 
 type BusinessOverviewProps = {
   business: Business<string>;

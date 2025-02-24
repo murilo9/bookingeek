@@ -1,4 +1,4 @@
-import { Business } from "@bookingeek/api/src/businesses/types";
+import { Business } from "@bookingeek/core";
 import { appApi } from "../store";
 
 export const businessesApi = appApi.injectEndpoints({

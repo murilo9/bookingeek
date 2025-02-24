@@ -1,13 +1,12 @@
-import { TimeRange } from "@bookingeek/api/src/common/types";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import IconButton from "../../../common/components/icon-button/icon-button";
 import Select from "../../../common/components/select/select";
 import { getUtcTimeString } from "../../../common/helpers/getUtcTimeString";
 import DeleteIcon from "../../../common/icons/delete/delete";
-import { ReservationTimeGranularity } from "@bookingeek/api/src/resources/types";
 import { COLORS } from "../../../common/data/colors";
 import { getTimesList } from "../../helpers/get-times-list";
+import { TimeRange, ReservationTimeGranularity } from "@bookingeek/core";
 
 const StyledForm = styled.div`
   display: flex;

@@ -1,14 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { sign } from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
-import { FromPersistentEntity } from 'src/database/types/from-persistent-entity';
 import { ObjectId } from 'mongodb';
 import { DatabaseService } from 'src/database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
-import { UserPassword } from './types/user-password.entity';
 import * as bcrypt from 'bcryptjs';
-import { BusinessSignUpDto, UpdateBusinessDto } from './dto';
-import { BusinessSignUpResponse, Business, User } from './types';
+import {
+  BusinessSignUpDto,
+  BusinessSignUpResponse,
+  Business,
+  FromPersistentEntity,
+  User,
+  UpdateBusinessDto,
+} from '@bookingeek/core';
+import { UserPassword } from 'src/common/types/user-password.entity';
 
 @Injectable()
 export class BusinessesService {

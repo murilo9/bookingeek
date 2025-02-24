@@ -4,13 +4,13 @@ import { DatabaseService } from 'src/database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
 import { getDaysInMonth } from 'date-fns';
 import {
+  Resource,
   RetrieveResourceAvailabilityQuery,
   DayOfWeekAvailability,
-} from './types';
-import { FromPersistentEntity } from 'src/database/types/from-persistent-entity';
-import { CreateResourceDto } from './dto/create-resource.dto';
-import { UpdateResourceDto } from './dto/update-resource.dto';
-import { Resource } from './types/resource';
+  CreateResourceDto,
+  FromPersistentEntity,
+  UpdateResourceDto,
+} from '@bookingeek/core';
 
 @Injectable()
 export class ResourcesService {

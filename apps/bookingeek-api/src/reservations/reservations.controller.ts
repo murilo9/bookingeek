@@ -9,10 +9,12 @@ import {
 } from '@nestjs/common';
 import { ReservationsService } from './reservations.provider';
 import { ValidationPipe } from 'src/common/pipes/validation.pipe';
-import { RetrieveReservationsQuery } from './queries/retrieve-reservations-query';
-import { parseRetrieveReservationsQuery } from './helpers/parseRetrieveReservationsQuery';
-import { CreateReservationDto } from './dto/create-reservation.dto';
 import { CreateReservationGuard } from './guards/create-reservation.guard';
+import {
+  CreateReservationDto,
+  RetrieveReservationsQuery,
+} from '@bookingeek/core';
+import { ParseReservationsQueryPipe } from './pipes/parse-reservation-query.pipe';
 
 @Controller()
 export class ReservationsController {
@@ -26,7 +28,9 @@ export class ReservationsController {
     @Query(new ValidationPipe(RetrieveReservationsQuery))
     query: RetrieveReservationsQuery,
   ) {
-    const retrieveReservationsDto = parseRetrieveReservationsQuery(query);
+    const retrieveReservationsDto = new ParseReservationsQueryPipe().transform(
+      query,
+    );
     return this.reservationsService.retrieveReservations(
       retrieveReservationsDto,
     );

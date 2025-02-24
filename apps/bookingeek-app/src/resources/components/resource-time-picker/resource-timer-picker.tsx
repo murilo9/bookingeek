@@ -1,11 +1,13 @@
-import { DAY_OF_WEEK_NAME } from "@bookingeek/api/src/common/types/day-of-week-name";
-import { Resource } from "@bookingeek/api/src/resources/types";
 import styled from "styled-components";
 import FormField from "../../../common/components/form-field/form-field";
-import { getTimeStringFromMinutes } from "@bookingeek/api/src/common/helpers/get-time-string-from-minutes";
 import { useEffect, useState } from "react";
 import { getTimesList } from "../../helpers/get-times-list";
 import OptionButton from "../../../common/components/option-button/option-button";
+import {
+  Resource,
+  DAY_OF_WEEK_NAME,
+  getTimeStringFromMinutes,
+} from "@bookingeek/core";
 
 const customFormatTime = (minutes: number) =>
   getTimeStringFromMinutes(minutes, "hh:mm aaa");

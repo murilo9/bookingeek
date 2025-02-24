@@ -1,9 +1,11 @@
-import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
-import { CreateResourceDto } from "@bookingeek/api/src/resources/dto/create-resource.dto";
-import { RetrieveResourcesQuery } from "@bookingeek/api/src/resources/queries/retrieve-resources-query.ts";
 import { appApi } from "../store";
-import { Resource } from "@bookingeek/api/src/resources/types";
 import { buildQueryString } from "../common/helpers/build-query-string";
+import {
+  Resource,
+  UpdateResourceDto,
+  CreateResourceDto,
+  RetrieveResourcesQuery,
+} from "@bookingeek/core";
 
 export const resourcesApi = appApi.injectEndpoints({
   endpoints: (builder) => ({

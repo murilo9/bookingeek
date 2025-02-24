@@ -1,8 +1,10 @@
 import { appApi } from "../store";
-import { CreateReservationDto } from "@bookingeek/api/src/reservations/dto/create-reservation.dto";
-import { RetrieveReservationsQuery } from "@bookingeek/api/src/reservations/queries/retrieve-reservations-query";
-import { Reservation } from "@bookingeek/api/src/reservations/types";
 import { buildQueryString } from "../common/helpers/build-query-string";
+import {
+  Reservation,
+  RetrieveReservationsQuery,
+  CreateReservationDto,
+} from "@bookingeek/core";
 
 export const reservationsApi = appApi.injectEndpoints({
   endpoints: (builder) => ({

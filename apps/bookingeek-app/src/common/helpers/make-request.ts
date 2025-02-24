@@ -1,4 +1,4 @@
-import { RequestErrorResponse } from "@bookingeek/core/common/types";
+import { RequestErrorResponse } from "@bookingeek/core";
 import { BASE_URL_DEV } from "../../env";
 
 type Response<T> = {

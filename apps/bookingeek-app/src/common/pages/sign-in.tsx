@@ -6,9 +6,8 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { SIGNIN_ROUTE } from "../../env";
-import { SignInDto } from "@bookingeek/api/src/businesses/dto";
 import { makeRequest } from "../helpers/make-request";
-import { BusinessSignUpResponse } from "@bookingeek/api/src/businesses/types";
+import { SignInDto, BusinessSignUpResponse } from "@bookingeek/core";
 
 const StyledPageContainer = styled.div`
   display: flex;

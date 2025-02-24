@@ -6,6 +6,7 @@ import { FormFieldLabel } from "./form-field-label";
 import { KeyboardEvent } from "react";
 import RadioEmptyIcon from "../../icons/radio-empty/radio-empty";
 import RadioFullIcon from "../../icons/radio-full/radio-full";
+import { FormFieldType } from "../../types/form-field-type";
 
 const StyledFormField = styled.div`
   display: flex;
@@ -51,14 +52,6 @@ const StyledFormFieldGrid = styled.div`
   grid-template-columns: 1fr 1fr;
   column-gap: 12px;
 `;
-
-export type FormFieldType =
-  | "text"
-  | "text-long"
-  | "password"
-  | "options-radio"
-  | "options-select"
-  | "options-select-value";
 
 type FormFieldProps<ValueType = string, InputValueType = string> = {
   // Text displayed above the input

@@ -1,9 +1,6 @@
-import {
-  ReservationTimeGranularity,
-  ResourcePicture,
-} from "@bookingeek/api/src/resources/types";
 import styled from "styled-components";
 import { renderResourceIcon } from "../../data/resource-icons";
+import { ResourcePicture, ReservationTimeGranularity } from "@bookingeek/core";
 
 const StyledResourceItem = styled.div`
   display: flex;

@@ -1,7 +1,3 @@
-import {
-  Resource,
-  ResourceExtraField,
-} from "@bookingeek/api/src/resources/types";
 import { useOutletContext } from "react-router";
 import styled from "styled-components";
 import { useHandleRequestCall } from "../../common/hooks/handle-request-call";
@@ -11,7 +7,11 @@ import Button from "../../common/components/button/button";
 import AddIcon from "../../common/icons/add/add";
 import { useState } from "react";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
-import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
+import {
+  Resource,
+  UpdateResourceDto,
+  ResourceExtraField,
+} from "@bookingeek/core";
 
 const StyledForm = styled.div`
   padding: 8px;

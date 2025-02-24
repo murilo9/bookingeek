@@ -7,6 +7,7 @@
     "dev:app": "pnpm --filter @bookingeek/app dev",
     "dev:api": "pnpm --filter @bookingeek/api start:dev",
     "dev:website": "pnpm --filter @bookingeek/website dev",
+    "build:core": "pnpm --filter @bookingeek/core build",
     "build:web": "pnpm recursive run build",
     "build:android": "cd apps/bookingeek-app/android && sh gradlew build && ./gradlew assemble",
     "storybook:app": "pnpm --filter @bookingeek/app storybook"
@@ -17,5 +18,9 @@
   "resolutions": {
     "styled-components": "^5"
   },
-  "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c"
+  "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c",
+  "dependencies": {
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1"
+  }
 }

@@ -1,14 +1,12 @@
-import { Resource } from "@bookingeek/api/src/resources/types";
 import FormHeader from "../../common/components/form-header/form-header";
 import styled from "styled-components";
 import { format } from "date-fns";
 import { RESOURCE_ICON } from "../../resources/data/resource-icons";
 import ClockIcon from "../../common/icons/clock/clock";
 import CalendarIcon from "../../common/icons/calendar/calendar";
-import { getTimeStringFromMinutes } from "@bookingeek/api/src/common/helpers/get-time-string-from-minutes";
 import PlaceIcon from "../../common/icons/place/place";
-import { Business } from "@bookingeek/api/src/businesses/types";
 import { ReservationFormSteps } from "../types/reservation-form-steps";
+import { Resource, Business } from "@bookingeek/core";
 
 const StyledContainer = styled.div<{ currentStep: ReservationFormSteps }>`
   display: ${(props) =>

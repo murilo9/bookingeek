@@ -4,10 +4,6 @@ import NotFoundPage from "../../common/pages/not-found";
 import styled from "styled-components";
 import ReservationOverview from "../components/reservation-overview";
 import { useEffect, useState } from "react";
-import {
-  Resource,
-  ResourceExtraField,
-} from "@bookingeek/api/src/resources/types";
 import { useGetResourcesQuery } from "../../resources/resources-api";
 import ResourceItem from "../../resources/components/resource-item/resource-item";
 import BusinessOverview from "../components/business-overview";
@@ -24,9 +20,13 @@ import {
 import Button from "../../common/components/button/button";
 import PaymentTypeStep from "../../reservations/components/payment-type-step";
 import ConfirmationStep from "../../reservations/components/confirmation-step";
-import { CreateReservationDto } from "@bookingeek/api/src/reservations/dto/create-reservation.dto";
+import {
+  CreateReservationDto,
+  Reservation,
+  Resource,
+  ResourceExtraField,
+} from "@bookingeek/core";
 import { getDateDefFromDate } from "../../common/helpers/get-date-def-from-date";
-import { Reservation } from "@bookingeek/api/src/reservations/types";
 import CheckoutStep from "../../reservations/components/checkout-step";
 
 const StyledShowcasePage = styled.div`

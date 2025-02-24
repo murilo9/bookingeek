@@ -1,4 +1,4 @@
-import { ReservationTimeGranularity } from "@bookingeek/api/src/resources/types";
+import { ReservationTimeGranularity } from "@bookingeek/core";
 
 // Retrives a list of times based on the time granularity
 export const getTimesList = (

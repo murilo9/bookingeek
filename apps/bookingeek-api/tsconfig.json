@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "strict": true,
     "paths": {
-      "@bookingeek/core": ["../bookingeek-core"]
+      "@bookingeek/core": ["../bookingeek-core/dist"]
     }
   }
 }

@@ -6,7 +6,7 @@ import { useGetBusinessByIdQuery } from "../../businesses/businesses-api";
 import { useGetResourcesQuery } from "../../resources/resources-api";
 import BusinessOverview from "../../businesses/components/business-overview";
 import ReservationOverview from "../../businesses/components/reservation-overview";
-import { getDateFromDateDef } from "@bookingeek/api/src/common/helpers/get-date-from-date-def";
+import { getDateFromDateDef } from "@bookingeek/core";
 
 const StyledContainer = styled.div`
   display: flex;

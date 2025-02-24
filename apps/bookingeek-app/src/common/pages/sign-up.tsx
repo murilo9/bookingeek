@@ -20,9 +20,9 @@ import {
   BUSINESS_REFUND_TYPES,
   BusinessRefundType,
 } from "../../businesses/types/business-refund-type";
-import { BusinessSignUpDto } from "@bookingeek/api/src/businesses/dto";
 import { BASE_URL_DEV, SIGNUP_ROUTE } from "../../env";
 import { useAuth } from "../hooks/useAuth";
+import { BusinessSignUpDto } from "@bookingeek/core";
 
 const StyledPageContainer = styled.div`
   display: flex;

@@ -1,7 +1,6 @@
+import { RetrieveReservationsQuery, Reservation } from '@bookingeek/core';
 import { PipeTransform, Injectable } from '@nestjs/common';
-import { RetrieveReservationsQuery } from '../queries/retrieve-reservations-query';
 import { Filter, ObjectId } from 'mongodb';
-import { Reservation } from '../types';
 
 @Injectable()
 export class ParseReservationsQueryPipe implements PipeTransform {

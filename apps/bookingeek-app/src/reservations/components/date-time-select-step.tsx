@@ -2,9 +2,9 @@ import styled from "styled-components";
 import CalendarPicker from "../../common/components/calendar-picker/calendar-picker";
 import Button from "../../common/components/button/button";
 import FormHeader from "../../common/components/form-header/form-header";
-import { Resource } from "@bookingeek/api/src/resources/types";
 import ResourceTimePicker from "../../resources/components/resource-time-picker/resource-timer-picker";
 import { ReservationFormSteps } from "../../businesses/types/reservation-form-steps";
+import { Resource } from "@bookingeek/core";
 
 const StyledContainer = styled.div`
   display: flex;

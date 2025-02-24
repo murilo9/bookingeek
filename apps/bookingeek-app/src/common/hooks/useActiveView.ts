@@ -1,7 +1,7 @@
 import { useLocation } from "react-router";
 import { useGetResourcesQuery } from "../../resources/resources-api";
 import { useAuth } from "./useAuth";
-import { Resource } from "@bookingeek/api/src/resources/types";
+import { Resource } from "@bookingeek/core";
 
 const VIEWS: Record<string, string> = {
   resources: "Resources",

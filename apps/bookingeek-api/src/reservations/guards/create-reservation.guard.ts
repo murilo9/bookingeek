@@ -8,14 +8,16 @@ import {
 import { DatabaseService } from '../../database/database.service';
 import { ObjectId } from 'mongodb';
 import { DbCollection } from 'src/database/collection.enum';
-import { User } from 'src/businesses/types';
-import { CreateReservationDto } from '../dto/create-reservation.dto';
-import { Resource } from 'src/resources/types';
-import { getDateFromDateDef } from 'src/common/helpers/get-date-from-date-def';
-import { DAY_OF_WEEK_NAME } from 'src/common/types/day-of-week-name';
-import { customPriceRuleMatchesDateTime } from '../helpers/custom-price-matches-datetime';
-import { Reservation } from '../types';
-import { reservationsOverlap } from '../helpers/reservations-overlap';
+import {
+  User,
+  Resource,
+  customPriceRuleMatchesDateTime,
+  reservationsOverlap,
+  CreateReservationDto,
+  Reservation,
+  getDateFromDateDef,
+  DAY_OF_WEEK_NAME,
+} from '@bookingeek/core';
 
 /**
  * Checks if there are active (default or custom) rules for the reservation intent.

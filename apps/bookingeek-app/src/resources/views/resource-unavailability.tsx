@@ -1,4 +1,3 @@
-import { CustomPriceRule, Resource } from "@bookingeek/api/src/resources/types";
 import { useState } from "react";
 import styled from "styled-components";
 import { useHandleRequestCall } from "../../common/hooks/handle-request-call";
@@ -15,12 +14,16 @@ import CloseIcon from "../../common/icons/close/close";
 import Input from "../../common/components/input/input";
 import { MONTHS } from "../../common/data/months";
 import AvailabilityRangeRuleForm from "../components/availability-range-rule-form/availability-time-rule-form";
-import { TimeRange } from "@bookingeek/api/src/common/types";
-import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
 import { useUpdateResourceMutation } from "../resources-api";
 import { onFormatNumber } from "../../common/helpers/on-format-number";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
 import { deepCopy } from "../../common/helpers/deep-copy";
+import {
+  Resource,
+  CustomPriceRule,
+  UpdateResourceDto,
+  TimeRange,
+} from "@bookingeek/core";
 
 const StyledForm = styled.div`
   padding: 8px;

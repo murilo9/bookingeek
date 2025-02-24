@@ -1,16 +1,13 @@
-import {
-  Resource,
-  ResourceExtraField,
-} from "@bookingeek/api/src/resources/types";
 import styled from "styled-components";
 import FormHeader from "../../common/components/form-header/form-header";
 import FormField, {
   FormFieldType,
 } from "../../common/components/form-field/form-field";
 import Checkbox from "../../common/components/checkbox/checkbox";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Button from "../../common/components/button/button";
 import { emailIsValid } from "../../common/helpers/email-is-valid";
+import { ResourceExtraField } from "@bookingeek/core";
 
 const StyledContainer = styled.div`
   display: flex;

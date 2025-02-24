@@ -1,22 +1,23 @@
 import styled from "styled-components";
-import {
-  DayOfWeekAvailability,
-  Resource,
-} from "@bookingeek/api/src/resources/types";
 import { useOutletContext } from "react-router";
 import { capitalize } from "../../common/helpers/capitalize";
 import IconButton from "../../common/components/icon-button/icon-button";
 import AddIcon from "../../common/icons/add/add";
 import Checkbox from "../../common/components/checkbox/checkbox";
 import { useState } from "react";
-import { DayOfWeekName, TimeRange } from "@bookingeek/api/src/common/types";
 import { deepCopy } from "../../common/helpers/deep-copy";
 import Button from "../../common/components/button/button";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
-import { UpdateResourceDto } from "@bookingeek/api/src/resources/dto/update-resource.dto";
 import { useUpdateResourceMutation } from "../resources-api";
 import { useHandleRequestCall } from "../../common/hooks/handle-request-call";
 import AvailabilityTimeRuleForm from "../components/availability-range-rule-form/availability-time-rule-form";
+import {
+  Resource,
+  UpdateResourceDto,
+  DayOfWeekName,
+  TimeRange,
+  DayOfWeekAvailability,
+} from "@bookingeek/core";
 
 const StyledForm = styled.div`
   padding: 8px;

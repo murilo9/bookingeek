@@ -2,10 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import Stripe from 'stripe';
 import { ConfigService } from '@nestjs/config';
 import { DatabaseService } from 'src/database/database.service';
-import { CreateCheckoutSessionDto } from './dto/create-checkout-session.dto';
 import { DbCollection } from 'src/database/collection.enum';
 import { ObjectId } from 'mongodb';
-import { Reservation } from 'src/reservations/types';
+import { Reservation } from '@bookingeek/core';
+import { CreateCheckoutSessionDto } from './types/create-checkout-session.dto';
 
 // Relevant references: https://stripe.com/docs/connect/enable-payment-acceptance-guide
 

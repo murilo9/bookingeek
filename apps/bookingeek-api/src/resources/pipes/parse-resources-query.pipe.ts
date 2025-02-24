@@ -1,7 +1,6 @@
 import { PipeTransform, Injectable } from '@nestjs/common';
-import { RetrieveResourcesQuery } from '../queries/retrieve-resources-query';
 import { Filter, ObjectId } from 'mongodb';
-import { Resource } from '../types';
+import { Resource, RetrieveResourcesQuery } from '@bookingeek/core';
 
 @Injectable()
 export class ParseResourcesQueryPipe implements PipeTransform {

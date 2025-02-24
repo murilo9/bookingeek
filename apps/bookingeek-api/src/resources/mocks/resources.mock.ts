@@ -1,6 +1,5 @@
-import { TimeRange } from 'src/common/types';
+import { Resource, TimeRange } from '@bookingeek/core';
 import { BUSINNES_ID_0 } from 'src/businesses/mocks/businesses.mocks';
-import { Resource } from '../types/resource';
 
 const basicAvailabilityRule: TimeRange = {
   startInMinutesPastMidnight: 60 * 8,

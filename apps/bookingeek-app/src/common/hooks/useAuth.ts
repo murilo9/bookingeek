@@ -1,6 +1,6 @@
+import { User } from "@bookingeek/core";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import { User } from "@bookingeek/api/src/businesses/types";
 
 /**
  * Gives authentication data (access token) and logged business user data, if any.

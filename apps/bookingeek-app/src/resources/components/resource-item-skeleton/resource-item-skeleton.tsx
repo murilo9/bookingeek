@@ -1,3 +1,3 @@
-export default function ResourceItemSkeleton(){
-    
+export default function ResourceItemSkeleton() {
+  return <></>;
 }
