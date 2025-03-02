@@ -6,7 +6,7 @@ import ClockIcon from "../../common/icons/clock/clock";
 import CalendarIcon from "../../common/icons/calendar/calendar";
 import PlaceIcon from "../../common/icons/place/place";
 import { ReservationFormSteps } from "../types/reservation-form-steps";
-import { Resource, Business } from "@bookingeek/core";
+import { Resource, Business, getTimeStringFromMinutes } from "@bookingeek/core";
 
 const StyledContainer = styled.div<{ currentStep: ReservationFormSteps }>`
   display: ${(props) =>
