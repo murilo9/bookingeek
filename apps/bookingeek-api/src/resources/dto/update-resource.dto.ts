@@ -1,5 +1,4 @@
-import { Expose, Type } from "class-transformer";
-import {} from "../businesses";
+import { Expose, Type } from 'class-transformer';
 import {
   IsArray,
   IsDefined,
@@ -9,53 +8,56 @@ import {
   IsString,
   ValidateIf,
   ValidateNested,
-} from "class-validator";
-import { DayOfWeekName } from "../common";
-import { CustomPriceRule } from "./custom-price-rule";
-import { DayOfWeekAvailability } from "./day-of-week-availability";
-import { MinimalReservationAdvance } from "./minimal-reservation-advance";
-import { MinimalReservationDuration } from "./minimal-reservation-duration";
-import { ReservationTimeGranularity } from "./reservartion-time-granularity";
-import { ResourceCheckoutType } from "./resource-checkout-type";
-import { ResourceExtraField } from "./resource-extra-field";
-import { ResourcePicture } from "./resource-picture";
+} from 'class-validator';
+import { DayOfWeekAvailabilityDto } from './day-of-week-availability.dto';
+import { ResourcePictureDto } from './resource-picture.dto';
+import {
+  DayOfWeekName,
+  MinimalReservationAdvance,
+  MinimalReservationDuration,
+  ReservationTimeGranularity,
+  ResourceCheckoutType,
+  ResourceExtraField,
+  ResourcePicture,
+} from '@bookingeek/core';
+import { CustomPriceRuleDto } from './custom-price-rule';
 
-export class ResourceWeekAvailability {
+export class ResourceWeekAvailabilityDto {
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => DayOfWeekAvailability)
-  sunday: DayOfWeekAvailability;
+  @Type(() => DayOfWeekAvailabilityDto)
+  sunday: DayOfWeekAvailabilityDto;
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => DayOfWeekAvailability)
-  monday: DayOfWeekAvailability;
+  @Type(() => DayOfWeekAvailabilityDto)
+  monday: DayOfWeekAvailabilityDto;
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => DayOfWeekAvailability)
-  tuesday: DayOfWeekAvailability;
+  @Type(() => DayOfWeekAvailabilityDto)
+  tuesday: DayOfWeekAvailabilityDto;
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => DayOfWeekAvailability)
-  wednesday: DayOfWeekAvailability;
+  @Type(() => DayOfWeekAvailabilityDto)
+  wednesday: DayOfWeekAvailabilityDto;
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => DayOfWeekAvailability)
-  thursday: DayOfWeekAvailability;
+  @Type(() => DayOfWeekAvailabilityDto)
+  thursday: DayOfWeekAvailabilityDto;
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => DayOfWeekAvailability)
-  friday: DayOfWeekAvailability;
+  @Type(() => DayOfWeekAvailabilityDto)
+  friday: DayOfWeekAvailabilityDto;
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => DayOfWeekAvailability)
-  saturday: DayOfWeekAvailability;
+  @Type(() => DayOfWeekAvailabilityDto)
+  saturday: DayOfWeekAvailabilityDto;
 }
 
 export class UpdateResourceDto {
@@ -81,7 +83,7 @@ export class UpdateResourceDto {
   @IsDefined()
   @ValidateNested()
   @Type(() => ResourcePicture)
-  picture: ResourcePicture;
+  picture: ResourcePictureDto;
   @Expose()
   @IsDefined()
   @IsNumber()
@@ -95,7 +97,7 @@ export class UpdateResourceDto {
   @Expose()
   @IsDefined()
   @IsString()
-  @IsIn(["in-loco-online", "online-only", "in-loco-only"])
+  @IsIn(['in-loco-online', 'online-only', 'in-loco-only'])
   checkoutType: ResourceCheckoutType;
   @Expose()
   @IsDefined()
@@ -106,13 +108,13 @@ export class UpdateResourceDto {
   @Expose()
   @IsDefined()
   @IsString()
-  @IsIn(["date-time", "date-only"])
-  availabilityType: "date-time" | "date-only";
+  @IsIn(['date-time', 'date-only'])
+  availabilityType: 'date-time' | 'date-only';
   @Expose()
   @IsDefined()
   @IsString()
-  @IsIn(["ranges", "slots"])
-  reservationTimeType: "ranges" | "slots";
+  @IsIn(['ranges', 'slots'])
+  reservationTimeType: 'ranges' | 'slots';
   @Expose()
   @IsDefined()
   @IsNumber()
@@ -131,18 +133,18 @@ export class UpdateResourceDto {
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => ResourceWeekAvailability)
-  availability: Record<DayOfWeekName, DayOfWeekAvailability>;
+  @Type(() => ResourceWeekAvailabilityDto)
+  availability: Record<DayOfWeekName, DayOfWeekAvailabilityDto>;
   @Expose()
   @IsDefined()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => CustomPriceRule)
-  unavailability: Array<CustomPriceRule>;
+  @Type(() => CustomPriceRuleDto)
+  unavailability: Array<CustomPriceRuleDto>;
   @Expose()
   @IsDefined()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => CustomPriceRule)
-  customPrices: Array<CustomPriceRule>;
+  @Type(() => CustomPriceRuleDto)
+  customPrices: Array<CustomPriceRuleDto>;
 }

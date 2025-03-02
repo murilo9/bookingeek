@@ -7,7 +7,8 @@ import {
 import { DatabaseService } from '../../database/database.service';
 import { ObjectId } from 'mongodb';
 import { DbCollection } from 'src/database/collection.enum';
-import { User, CreateResourceDto, Resource } from '@bookingeek/core';
+import { User, Resource } from '@bookingeek/core';
+import { CreateResourceDto } from '../dto/create-resource.dto';
 
 /**
  * Checks if a businees with the same title or slug exists.

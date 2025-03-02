@@ -6,14 +6,14 @@ import { DatabaseService } from 'src/database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
 import * as bcrypt from 'bcryptjs';
 import {
-  BusinessSignUpDto,
   BusinessSignUpResponse,
   Business,
   FromPersistentEntity,
   User,
-  UpdateBusinessDto,
 } from '@bookingeek/core';
 import { UserPassword } from 'src/common/types/user-password.entity';
+import { BusinessSignUpDto } from './dto/business-signup.dto';
+import { UpdateBusinessDto } from './dto/update-business.dto';
 
 @Injectable()
 export class BusinessesService {

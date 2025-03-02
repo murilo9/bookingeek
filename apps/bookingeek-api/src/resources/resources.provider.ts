@@ -7,10 +7,10 @@ import {
   Resource,
   RetrieveResourceAvailabilityQuery,
   DayOfWeekAvailability,
-  CreateResourceDto,
   FromPersistentEntity,
-  UpdateResourceDto,
 } from '@bookingeek/core';
+import { CreateResourceDto } from './dto/create-resource.dto';
+import { UpdateResourceDto } from './dto/update-resource.dto';
 
 @Injectable()
 export class ResourcesService {

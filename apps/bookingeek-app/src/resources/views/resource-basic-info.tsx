@@ -18,7 +18,7 @@ import {
   Resource,
   ResourceIconName,
   ResourceCheckoutType,
-  UpdateResourceDto,
+  UpdateResourcePayload,
 } from "@bookingeek/core";
 
 const RESOURCE_CHECKOUT_TYPES: Record<string, string> = {
@@ -115,7 +115,7 @@ export default function ResourceBasicInfoView() {
   });
 
   const onSaveClick = async () => {
-    const dto: UpdateResourceDto = {
+    const dto: UpdateResourcePayload = {
       ...resource,
       picture: { icon: resourceIcon, src: [] },
       priceInCents: hasPrice ? Number(priceString) * 100 : null,

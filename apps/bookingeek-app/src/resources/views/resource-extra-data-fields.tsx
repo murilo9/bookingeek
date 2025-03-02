@@ -9,8 +9,8 @@ import { useState } from "react";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
 import {
   Resource,
-  UpdateResourceDto,
   ResourceExtraField,
+  UpdateResourcePayload,
 } from "@bookingeek/core";
 
 const StyledForm = styled.div`
@@ -61,7 +61,7 @@ export default function ResourceExtraDataFieldsView() {
   };
 
   const onSaveClick = async () => {
-    const dto: UpdateResourceDto = {
+    const dto: UpdateResourcePayload = {
       ...resource,
       extraFields,
     };

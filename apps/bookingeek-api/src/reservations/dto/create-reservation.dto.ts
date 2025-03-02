@@ -6,10 +6,10 @@ import {
   IsString,
   ValidateIf,
   ValidateNested,
-} from "class-validator";
-import { DateDef } from "./date-def";
-import { Expose, Type } from "class-transformer";
-import { ReservationCustomerData } from "./reservation-customer-data";
+} from 'class-validator';
+import { Expose, Type } from 'class-transformer';
+import { DateDefDto } from 'src/common/dto/date-def.dto';
+import { ReservationCustomerDataDto } from './reservation-customer-data.dto';
 
 export class CreateReservationDto {
   @Expose()
@@ -21,14 +21,14 @@ export class CreateReservationDto {
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => DateDef)
-  startDate: DateDef;
+  @Type(() => DateDefDto)
+  startDate: DateDefDto;
   // Reservation end date data
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => DateDef)
-  endDate: DateDef;
+  @Type(() => DateDefDto)
+  endDate: DateDefDto;
   // Start time, in minutes past midnight. Only applies if type = 'date-time'
   @Expose()
   @IsDefined()
@@ -45,8 +45,8 @@ export class CreateReservationDto {
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => ReservationCustomerData)
-  customerData: ReservationCustomerData;
+  @Type(() => ReservationCustomerDataDto)
+  customerData: ReservationCustomerDataDto;
   // Extra data fields, if any
   @Expose()
   @IsDefined()
@@ -55,6 +55,6 @@ export class CreateReservationDto {
   @Expose()
   @IsDefined()
   @IsString()
-  @IsIn(["online", "in-loco"])
-  checkoutOptionChosen: "online" | "in-loco";
+  @IsIn(['online', 'in-loco'])
+  checkoutOptionChosen: 'online' | 'in-loco';
 }

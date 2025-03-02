@@ -21,8 +21,8 @@ import { deepCopy } from "../../common/helpers/deep-copy";
 import {
   Resource,
   CustomPriceRule,
-  UpdateResourceDto,
   TimeRange,
+  UpdateResourcePayload,
 } from "@bookingeek/core";
 
 const StyledForm = styled.div`
@@ -94,7 +94,7 @@ export default function ResourceUnavailabilityView() {
   const availabilityIsDateOnly = resource.availabilityType === "date-only";
 
   const onSaveClick = async () => {
-    const dto: UpdateResourceDto = {
+    const dto: UpdateResourcePayload = {
       ...resource,
       unavailability: unavailabilityRules,
     };

@@ -68,3 +68,7 @@ In order to the Android build script work, the android/local.properties file (cr
 Saved links:
 
 https://www.reddit.com/r/reactjs/comments/15p0mfx/why_react_developers_dont_comment_their_code/
+
+**DTOs and decorators**
+
+Since classes with decoratos don't work properly on Nest.js when imported from the bookingeek-core build, all DTOs are located in the backend package. Their frontend equivalent is a "Payload"-sufixed class identical to the DTO, but without decorators.

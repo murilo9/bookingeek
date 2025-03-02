@@ -1,4 +1,4 @@
-export * from "./create-resource.dto";
+export * from "./create-resource-payload";
 export * from "./custom-price-rule";
 export * from "./day-of-week-availability";
 export * from "./minimal-reservation-advance";
@@ -13,4 +13,4 @@ export * from "./resource-picture";
 export * from "./resource-reservation-advance-unit";
 export * from "./retrieve-resource-availability-query";
 export * from "./retrieve-resources-query";
-export * from "./update-resource.dto";
+export * from "./update-resourc-payload";

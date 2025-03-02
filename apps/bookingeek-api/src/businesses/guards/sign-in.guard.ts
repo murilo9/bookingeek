@@ -8,8 +8,9 @@ import { compareSync } from 'bcryptjs';
 import { DatabaseService } from '../../database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
 import { ObjectId } from 'mongodb';
-import { SignInDto, User } from '@bookingeek/core';
+import { User } from '@bookingeek/core';
 import { UserPassword } from 'src/common/types/user-password.entity';
+import { SignInDto } from 'src/common/dto/sign-in.dto';
 
 /**
  * Checks if user exists and password matches email.

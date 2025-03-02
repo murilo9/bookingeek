@@ -21,10 +21,10 @@ import Button from "../../common/components/button/button";
 import PaymentTypeStep from "../../reservations/components/payment-type-step";
 import ConfirmationStep from "../../reservations/components/confirmation-step";
 import {
-  CreateReservationDto,
   Reservation,
   Resource,
   ResourceExtraField,
+  CreateReservationPayload,
 } from "@bookingeek/core";
 import { getDateDefFromDate } from "../../common/helpers/get-date-def-from-date";
 import CheckoutStep from "../../reservations/components/checkout-step";
@@ -110,7 +110,7 @@ export default function BusinessShowcasePage() {
 
   // Called after checkout is completed (if paying online) or after confirmation step
   const onCreateReservation = async () => {
-    const createReservationDto: CreateReservationDto = {
+    const createReservationDto: CreateReservationPayload = {
       checkoutOptionChosen: checkoutTypeChosen!,
       customerData: {
         email: customerEmail,

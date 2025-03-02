@@ -1,10 +1,10 @@
 import { appApi } from "../store";
 import { buildQueryString } from "../common/helpers/build-query-string";
 import {
+  CreateResourcePayload,
   Resource,
-  UpdateResourceDto,
-  CreateResourceDto,
   RetrieveResourcesQuery,
+  UpdateResourcePayload,
 } from "@bookingeek/core";
 
 export const resourcesApi = appApi.injectEndpoints({
@@ -18,7 +18,7 @@ export const resourcesApi = appApi.injectEndpoints({
     }),
     updateResource: builder.mutation<
       Resource<string>,
-      { dto: UpdateResourceDto; id: string }
+      { dto: UpdateResourcePayload; id: string }
     >({
       query: ({ id, dto }) => ({
         url: `resources/${id}`,
@@ -27,7 +27,7 @@ export const resourcesApi = appApi.injectEndpoints({
       }),
       invalidatesTags: ["Resource"],
     }),
-    createResource: builder.mutation<Resource<string>, CreateResourceDto>({
+    createResource: builder.mutation<Resource<string>, CreateResourcePayload>({
       query: (dto) => ({
         url: "resources",
         method: "POST",

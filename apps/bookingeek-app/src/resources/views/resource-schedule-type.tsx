@@ -10,8 +10,8 @@ import { useHandleRequestCall } from "../../common/hooks/handle-request-call";
 import { useFormComparator } from "../../common/hooks/useFormComparator";
 import {
   Resource,
-  UpdateResourceDto,
   ReservationTimeGranularity,
+  UpdateResourcePayload,
 } from "@bookingeek/core";
 
 const StyledForm = styled.div`
@@ -112,7 +112,7 @@ export default function ResourceScheduleTypeView() {
 
   // Saves the current changes
   const onSaveClick = async () => {
-    const dto: UpdateResourceDto = {
+    const dto: UpdateResourcePayload = {
       ...resource,
       availabilityType,
       reservationTimeType,

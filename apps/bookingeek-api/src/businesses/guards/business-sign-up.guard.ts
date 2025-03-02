@@ -7,7 +7,8 @@ import {
 import { DatabaseService } from '../../database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
 import { ObjectId } from 'mongodb';
-import { BusinessSignUpDto, User } from '@bookingeek/core';
+import { User } from '@bookingeek/core';
+import { BusinessSignUpDto } from '../dto/business-signup.dto';
 
 /**
  * Checks if a user exists with the specified email.

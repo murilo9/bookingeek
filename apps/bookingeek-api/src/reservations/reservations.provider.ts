@@ -10,8 +10,8 @@ import {
   FromPersistentEntity,
   getReservationPriceTotal,
   Reservation,
-  CreateReservationDto,
 } from '@bookingeek/core';
+import { CreateReservationDto } from './dto/create-reservation.dto';
 
 @Injectable()
 export class ReservationsService {

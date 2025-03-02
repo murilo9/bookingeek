@@ -13,11 +13,11 @@ import {
   Resource,
   customPriceRuleMatchesDateTime,
   reservationsOverlap,
-  CreateReservationDto,
   Reservation,
   getDateFromDateDef,
   DAY_OF_WEEK_NAME,
 } from '@bookingeek/core';
+import { CreateReservationDto } from '../dto/create-reservation.dto';
 
 /**
  * Checks if there are active (default or custom) rules for the reservation intent.

@@ -13,7 +13,7 @@ import { useHandleRequestCall } from "../../common/hooks/handle-request-call";
 import AvailabilityTimeRuleForm from "../components/availability-range-rule-form/availability-time-rule-form";
 import {
   Resource,
-  UpdateResourceDto,
+  UpdateResourcePayload,
   DayOfWeekName,
   TimeRange,
   DayOfWeekAvailability,
@@ -80,7 +80,7 @@ export default function ResourceAvailabilityView() {
 
   // Saves the current changes
   const onSaveClick = async () => {
-    const dto: UpdateResourceDto = {
+    const dto: UpdateResourcePayload = {
       ...resource,
       availability: availabilityForm,
     };

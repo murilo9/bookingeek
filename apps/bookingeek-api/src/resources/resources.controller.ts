@@ -20,12 +20,12 @@ import { ValidationPipe } from 'src/common/pipes/validation.pipe';
 import { CreateResrouceGuard } from './guards/create-resource.guard';
 import { ParseResourcesQueryPipe } from './pipes/parse-resources-query.pipe';
 import {
-  CreateResourceDto,
   RetrieveResourceAvailabilityQuery,
   RetrieveResourcesQuery,
-  UpdateResourceDto,
   User,
 } from '@bookingeek/core';
+import { CreateResourceDto } from './dto/create-resource.dto';
+import { UpdateResourceDto } from './dto/update-resource.dto';
 
 @Controller()
 export class ResourcesController {
