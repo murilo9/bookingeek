@@ -4,15 +4,28 @@ Bookingeek is a simple scheduling platform (similar to Calendly) where customers
 
 Figma wireframes: https://www.figma.com/design/pMVdc3Qzz2htje5C1H3MZg/Bookingeek?node-id=0-1&t=V8XPE5VmtDbAqNky-1
 
-## How it works
-
-- Businesses can register in the platform and create resources (services, venues, vehicles, people, etc) which are bookeable.
-- Businesses can register several users that may sign in to the platform with username and password (at least 1 user is mandatory) and manage their resources.
-- Customers can make reservations on resources.
-- Businesses' users can see reservations, as well as cancel or modify them.
-
 - [Frontend docs](/apps/bookingeek-app/README.md)
 - [Backend docs](/apps/bookingeek-api/README.md)
+
+## How it works
+
+Everything comes up to 4 things: **businesses**, **users**, **resources** and **reservations**.
+
+- Business: a business.
+- Resource: anything that can be booked/reserved (services, venues, vehicles, people, etc).
+- User: a business' employee (NOT a customer).
+- Reservation: a reservation made in a resource by a customer.
+
+> Customers technically don't exist as an entity in the platform. We only keep some of their data in the reservations.
+
+> As an entity, a "user" is any person that can sign in to the platform and manage the business on its behalf. I've decided to not call them "employees" as in some business an employee is techcnically a resource (like barbers in barber shops, alwyers in a law firm, etc).
+
+**Who can do what**
+
+- Businesses can register in the platform and create resources (services, venues, vehicles, people, etc) which are bookeable.
+- Businesses can register several users (employees) that may sign in to the platform with username and password and manage their resources. At least 1 user is mandatory.
+- Customers can make reservations on resources.
+- Businesses' users can see reservations, as well as cancel or modify them.
 
 ## References
 
