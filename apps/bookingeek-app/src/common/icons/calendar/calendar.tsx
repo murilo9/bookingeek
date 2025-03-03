@@ -9,7 +9,7 @@ export default function CalendarIcon({ color, size }: IconProps) {
       focusable="false"
       viewBox="0 0 24 24"
       aria-hidden="true"
-      stroke={computedColor}
+      fill={computedColor}
       width={computedSize}
       height={computedSize}
       strokeWidth={0.2}
