@@ -3,7 +3,7 @@ import { buildQueryString } from "../common/helpers/build-query-string";
 import {
   Reservation,
   RetrieveReservationsQuery,
-  CreateReservationDto,
+  CreateReservationPayload,
 } from "@bookingeek/core";
 
 export const reservationsApi = appApi.injectEndpoints({
@@ -16,7 +16,7 @@ export const reservationsApi = appApi.injectEndpoints({
     }),
     createReservation: builder.mutation<
       Reservation<string>,
-      CreateReservationDto
+      CreateReservationPayload
     >({
       query: (dto) => ({
         url: "reservations",

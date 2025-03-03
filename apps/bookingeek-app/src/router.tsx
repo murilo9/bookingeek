@@ -3,7 +3,6 @@ import { useAuth } from "./common/hooks/useAuth";
 import BusinessPanelPage from "./businesses/pages/panel";
 import BusinessShowcasePage from "./businesses/pages/showcase";
 import ResourcesListView from "./businesses/views/resources-list";
-import ReservationsView from "./businesses/views/reservations";
 import BusinessInfoView from "./businesses/views/business";
 import UsersManagementView from "./businesses/views/users";
 import AccountManagementView from "./businesses/views/account";
@@ -18,8 +17,10 @@ import ResourceCustomPricesView from "./resources/views/resource-custom-prices";
 import ResourceExtraDataFieldsView from "./resources/views/resource-extra-data-fields";
 import ResourceUnavailabilityView from "./resources/views/resource-unavailability";
 import ResourceScheduleTypeView from "./resources/views/resource-schedule-type";
-import ResourceProvider from "./resources/components/resource-loader/resource-provider";
+import ResourceProvider from "./resources/components/resource-provider/resource-provider";
 import ReservationDetailsPage from "./reservations/pages/reservation";
+import ReservationProvider from "./reservations/components/reservation-provider";
+import ReservationsListView from "./businesses/views/reservations-list";
 
 const PublicRouter = () => (
   <Routes>
@@ -54,11 +55,12 @@ const ProtectedRouter = () => (
         />
         <Route path="unavailability" element={<ResourceUnavailabilityView />} />
       </Route>
-      <Route path="/reservations" element={<ReservationsView />}>
-        <Route
-          path=":reservationId"
-          element={<BusinessReservationDetailsView />}
-        />
+      <Route path="/reservations" element={<ReservationsListView />} />
+      <Route
+        path="/reservations/:reservationId"
+        element={<ReservationProvider />}
+      >
+        <Route index element={<BusinessReservationDetailsView />} />
       </Route>
 
       <Route path="/users" element={<UsersManagementView />} />

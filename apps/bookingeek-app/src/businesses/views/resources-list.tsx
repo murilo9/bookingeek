@@ -15,7 +15,7 @@ const StyledResourcesList = styled.div`
  */
 export default function ResourcesListView() {
   const { user } = useAuth();
-  const { data } = useGetResourcesQuery(user!.businessId);
+  const { data } = useGetResourcesQuery({ businessId: user!.businessId });
   const navigate = useNavigate();
 
   // TODO: loading state if data does not exist. Check isFetching and isLoading from useGetResourcesQuery as well
