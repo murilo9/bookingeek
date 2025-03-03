@@ -71,6 +71,7 @@ export class ReservationsService {
       extraFields,
       paymentStatus: 'pending',
       refundedAmountInCents: 0,
+      totalPriceInCents: 0,
       resourceId,
       resourceJSON: JSON.stringify(resource),
       startDateTimestamp: startDateObj.getTime(),
@@ -101,6 +102,7 @@ export class ReservationsService {
           ],
           platformFeeInCents: Math.round(totalPriceInCents / 10),
         });
+      reservationToCreate.totalPriceInCents = totalPriceInCents;
       reservationToCreate.stripePaymentIntentId = stripeCheckoutSession.id;
       reservationToCreate.checkoutSessionClientSecret =
         stripeCheckoutSession.client_secret;

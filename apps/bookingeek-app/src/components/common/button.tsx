@@ -35,7 +35,7 @@ const color = {
 };
 
 type ButtonProps = {
-  children?: JSX.Element | string | number;
+  children?: JSX.Element | string | string[] | number;
   disabled?: boolean;
   variant?: "primary" | "secondary" | "danger" | "warning";
   startSlot?: JSX.Element;

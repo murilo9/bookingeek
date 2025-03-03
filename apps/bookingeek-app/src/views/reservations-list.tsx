@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ReservationItem from "../components/domain/reservation-item";
 import { useGetReservationsQuery } from "../store/reservations-api";
 import Input from "../components/common/input";
+import { useNavigate } from "react-router";
 
 const StyledReservationsView = styled.div`
   display: flex;
@@ -26,6 +27,7 @@ const StyledReservationItemsList = styled.div`
 
 export default function ReservationsListView() {
   const { data: reservations, isLoading } = useGetReservationsQuery({});
+  const navigate = useNavigate();
 
   return (
     <StyledReservationsView>
@@ -37,7 +39,11 @@ export default function ReservationsListView() {
         {isLoading
           ? "Loading reservations..."
           : reservations?.map((reservation) => (
-              <ReservationItem reservation={reservation} clickable />
+              <ReservationItem
+                reservation={reservation}
+                clickable
+                onClick={() => navigate("/reservations/" + reservation._id)}
+              />
             ))}
       </StyledReservationItemsList>
     </StyledReservationsView>

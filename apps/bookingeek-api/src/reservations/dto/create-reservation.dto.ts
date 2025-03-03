@@ -3,6 +3,7 @@ import {
   IsIn,
   IsNotEmpty,
   IsNumber,
+  IsObject,
   IsString,
   ValidateIf,
   ValidateNested,
@@ -50,6 +51,7 @@ export class CreateReservationDto {
   // Extra data fields, if any
   @Expose()
   @IsDefined()
+  @IsObject()
   extraFields: Record<string, string | boolean>;
   // Checkout option chosen by the customer
   @Expose()

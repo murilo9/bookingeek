@@ -72,7 +72,7 @@ export default function ReservationItem({
   const resource = data?.length ? data[0] : undefined;
 
   return (
-    <StyledReservationItem clickable={clickable}>
+    <StyledReservationItem clickable={clickable} onClick={onClick || undefined}>
       {resource ? (
         <>
           <div>

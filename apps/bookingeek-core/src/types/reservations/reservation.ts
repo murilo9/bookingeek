@@ -30,6 +30,8 @@ export interface Reservation<T> extends PersistentEntity<T> {
     fullName: string;
     email: string;
   };
+  // Total price expected to be paid, in cents
+  totalPriceInCents: number;
   // Extra data fields, if any
   extraFields: Record<string, string | boolean>;
   // Checkout option chosen by the customer
