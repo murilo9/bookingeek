@@ -22,5 +22,10 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "stories/common/button.stories.tsx",
+    "stories/common/calendar.stories.tsx",
+    "stories/common/input.stories.tsx"
+  ]
 }

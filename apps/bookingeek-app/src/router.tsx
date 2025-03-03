@@ -1,26 +1,26 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
-import { useAuth } from "./common/hooks/useAuth";
-import BusinessPanelPage from "./businesses/pages/panel";
-import BusinessShowcasePage from "./businesses/pages/showcase";
-import ResourcesListView from "./businesses/views/resources-list";
-import BusinessInfoView from "./businesses/views/business";
-import UsersManagementView from "./businesses/views/users";
-import AccountManagementView from "./businesses/views/account";
-import NotFoundPage from "./common/pages/not-found";
-import BusinessReservationDetailsView from "./businesses/views/business-reservation-details";
-import SignInView from "./common/pages/sign-in";
-import SignUpView from "./common/pages/sign-up";
-import ResourceMenuView from "./resources/views/resource-menu";
-import ResourceAvailabilityView from "./resources/views/resource-availability";
-import ResourceBasicInfoView from "./resources/views/resource-basic-info";
-import ResourceCustomPricesView from "./resources/views/resource-custom-prices";
-import ResourceExtraDataFieldsView from "./resources/views/resource-extra-data-fields";
-import ResourceUnavailabilityView from "./resources/views/resource-unavailability";
-import ResourceScheduleTypeView from "./resources/views/resource-schedule-type";
-import ResourceProvider from "./resources/components/resource-provider/resource-provider";
-import ReservationDetailsPage from "./reservations/pages/reservation";
-import ReservationProvider from "./reservations/components/reservation-provider";
-import ReservationsListView from "./businesses/views/reservations-list";
+import { useAuth } from "./hooks/useAuth";
+import BusinessPanelPage from "./pages/panel";
+import BusinessShowcasePage from "./pages/showcase";
+import ResourcesListView from "./views/resources-list";
+import BusinessInfoView from "./views/business";
+import UsersManagementView from "./views/users";
+import AccountManagementView from "./views/account";
+import NotFoundPage from "./pages/not-found";
+import BusinessReservationDetailsView from "./views/business-reservation-details";
+import SignInView from "./pages/sign-in";
+import SignUpView from "./pages/sign-up";
+import ResourceMenuView from "./views/resource-menu";
+import ResourceAvailabilityView from "./views/resource-availability";
+import ResourceBasicInfoView from "./views/resource-basic-info";
+import ResourceCustomPricesView from "./views/resource-custom-prices";
+import ResourceExtraDataFieldsView from "./views/resource-extra-data-fields";
+import ResourceUnavailabilityView from "./views/resource-unavailability";
+import ResourceScheduleTypeView from "./views/resource-schedule-type";
+import ResourceProvider from "./components/domain/resource-provider";
+import ReservationDetailsPage from "./pages/reservation";
+import ReservationProvider from "./components/domain/reservation-provider";
+import ReservationsListView from "./views/reservations-list";
 
 const PublicRouter = () => (
   <Routes>

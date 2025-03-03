@@ -6,3 +6,4 @@
 - prevent saving duplicated time slots at resourece's availability config
 - extra data fields limits
 - filter reservations by resource at business' reservations list view
+- move unecessary types from the frontend folder to bookingeek-core, or remove them

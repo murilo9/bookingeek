@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import Router from "./router";
-import { useAppDispatch, useAppSelector } from "./store";
-import Dialog from "./common/components/dialog/dialog";
-import { genericDialogClosed } from "./common/common-slice";
+import { useAppDispatch, useAppSelector } from "./store/store";
+import Dialog from "./components/common/dialog";
+import { genericDialogClosed } from "./store/common-slice";
 
 function App() {
   const dispatch = useAppDispatch();

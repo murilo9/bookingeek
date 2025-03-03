@@ -1,7 +1,15 @@
 # Bookingeek - Frontend
 
-Bookingeek's frontend is an SPA made with React Vite, using Styled Components for styling It is essentially divided into 3 concepts: pages, views and components. A page loads all necessary data then renders a view. A view gets all necessary data loaded by the page and renders its components (lists, buttons, menus, etc). We use React Router's routes and outlets to ensure that the page/view hierarchy works as expected and they're navigable through the URL path.
-The code is split between feature modules, each module being resposible for holding code that belongs to a specific domain.
+Bookingeek's frontend is an SPA made with React Vite, using Styled Components for styling. It is essentially divided into 3 concepts: pages, views and components. A page loads all necessary data then renders a view. A view gets all necessary data loaded by the page and renders its components (lists, buttons, menus, etc). React Router's routes and outlets are used to ensure that the page/view hierarchy works as expected and they're navigable through the URL path.
+The code is split among:
+
+- **components**: which can be _common_ (general utility, like buttons and input fields), _domain_ (specific to the application's domain, like a reservation list item) and _icons_.
+- **data**: constant values used in the code.
+- **views**: components that consitutes a view.
+- **pages**: components that renders views and are rendered by the router.
+- **types**: all Typescript typings specific to the front-end.
+- **hooks**: React hooks used in the application.
+- **store**: holds Redux's store slices, RTK Query APIs and the master store object.
 
 ## Pages
 
