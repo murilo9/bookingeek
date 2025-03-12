@@ -15,33 +15,38 @@ const StyledResourcesList = styled.div`
  */
 export default function ResourcesListView() {
   const { user } = useAuth();
-  const { data } = useGetResourcesQuery({ businessId: user!.businessId });
+  const { data: resources, isLoading } = useGetResourcesQuery({
+    businessId: user!.businessId,
+  });
   const navigate = useNavigate();
 
-  // TODO: loading state if data does not exist. Check isFetching and isLoading from useGetResourcesQuery as well
   return (
     <StyledResourcesList>
-      {data?.map(
-        ({
-          picture,
-          priceInCents,
-          priceTypeMinutes,
-          title,
-          description,
-          subtitle,
-          _id,
-        }) => (
-          <ResourceItem
-            picture={picture}
-            priceInCents={priceInCents}
-            priceTypeMinutes={priceTypeMinutes}
-            title={title}
-            description={description}
-            subtitle={subtitle}
-            onClick={() => navigate(`/resources/${_id}`)}
-          />
-        )
-      )}
+      {isLoading
+        ? "Loading..."
+        : resources?.length
+          ? resources.map(
+              ({
+                picture,
+                priceInCents,
+                priceTypeMinutes,
+                title,
+                description,
+                subtitle,
+                _id,
+              }) => (
+                <ResourceItem
+                  picture={picture}
+                  priceInCents={priceInCents}
+                  priceTypeMinutes={priceTypeMinutes}
+                  title={title}
+                  description={description}
+                  subtitle={subtitle}
+                  onClick={() => navigate(`/resources/${_id}`)}
+                />
+              )
+            )
+          : "You have no resources yet."}
     </StyledResourcesList>
   );
 }

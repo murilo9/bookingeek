@@ -22,6 +22,7 @@ export class ReservationsService {
 
   async retrieveReservations(query: Filter<Reservation<ObjectId>>) {
     // Searches the database
+    console.log('query', query);
     const reservations = await this.databaseService.findMany<
       Reservation<ObjectId>
     >(DbCollection.Reservations, query);

@@ -3,6 +3,7 @@ import ReservationItem from "../components/domain/reservation-item";
 import { useGetReservationsQuery } from "../store/reservations-api";
 import Input from "../components/common/input";
 import { useNavigate } from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 const StyledReservationsView = styled.div`
   display: flex;
@@ -26,7 +27,10 @@ const StyledReservationItemsList = styled.div`
 `;
 
 export default function ReservationsListView() {
-  const { data: reservations, isLoading } = useGetReservationsQuery({});
+  const { user } = useAuth();
+  const { data: reservations, isLoading } = useGetReservationsQuery({
+    businessId: user?.businessId,
+  });
   const navigate = useNavigate();
 
   return (
@@ -38,13 +42,15 @@ export default function ReservationsListView() {
       <StyledReservationItemsList>
         {isLoading
           ? "Loading reservations..."
-          : reservations?.map((reservation) => (
-              <ReservationItem
-                reservation={reservation}
-                clickable
-                onClick={() => navigate("/reservations/" + reservation._id)}
-              />
-            ))}
+          : reservations?.length
+            ? reservations?.map((reservation) => (
+                <ReservationItem
+                  reservation={reservation}
+                  clickable
+                  onClick={() => navigate("/reservations/" + reservation._id)}
+                />
+              ))
+            : "No reservations yet."}
       </StyledReservationItemsList>
     </StyledReservationsView>
   );

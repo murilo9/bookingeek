@@ -10,9 +10,8 @@ import {
 import { ReservationsService } from './reservations.provider';
 import { ValidationPipe } from 'src/common/pipes/validation.pipe';
 import { CreateReservationGuard } from './guards/create-reservation.guard';
-import { RetrieveReservationsQuery } from '@bookingeek/core';
 import { ParseReservationsQueryPipe } from './pipes/parse-reservation-query.pipe';
-import { RetrieveReservationsQueryDto } from './dto/retrieve-reservations-query.dto';
+import { RetrieveReservationsDto } from './dto/retrieve-reservations.dto';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 
 @Controller()
@@ -24,8 +23,8 @@ export class ReservationsController {
 
   @Get('reservations')
   retrieveReservations(
-    @Query(new ValidationPipe(RetrieveReservationsQuery))
-    query: RetrieveReservationsQueryDto,
+    @Query(new ValidationPipe(RetrieveReservationsDto))
+    query: RetrieveReservationsDto,
   ) {
     const retrieveReservationsDto = new ParseReservationsQueryPipe().transform(
       query,
