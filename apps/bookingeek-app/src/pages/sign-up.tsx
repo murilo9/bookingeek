@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { BusinessSignUpPayload } from "@bookingeek/core";
+import { BusinessSignUpPayload, SignInProvider } from "@bookingeek/core";
 import { useAuth } from "../hooks/useAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Button from "../components/common/button";
 import FormField from "../components/common/form-field";
@@ -20,6 +20,8 @@ import {
   BusinessResourcesType,
   BUSINESS_RESOURCE_TYPES,
 } from "../types/business-resource-type";
+import { getSlug } from "../helpers/get-slug";
+import { post } from "../helpers/make-request";
 
 const StyledPageContainer = styled.div`
   display: flex;
@@ -86,18 +88,23 @@ const STAGE_NAMES: Record<SignUpStages, string> = {
  */
 export default function SignUpPage() {
   const navigate = useNavigate();
+  const urlParams = new URLSearchParams(window.location.search);
+  const signInProvider = (urlParams.get("provider") ||
+    SignInProvider.NONE) as SignInProvider;
+  const defaultEmail = urlParams.get("email");
+  const defaultName = urlParams.get("name");
   const { signIn } = useAuth();
   // Defines the form step to be rendered
   const [formStep, setFormStep] = useState(0);
   // Fetching state of sign up request
   const [signingUp, setSigningUp] = useState(false);
   // ----- Form fields -----
-  const [businessName, setBusinessName] = useState("Joe's Barber");
+  const [businessName, setBusinessName] = useState("");
   const [businessField, setBusinessField] = useState<BusinessField>(
     "beauty-and-wellbeing"
   );
-  const [businessAddress, setBusinessAddress] = useState("47 St, 358, Boston");
-  const [businessPhone, setBusinessPhone] = useState("6171169845");
+  const [businessAddress, setBusinessAddress] = useState("");
+  const [businessPhone, setBusinessPhone] = useState("");
   const [businessDoesRefund, setBusinessDoesRefund] = useState<"yes" | "no">(
     "yes"
   );
@@ -106,12 +113,20 @@ export default function SignUpPage() {
   const [refundDescription, setRefundDescription] = useState("");
   const [businessResourcesType, setBusinessResourcesType] =
     useState<BusinessResourcesType>("services");
-  const [businessSlug, setBusinessSlug] = useState("joes-barber");
-  const [userFullName, setUserFullName] = useState("Joe Smith");
-  const [userEmail, setUserEmail] = useState("joe.smith@email.com");
-  const [userPassword, setUserPassword] = useState("joesmith#321");
-  const [userPasswordRepeat, setUserPasswordRepeat] = useState("joesmith#321");
+  const [businessSlug, setBusinessSlug] = useState("");
+  const [userFullName, setUserFullName] = useState(defaultName || "");
+  const [userEmail, setUserEmail] = useState(defaultEmail || "");
+  const [userPassword, setUserPassword] = useState("");
+  const [userPasswordRepeat, setUserPasswordRepeat] = useState("");
   // ----- End of form fields -----
+
+  // Forms the slug based on the business' name, if no slug is defined yet
+  useEffect(() => {
+    if (businessName && !businessSlug) {
+      const slug = getSlug(businessName);
+      setBusinessSlug(slug);
+    }
+  }, [businessName]);
 
   // Goes to previous form step, if possible
   const onBackClick = () => {
@@ -121,51 +136,63 @@ export default function SignUpPage() {
   };
 
   // Goes to next form step, if possible
-  const onNextClick = (currentStep: number) => {
-    if (currentStep < 10) {
-      setFormStep(currentStep + 1);
+  const onNextClick = () => {
+    if (formStep < 10) {
+      // Forms business' slug from business'n name if not formed yet
+      if (formStep === 0 && businessName) {
+        const slug = getSlug(businessName);
+        setBusinessSlug(slug);
+      }
+      // If sign in provider is google or facebook, prevents going to steps 7, 8 and 9 that asks for e-mail, password and name
+      if (signInProvider === SignInProvider.GOOGLE && formStep === 6) {
+        setFormStep(10);
+      } else {
+        setFormStep(formStep + 1);
+      }
     }
-    // TODO: add submit flow
+    // Sign up submit
+    else {
+      handleSignUp();
+    }
   };
 
   // Handles Enter key press in a form step
   const handleStepSubmit = () => {
     if (mayGoToNextFormStep()) {
-      onNextClick(formStep);
+      onNextClick();
     }
   };
 
   // Makes the sign up request
   const handleSignUp = async () => {
     setSigningUp(true);
-    try {
-      const signUpDto: BusinessSignUpPayload = {
-        adminUserEmail: userEmail,
-        adminUserFullName: userFullName,
-        adminUserPassword: userPassword,
-        businessAddress,
-        businessField,
-        businessName,
-        businessPhoneNumber: businessPhone,
-        businessResourcesType: businessResourcesType,
-        businessSlug,
-        doesRefund: businessDoesRefund === "yes",
-        refundDescription,
-        refundType: businessRefundType,
-      };
-      const signUpResponse = await fetch(`${BASE_URL_DEV}${SIGNUP_ROUTE}`, {
-        method: "POST",
-        body: JSON.stringify(signUpDto),
-        headers: { "Content-Type": "application/json" },
-      });
-      const res: { access_token: string /*, user: User*/ } =
-        await signUpResponse.json();
-      signIn(res.access_token);
-      window.location.reload();
-    } catch (error) {
-      // TODO: handle error
-      console.log(error);
+    const signUpDto: BusinessSignUpPayload = {
+      adminUserEmail: userEmail,
+      adminUserFullName: userFullName,
+      adminUserPassword: userPassword,
+      businessAddress,
+      businessField,
+      businessName,
+      businessPhoneNumber: businessPhone,
+      businessResourcesType: businessResourcesType,
+      businessSlug,
+      doesRefund: businessDoesRefund === "yes",
+      refundDescription,
+      refundType: businessRefundType,
+      signInProvider,
+    };
+    const { success, error } = await post<{ access_token: string }>(
+      SIGNUP_ROUTE,
+      signUpDto
+    );
+    if (error) {
+      console.log("error", error);
       setSigningUp(false);
+    } else if (success) {
+      console.log("success", success);
+      const { access_token } = success;
+      signIn(access_token);
+      window.location.reload();
     }
   };
 
@@ -408,9 +435,7 @@ export default function SignUpPage() {
             </Button>
           ) : null}
           <Button
-            onClick={() =>
-              formStep === 10 ? handleSignUp() : onNextClick(formStep)
-            }
+            onClick={onNextClick}
             disabled={!mayGoToNextFormStep() || signingUp}
           >
             {formStep === 10 ? "Submit" : "Next"}

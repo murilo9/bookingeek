@@ -47,11 +47,12 @@ export default function BusinessPanelPage() {
   const activeView = useActiveView();
   const currentPath = window.location.pathname;
   const { user } = useAuth();
-  const resourcesLoaded = useGetResourcesQuery({
+  const { data: businessResources } = useGetResourcesQuery({
     businessId: user!.businessId,
-  }).data;
-  const businessData = useGetBusinessByIdQuery(user?.businessId || "null");
-
+  });
+  const { data: businessData } = useGetBusinessByIdQuery(
+    user?.businessId || "null"
+  );
   // Dismisses toast after 6 seconds
   useEffect(() => {
     if (toastNotification) {
@@ -61,8 +62,7 @@ export default function BusinessPanelPage() {
 
   // Set page title
   useEffect(() => {
-    if (businessData?.data)
-      document.title = `${businessData.data.name} - Bookingeek`;
+    if (businessData) document.title = `${businessData.name} - Bookingeek`;
   }, [businessData]);
 
   // Goes back in the views hierarchy (removes last part of current URL path)
@@ -87,11 +87,13 @@ export default function BusinessPanelPage() {
       <></>
     );
 
-  return resourcesLoaded ? (
+  const everythingLoaded = businessData && businessResources;
+
+  return everythingLoaded ? (
     <>
       <DesktopHeader
-        businessName="Joe's Barber"
-        businessPictureUrl="https://jjsbasicmechanic.sitehenger.com/jjs-logo.png"
+        businessName={businessData.name}
+        businessPictureUrl={businessData.pictureUrl || "/business-generic.png"}
       />
       <StyledContentWrapper>
         <PanelLateralNavigationMenu />

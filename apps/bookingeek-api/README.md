@@ -63,6 +63,14 @@ F: frontend; B: backend; S: stripe
 2. B: checks if user exists and password matches. If so, signs a JWT token that is sent to the frontend.
 3. F: Persists the JWT token so the protected routes can be displayed.
 
+### Google Sign In
+
+1. F: user clicks the Google Sign In button and signs in with Google, which sends an access token.
+2. F: sends the access token to the backend (to the specific google sign in rendpoint).
+3. B: uses the access token to call Google's OAuth API and retrieve user's e-mail address.
+4. B: checks if a user with the given e-mail address exists. If so, signs in as normal. If not, returns the e-mail address.
+5. F: if received an access token, signs in as normal. If received an email address, redirect the user to the sign up page with e-mail address input filled and the 'google' provider, 'name' and 'email' parameters (all passed by the query string) so the sign up form can operate in 'google' provider mode.
+
 ### Reservation
 
 1. F: The customer selects a resource and fills the necessary data to make a reservation, that generates a CreateReservationDto, which is sent to the backend.

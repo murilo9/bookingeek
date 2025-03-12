@@ -9,10 +9,14 @@ type Response<T> = {
 type Options = {
   baseUrl?: string;
   queryParams?: URLSearchParams;
+  headers?: Record<string, string>;
 };
 
 // Makes a GET request.
-async function get<T>(route: string, options?: Options): Promise<Response<T>> {
+export async function get<T>(
+  route: string,
+  options?: Options
+): Promise<Response<T>> {
   const request = await fetch(
     `${options?.baseUrl || BASE_URL_DEV}${route}${options?.queryParams || ""}`
   );
@@ -26,7 +30,7 @@ async function get<T>(route: string, options?: Options): Promise<Response<T>> {
 }
 
 // Makes a POST request.
-async function post<T>(
+export async function post<T>(
   route: string,
   body: unknown,
   options?: Options
@@ -36,7 +40,7 @@ async function post<T>(
     {
       method: "POST",
       body: JSON.stringify(body),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...options?.headers },
     }
   );
   const response: T | RequestErrorResponse = await request.json();
@@ -48,8 +52,3 @@ async function post<T>(
     return { success };
   }
 }
-
-export const makeRequest = {
-  get,
-  post,
-};

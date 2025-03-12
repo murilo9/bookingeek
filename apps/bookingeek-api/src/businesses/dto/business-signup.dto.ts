@@ -1,3 +1,4 @@
+import { SignInProvider } from '@bookingeek/core';
 import { Expose } from 'class-transformer';
 import {
   IsBoolean,
@@ -41,7 +42,6 @@ export class BusinessSignUpDto {
   @Expose()
   @IsDefined()
   @IsString()
-  @IsNotEmpty()
   adminUserPassword: string;
   @Expose()
   @IsDefined()
@@ -65,4 +65,9 @@ export class BusinessSignUpDto {
   @IsDefined()
   @IsString()
   refundDescription: string;
+  @Expose()
+  @IsDefined()
+  @IsString()
+  @IsIn(['none', 'google', 'facebook'])
+  signInProvider: SignInProvider;
 }

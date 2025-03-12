@@ -13,6 +13,7 @@ import ResourcesIcon from "../icons/resources/resources";
 import SignoutIcon from "../icons/signout/signout";
 import UsersOutlinedIcon from "../icons/users-outlined/users-outlined";
 import UsersIcon from "../icons/users/users";
+import { googleLogout } from "@react-oauth/google";
 
 const StyledPanel = styled.div`
   display: none;
@@ -79,6 +80,8 @@ export default function PanelLateralNavigationMenu() {
   const { signOut } = useAuth();
 
   const handleSignOut = () => {
+    // TODO: this might need a check for existing google signin
+    googleLogout();
     signOut();
     window.location.href = "/";
   };

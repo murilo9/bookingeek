@@ -1,4 +1,5 @@
 import { PersistentEntity } from "../common";
+import { SignInProvider } from "./sign-in-provider";
 
 /**
  * Represents a business' employee that can sign in
@@ -10,4 +11,6 @@ export interface User<T> extends PersistentEntity<T> {
   name: string;
   // ID of the business this user belongs to
   businessId: T;
+  // Sign in provider
+  signInProvider: SignInProvider;
 }

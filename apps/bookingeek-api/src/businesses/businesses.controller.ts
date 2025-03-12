@@ -23,6 +23,7 @@ import { User } from '@bookingeek/core';
 import { BusinessSignUpDto } from './dto/business-signup.dto';
 import { SignInDto } from 'src/common/dto/sign-in.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
+import { GoogleSignInGuard } from './guards/google-sign-in.guard';
 
 @Controller()
 export class BusinessesController {
@@ -43,7 +44,7 @@ export class BusinessesController {
   }
 
   /**
-   * Called for signin in as a business user.
+   * Called for password sign in a business user.
    */
   @Post('signin')
   @UseGuards(SignInGuard)
@@ -52,6 +53,18 @@ export class BusinessesController {
     @Req() request: { user: User<ObjectId> },
   ) {
     return this.businessService.signIn(request.user);
+  }
+
+  /**
+   * Called for signing in/up with Google OAuth.
+   */
+  @Post('google-signin')
+  @UseGuards(GoogleSignInGuard)
+  googleSignIn(
+    @Req() request: { user?: User<ObjectId>; email?: string; name?: string },
+  ) {
+    const { user, email, name } = request;
+    return user ? this.businessService.signIn(request.user) : { email, name };
   }
 
   /**

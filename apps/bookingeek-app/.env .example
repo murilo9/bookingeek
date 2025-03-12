@@ -1,1 +1,2 @@
-VITE_STRIPE_KEY=stripekey
+VITE_STRIPE_KEY=stripe_publishable_key
+VITE_GOOGLE_APP_CLIENT_ID=google_app_client_id

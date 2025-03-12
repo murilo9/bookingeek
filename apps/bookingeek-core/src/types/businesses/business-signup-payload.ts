@@ -7,6 +7,7 @@ import {
   IsString,
   MinLength,
 } from "class-validator";
+import { SignInProvider } from "./sign-in-provider";
 
 export class BusinessSignUpPayload {
   businessName: string;
@@ -21,4 +22,5 @@ export class BusinessSignUpPayload {
   doesRefund: boolean;
   refundType: "total" | "partial";
   refundDescription: string;
+  signInProvider: SignInProvider;
 }

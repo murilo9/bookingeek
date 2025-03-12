@@ -39,6 +39,7 @@ export function RESERVATIONS_MOCK<T>(
       startTimeInMinutesPastMidnight: 60 * 14,
       stripePaymentIntentId: '',
       type: 'date-time',
+      totalPriceInCents: 0,
     },
     {
       _id: new Id(),
@@ -74,6 +75,7 @@ export function RESERVATIONS_MOCK<T>(
       startTimeInMinutesPastMidnight: 60 * 10.5,
       stripePaymentIntentId: '',
       type: 'date-time',
+      totalPriceInCents: 0,
     },
   ];
 }

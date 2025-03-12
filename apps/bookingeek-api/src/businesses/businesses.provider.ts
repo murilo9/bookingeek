@@ -10,6 +10,7 @@ import {
   Business,
   FromPersistentEntity,
   User,
+  SignInProvider,
 } from '@bookingeek/core';
 import { UserPassword } from 'src/common/types/user-password.entity';
 import { BusinessSignUpDto } from './dto/business-signup.dto';
@@ -56,22 +57,27 @@ export class BusinessesService {
       businessId: business._id,
       email: businessSignUpDto.adminUserEmail,
       name: businessSignUpDto.adminUserFullName,
+      signInProvider: businessSignUpDto.signInProvider,
     };
     const adminUser = await this.databaseService.insertOne<User<ObjectId>>(
       DbCollection.Users,
       userToCreate,
     );
-    // Creates business admin user's password
-    const hash = bcrypt.hashSync(businessSignUpDto.adminUserPassword, 13);
-    const adminUserPasswordToCreate: Omit<UserPassword, FromPersistentEntity> =
-      {
+    if (businessSignUpDto.signInProvider === SignInProvider.NONE) {
+      // Creates business admin user's password if there is no sign in provider
+      const hash = bcrypt.hashSync(businessSignUpDto.adminUserPassword, 13);
+      const adminUserPasswordToCreate: Omit<
+        UserPassword,
+        FromPersistentEntity
+      > = {
         hash,
         userId: adminUser._id,
       };
-    await this.databaseService.insertOne<UserPassword>(
-      DbCollection.UserPasswords,
-      adminUserPasswordToCreate,
-    );
+      await this.databaseService.insertOne<UserPassword>(
+        DbCollection.UserPasswords,
+        adminUserPasswordToCreate,
+      );
+    }
     // Attaches admin user to business
     business.adminUserId = adminUser._id;
     await this.databaseService.updateOne<Business<ObjectId>>(
