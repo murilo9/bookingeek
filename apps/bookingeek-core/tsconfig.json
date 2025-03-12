@@ -59,10 +59,7 @@
     "emitDecoratorMetadata": true // Enable metadata reflection for decorators
   },
   "include": [
-    "src/**/*.ts", // Include all .ts files in the src directory
-    "../bookingeek-api/src/businesses/dto/business-signup.dto.ts",
-    "../bookingeek-api/src/businesses/dto/update-business.dto.ts",
-    "../bookingeek-api/src/common/dto/sign-in.dto.ts"
+    "/**/*.ts" // Include all .ts files in the root directory
   ],
   "exclude": [
     "node_modules" // Exclude node_modules
