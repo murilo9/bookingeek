@@ -14,9 +14,11 @@ const StyledFormField = styled.div`
   gap: 12px;
 `;
 
-const StyledRadioInputContainer = styled.div`
+const StyledRadioInputContainer = styled.div<{
+  orirentation?: "column" | "row";
+}>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${(props) => props.orirentation || "column"};
   gap: 12px;
 `;
 
@@ -66,7 +68,7 @@ type FormFieldProps<ValueType = string, InputValueType = string> = {
   placeholder?: string;
   // Input type
   type?: FormFieldType;
-  // Only applies when type = 'select' or 'radio'
+  // Only applies for select and radio types
   options?: Array<{ value: string | number; label: string }>;
   // Children that will be rendered bellow the content
   children?: JSX.Element | Array<JSX.Element> | string | null;
@@ -78,6 +80,8 @@ type FormFieldProps<ValueType = string, InputValueType = string> = {
   autofocus?: boolean;
   // Makes the input outline and helper text red.
   error?: boolean;
+  // Options orientation. Only applies for 'options-radio' type.
+  orientation?: "column" | "row";
   // Change handler
   onChange: (value: ValueType) => void;
   // Inpout value change handler. Only applies for 'select-value' field type
@@ -107,6 +111,7 @@ export default function FormField<ValueType = string, InputValueType = string>({
   autofocus,
   children,
   description,
+  orientation,
 }: FormFieldProps<ValueType, InputValueType>) {
   const handleKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && onSubmit) {
@@ -153,7 +158,7 @@ export default function FormField<ValueType = string, InputValueType = string>({
         );
       case "options-radio":
         return (
-          <StyledRadioInputContainer>
+          <StyledRadioInputContainer orirentation={orientation}>
             {options?.length
               ? options.map((option) => (
                   <StyledRadioInput
