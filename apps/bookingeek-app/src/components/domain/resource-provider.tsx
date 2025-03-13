@@ -9,9 +9,9 @@ export default function ResourceProvider() {
     throw new Error("ResourceProvider: could not retrieve value of user!");
   }
 
-  const { isLoading, isFetching, data } = useGetResourcesQuery(
-    user!.businessId
-  );
+  const { isLoading, isFetching, data } = useGetResourcesQuery({
+    businessId: user!.businessId,
+  });
   const resource = data?.find(
     (resourceItem) => resourceItem._id === resourceId
   );

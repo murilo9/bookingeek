@@ -1,6 +1,7 @@
 import { Expose, Type } from 'class-transformer';
 import {
   IsArray,
+  IsBoolean,
   IsDefined,
   IsIn,
   IsNotEmpty,
@@ -61,6 +62,10 @@ export class ResourceWeekAvailabilityDto {
 }
 
 export class UpdateResourceDto {
+  @Expose()
+  @IsDefined()
+  @IsBoolean()
+  isActive: boolean;
   @Expose()
   @IsDefined()
   @IsString()

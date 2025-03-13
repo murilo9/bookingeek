@@ -31,6 +31,7 @@ export class ResourceWeekAvailability {
 }
 
 export class UpdateResourcePayload {
+  isActive: boolean;
   title: string;
   slug: string;
   subtitle: string;

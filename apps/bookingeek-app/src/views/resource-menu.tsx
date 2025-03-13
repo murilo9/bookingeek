@@ -1,5 +1,11 @@
-import { useNavigate } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 import styled from "styled-components";
+import Toggle from "../components/common/toggle";
+import { Resource, UpdateResourcePayload } from "@bookingeek/core";
+import { useEffect, useState } from "react";
+import { useUpdateResourceMutation } from "../store/resources-api";
+import { useAppDispatch } from "../store/store";
+import { toastNotificationShown } from "../store/common-slice";
 
 const StyledMenuItem = styled.div`
   padding: 16px;
@@ -11,6 +17,18 @@ const StyledMenuItem = styled.div`
   &:hover {
     background: #f4f4f4;
   }
+`;
+
+const StyledActivationlabel = styled.p<{ isActive: boolean }>`
+  font-weight: 600;
+  color: ${(props) => (props.isActive ? "inherit" : "#AA3131")};
+`;
+
+const StyledActivationToggleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
 `;
 
 const StyledMenuItemTitle = styled.p`
@@ -62,12 +80,57 @@ const MENU_ITEMS: Array<{
 
 export default function ResourceMenuView() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [updateResource] = useUpdateResourceMutation();
+  const resource = useOutletContext<Resource<string>>();
+  const [resourceIsActive, setResourceIsActive] = useState(resource.isActive);
+  const [updatingResource, setUpdatingResource] = useState(false);
   const currentPath = window.location.pathname;
 
-  return MENU_ITEMS.map(({ action, description, title }) => (
-    <StyledMenuItem onClick={() => navigate(`${currentPath}/${action}`)}>
-      <StyledMenuItemTitle>{title}</StyledMenuItemTitle>
-      <StyledMenuItemDescription>{description}</StyledMenuItemDescription>
-    </StyledMenuItem>
-  ));
+  const onToggleResource = async (isActive: boolean) => {
+    setResourceIsActive(isActive);
+    setUpdatingResource(true);
+    const updateResourcePayload: UpdateResourcePayload = {
+      ...resource,
+      isActive,
+    };
+    const { data, error } = await updateResource({
+      dto: updateResourcePayload,
+      id: resource._id,
+    });
+    if (error) {
+      console.log(error);
+      // TODO: handle error
+    }
+    if (data) {
+      dispatch(
+        toastNotificationShown({
+          message: `Resource ${isActive ? "activated" : "deactivated"} successfully.`,
+          type: "success",
+        })
+      );
+    }
+    setUpdatingResource(false);
+  };
+
+  return (
+    <>
+      <StyledActivationToggleContainer>
+        <Toggle
+          active={resourceIsActive}
+          onChange={onToggleResource}
+          disabled={updatingResource}
+        />
+        <StyledActivationlabel isActive={resourceIsActive}>
+          Resource is {resourceIsActive ? "active" : "inactive"}
+        </StyledActivationlabel>
+      </StyledActivationToggleContainer>
+      {MENU_ITEMS.map(({ action, description, title }) => (
+        <StyledMenuItem onClick={() => navigate(`${currentPath}/${action}`)}>
+          <StyledMenuItemTitle>{title}</StyledMenuItemTitle>
+          <StyledMenuItemDescription>{description}</StyledMenuItemDescription>
+        </StyledMenuItem>
+      ))}
+    </>
+  );
 }

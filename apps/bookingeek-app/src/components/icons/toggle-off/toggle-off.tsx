@@ -1,58 +1,19 @@
 import { IconProps } from "../../../types/icon-props";
 
-export default function ToggleOffIcon({ size }: IconProps) {
+export default function ToggleOffIcon({ size, color }: IconProps) {
   const computedSize = size || 24;
+  const computedColor = color || "inherit";
 
   return (
     <svg
-      viewBox="0 0 24 24"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       width={computedSize}
       height={computedSize}
       preserveAspectRatio="xMidYMid meet"
+      viewBox="0 -960 960 960"
+      fill={color}
     >
-      <rect x="12" y="7" width="16" height="10" rx="5" fill="#777777" />
-      <g filter="url(#filter0_d_378_173)">
-        <rect x="4" y="4" width="16" height="16" rx="8" fill="#F8F8F8" />
-      </g>
-      <defs>
-        <filter
-          id="filter0_d_378_173"
-          x="0"
-          y="0"
-          width="24"
-          height="24"
-          filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
-        >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset />
-          <feGaussianBlur stdDeviation="2" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_378_173"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_378_173"
-            result="shape"
-          />
-        </filter>
-      </defs>
+      <path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm0-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm200-120Z" />
     </svg>
   );
 }
