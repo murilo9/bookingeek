@@ -6,6 +6,7 @@ import {
   RetrieveResourcesQuery,
   UpdateResourcePayload,
 } from "@bookingeek/core";
+import cookies from "js-cookie";
 
 export const resourcesApi = appApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -32,6 +33,9 @@ export const resourcesApi = appApi.injectEndpoints({
         url: "resources",
         method: "POST",
         body: dto,
+        headers: {
+          authorization: cookies.get("access_token"),
+        },
       }),
       invalidatesTags: ["Resource"],
     }),

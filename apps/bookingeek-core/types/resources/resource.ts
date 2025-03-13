@@ -12,6 +12,8 @@ import { PersistentEntity, DayOfWeekName } from "../common";
  * Represents an entity (service, venue, vehicle, worker, etc) that can be booked.
  */
 export interface Resource<T> extends PersistentEntity<T> {
+  // Whether the resource can be booked and will be displayed in the business showcase
+  isActive: boolean;
   // Resource's title
   title: string;
   // Resource's slug

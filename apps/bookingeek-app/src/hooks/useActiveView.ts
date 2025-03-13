@@ -9,6 +9,7 @@ const VIEWS: Record<string, string> = {
   business: "Business",
   account: "Account",
   users: "Users",
+  "new-resource": "New Resource",
 };
 
 /**

@@ -13,6 +13,7 @@ import {
 import Button from "../components/common/button";
 import ButtonRadio from "../components/common/button-radio";
 import RadioCard from "../components/common/radio-card";
+import { AVAILABILITY_TYPE_OPTIONS } from "../data/availability-type-options";
 
 const StyledForm = styled.div`
   padding: 8px;
@@ -38,21 +39,6 @@ const StyledRadioCardsList = styled.div`
   flex-direction: column;
   gap: 8px;
 `;
-
-// Options for choosing a resource's availability type
-const AVAILABILITY_TYPE_OPTIONS: Array<{
-  label: string;
-  value: "date-time" | "date-only";
-}> = [
-  {
-    label: "Date & Time",
-    value: "date-time",
-  },
-  {
-    label: "Date Only",
-    value: "date-only",
-  },
-];
 
 // Options for choosing a resource's minimal reservation advance unit
 const MINIMAL_RESERVATION_ADVANCE_UNIT_OPTIONS = [

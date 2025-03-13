@@ -69,6 +69,8 @@ const buildFormFromExtraFields = (
 export default function BusinessShowcasePage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const params = useParams();
+  const { resourceId: resourceIdFromUrl } = params;
   const [createReservation, createReservationData] =
     useCreateReservationMutation();
   const isCreatingReservation = createReservationData.isLoading;
@@ -80,9 +82,13 @@ export default function BusinessShowcasePage() {
   const [createdReservation, setCreatedReservation] =
     useState<Reservation<string> | null>(null);
 
-  const resourcesApi = useGetResourcesQuery({ businessId });
+  const { data: resources, isLoading: isLoadingResources } =
+    useGetResourcesQuery({ businessId });
+  const defaultResource = resources?.find(
+    (resource) => resource._id === resourceIdFromUrl
+  );
   const [selectedResource, setSelectedResource] =
-    useState<Resource<string> | null>(null);
+    useState<Resource<string> | null>(defaultResource || null);
   // Reservation form fields
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<{
@@ -318,10 +324,10 @@ export default function BusinessShowcasePage() {
         </>
       ) : (
         <StyledResourcesList>
-          {resourcesApi.isLoading ? (
+          {isLoadingResources ? (
             <>Loading reosurces...</>
-          ) : resourcesApi.data?.length ? (
-            resourcesApi.data.map((resource) => (
+          ) : resources?.length ? (
+            resources.map((resource) => (
               <ResourceItem
                 key={resource._id}
                 title={resource.title}

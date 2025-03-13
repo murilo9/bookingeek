@@ -14,6 +14,7 @@ import {
   ResourceIconName,
   ResourceCheckoutType,
   UpdateResourcePayload,
+  RESOURCE_CHECKOUT_TYPES,
 } from "@bookingeek/core";
 import Button from "../components/common/button";
 import IconButton from "../components/common/icon-button";
@@ -21,19 +22,8 @@ import Input from "../components/common/input";
 import Select from "../components/common/select";
 import { isPriceValid } from "../helpers/is-price-valid";
 import { onFormatCurrency } from "../helpers/on-format-currency";
-
-const RESOURCE_CHECKOUT_TYPES: Record<string, string> = {
-  "in-loco-online": "In-loco & online",
-  "in-loco-only": "In-loco only",
-  "online-only": "Online only",
-};
-const RESOURCE_PRICE_TYPES: Record<string, string> = {
-  hourly: "hour",
-  "30-min": "30 min",
-  "15-min": "15 min",
-  "10-min": "10 min",
-  "5-min": "5 min",
-};
+import { RESOURCE_PRICE_TYPES } from "../data/resource-price-types";
+import { validateSlug } from "../helpers/slug-is-valid";
 
 const StyledForm = styled.div`
   padding: 8px;
@@ -101,7 +91,7 @@ export default function ResourceBasicInfoView() {
   const [description, setDescription] = useState(resource.description);
   const [slug, setSlug] = useState(resource.slug);
   const priceIsValid = isPriceValid(priceString);
-  const slugIsValid = new RegExp(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).test(slug);
+  const slugIsValid = validateSlug(slug);
   const isSaving = updateData.isLoading;
   const { formChanged } = useFormComparator({
     pictureType,
@@ -134,6 +124,7 @@ export default function ResourceBasicInfoView() {
     <StyledForm>
       <FormField
         label="Image"
+        description="Choose an icon or upload a picture"
         type="options-radio"
         onChange={setPictureType}
         value={pictureType}
@@ -169,7 +160,6 @@ export default function ResourceBasicInfoView() {
       >
         {hasPrice === "yes" ? (
           <StyledPriceInputGrid>
-            {/* TODO: price string formatter */}
             <Input
               value={priceString}
               onChange={({ target: { value } }) =>
@@ -194,6 +184,7 @@ export default function ResourceBasicInfoView() {
       </FormField>
       <FormField
         label="Checkout Options"
+        description="Set how customers can pay"
         type="options-radio"
         value={checkoutType}
         onChange={setCheckoutType}
@@ -206,7 +197,7 @@ export default function ResourceBasicInfoView() {
       <FormField
         label="Description"
         type="text-long"
-        value={title}
+        value={description}
         onChange={setDescription}
       />
       <FormField

@@ -10,7 +10,9 @@ export default function PublicRouter() {
     <Routes>
       <Route path="/business">
         <Route index element={<Navigate to="/" />} />
-        <Route path=":businessId" element={<BusinessShowcasePage />} />
+        <Route path=":businessId" element={<BusinessShowcasePage />}>
+          <Route path=":resourceId" element={<BusinessShowcasePage />} />
+        </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Route>
       <Route

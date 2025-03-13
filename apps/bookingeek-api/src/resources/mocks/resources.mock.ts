@@ -18,6 +18,7 @@ export function RESOURCES_MOCK<T>(
       created: new Date().getTime(),
       updated: new Date().getTime(),
       IS_DELETED: false,
+      isActive: true,
       availability: {
         sunday: {
           available: true,
@@ -80,6 +81,7 @@ export function RESOURCES_MOCK<T>(
       created: new Date().getTime(),
       updated: new Date().getTime(),
       IS_DELETED: false,
+      isActive: true,
       availability: {
         sunday: {
           available: true,

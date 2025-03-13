@@ -17,6 +17,8 @@ import DesktopHeader from "../components/common/desktop-header";
 import IconButton from "../components/common/icon-button";
 import ViewHeader from "../components/common/view-hedaer";
 import BackIcon from "../components/icons/back/back";
+import AddIcon from "../components/icons/add/add";
+import { DEFAULT_BUSINESS_PICTURE_URL } from "../data/constants";
 
 const StyledContentWrapper = styled.div`
   flex: 1;
@@ -77,11 +79,22 @@ export default function BusinessPanelPage() {
     dispatch(toastNotificationCleared());
   };
 
-  // Action button of view header
-  const actionButton =
-    location.pathname.split("/").length > 2 ? (
+  // Left button of view header (usually a back button)
+  const headerStartButton =
+    location.pathname.split("/").length > 2 ||
+    activeView.route === "new-resource" ? (
       <IconButton onClick={onGoBackClick}>
         <BackIcon size={20} />
+      </IconButton>
+    ) : (
+      <></>
+    );
+
+  // Right button of view header (usually a "+" button for creating something)
+  const headerEndButton =
+    activeView.route === "resources" ? (
+      <IconButton onClick={() => navigate("/new-resource")}>
+        <AddIcon />
       </IconButton>
     ) : (
       <></>
@@ -93,7 +106,9 @@ export default function BusinessPanelPage() {
     <>
       <DesktopHeader
         businessName={businessData.name}
-        businessPictureUrl={businessData.pictureUrl || "/business-generic.png"}
+        businessPictureUrl={
+          businessData.pictureUrl || DEFAULT_BUSINESS_PICTURE_URL
+        }
       />
       <StyledContentWrapper>
         <PanelLateralNavigationMenu />
@@ -104,7 +119,8 @@ export default function BusinessPanelPage() {
               activeView.params[0] ||
               activeView.title
             }
-            startSlot={actionButton}
+            startSlot={headerStartButton}
+            endSlot={headerEndButton}
           />
           <Outlet />
         </StyledViewWrapper>

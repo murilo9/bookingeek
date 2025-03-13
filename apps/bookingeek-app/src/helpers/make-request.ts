@@ -1,5 +1,6 @@
 import { RequestErrorResponse } from "@bookingeek/core";
 import { BASE_URL_DEV } from "../env";
+import cookies from "js-cookie";
 
 type Response<T> = {
   success?: T;
@@ -40,7 +41,11 @@ export async function post<T>(
     {
       method: "POST",
       body: JSON.stringify(body),
-      headers: { "Content-Type": "application/json", ...options?.headers },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: cookies.get("access_token") || "",
+        ...options?.headers,
+      },
     }
   );
   const response: T | RequestErrorResponse = await request.json();

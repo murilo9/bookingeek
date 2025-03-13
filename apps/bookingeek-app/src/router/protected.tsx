@@ -15,6 +15,7 @@ import ResourceScheduleTypeView from "../views/resource-schedule-type";
 import ResourceUnavailabilityView from "../views/resource-unavailability";
 import ResourcesListView from "../views/resources-list";
 import UsersManagementView from "../views/users";
+import CreateResourceView from "../views/create-resource";
 
 export default function ProtectedRouter() {
   return (
@@ -36,6 +37,7 @@ export default function ProtectedRouter() {
             element={<ResourceUnavailabilityView />}
           />
         </Route>
+        <Route path="/new-resource" element={<CreateResourceView />} />
         <Route path="/reservations" element={<ReservationsListView />} />
         <Route
           path="/reservations/:reservationId"

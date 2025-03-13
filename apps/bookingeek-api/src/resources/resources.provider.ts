@@ -77,6 +77,7 @@ export class ResourcesService {
   ) {
     const resourceToCreate: Omit<Resource<ObjectId>, FromPersistentEntity> = {
       ...createResourceDto,
+      isActive: false,
       availability: {
         sunday: { available: false, rules: [] },
         monday: { available: false, rules: [] },

@@ -10,6 +10,14 @@ export class CreateResourceDto {
   @Expose()
   @IsDefined()
   @IsString()
+  subtitle: string;
+  @Expose()
+  @IsDefined()
+  @IsString()
+  description: string;
+  @Expose()
+  @IsDefined()
+  @IsString()
   @IsNotEmpty()
   slug: string;
   @Expose()
