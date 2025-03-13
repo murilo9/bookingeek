@@ -19,7 +19,6 @@ import {
   ReservationTimeGranularity,
   ResourceCheckoutType,
   ResourceExtraField,
-  ResourcePicture,
 } from '@bookingeek/core';
 import { CustomPriceRuleDto } from './custom-price-rule';
 
@@ -87,7 +86,7 @@ export class UpdateResourceDto {
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => ResourcePicture)
+  @Type(() => ResourcePictureDto)
   picture: ResourcePictureDto;
   @Expose()
   @IsDefined()
