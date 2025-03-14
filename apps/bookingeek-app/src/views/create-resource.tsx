@@ -438,6 +438,7 @@ export default function CreateResourceView() {
             icon: resourceIcon,
             src: resourcePicture ? [resourcePicture] : [],
           }}
+          isActive={true}
           priceInCents={Number(priceString) * 100}
           priceTypeMinutes={60}
           title={title}

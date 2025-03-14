@@ -77,6 +77,11 @@ const StyledPriceValue = styled.span`
   font-weight: 600;
 `;
 
+const StyledInactiveLabel = styled.span`
+  font-weight: 500;
+  color: #aa3131;
+`;
+
 const PRICE_TYPE: Record<string, string> = {
   "5": "5 min",
   "10": "10 min",
@@ -86,6 +91,7 @@ const PRICE_TYPE: Record<string, string> = {
 };
 
 type ResourceItemProps = {
+  isActive: boolean;
   title: string;
   subtitle?: string;
   description?: string;
@@ -102,6 +108,7 @@ export default function ResourceItem({
   title,
   description,
   subtitle,
+  isActive,
   onClick,
 }: ResourceItemProps) {
   const renderPicture = () =>
@@ -122,6 +129,7 @@ export default function ResourceItem({
         <StyledTitleLabel>{title}</StyledTitleLabel>
         <StyledSubtitleLabel>{subtitle}</StyledSubtitleLabel>
         <StyledDescriptionLabel>{description}</StyledDescriptionLabel>
+        {isActive ? null : <StyledInactiveLabel>Inactive</StyledInactiveLabel>}
       </StyledCenterContent>
       <StyledPriceContainer>
         <StyledPriceLabel>

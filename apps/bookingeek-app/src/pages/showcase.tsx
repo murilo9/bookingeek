@@ -330,6 +330,7 @@ export default function BusinessShowcasePage() {
             resources.map((resource) => (
               <ResourceItem
                 key={resource._id}
+                isActive={resource.isActive}
                 title={resource.title}
                 picture={resource.picture}
                 priceInCents={resource.priceInCents}

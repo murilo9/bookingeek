@@ -33,9 +33,11 @@ export default function ResourcesListView() {
                 title,
                 description,
                 subtitle,
+                isActive,
                 _id,
               }) => (
                 <ResourceItem
+                  isActive={isActive}
                   picture={picture}
                   priceInCents={priceInCents}
                   priceTypeMinutes={priceTypeMinutes}

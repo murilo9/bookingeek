@@ -220,6 +220,7 @@ export default function ResourceBasicInfoView() {
       />
       <StyledTitleLabel>Preview</StyledTitleLabel>
       <ResourceItem
+        isActive={true}
         picture={{ icon: resourceIcon, src: [] }}
         priceInCents={Number(priceString) * 100}
         priceTypeMinutes={resource.priceTypeMinutes}
