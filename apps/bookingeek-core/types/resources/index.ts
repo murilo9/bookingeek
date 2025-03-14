@@ -13,4 +13,4 @@ export * from "./resource-picture";
 export * from "./resource-reservation-advance-unit";
 export * from "./retrieve-resource-availability-query";
 export * from "./retrieve-resources-query";
-export * from "./update-resourc-payload";
+export * from "./update-resource-payload";

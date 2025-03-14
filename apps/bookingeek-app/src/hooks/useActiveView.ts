@@ -6,7 +6,7 @@ import { Resource } from "@bookingeek/core";
 const VIEWS: Record<string, string> = {
   resources: "Resources",
   reservations: "Reservations",
-  business: "Business",
+  business: "Business Data",
   account: "Account",
   users: "Users",
   "new-resource": "New Resource",
