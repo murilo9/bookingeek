@@ -75,7 +75,7 @@ type FormFieldProps<ValueType = string, InputValueType = string> = {
   // Used to draw icons or button inside the input. Only applies when type != 'radio'
   inputStartSlot?: JSX.Element;
   // A helper text displayed bellow the input
-  helperText?: string;
+  helperText?: JSX.Element | string;
   // Whether the input should autofocus. Only applies to text-based inputs
   autofocus?: boolean;
   // Makes the input outline and helper text red.
