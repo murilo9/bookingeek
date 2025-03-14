@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 // The actual header container
 const StyledHeader = styled.div`
+  z-index: 1;
   height: 56px;
   display: flex;
   position: sticky;
