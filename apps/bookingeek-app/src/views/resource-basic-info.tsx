@@ -25,6 +25,12 @@ import { isPriceValid } from "../helpers/is-price-valid";
 import { onFormatCurrency } from "../helpers/on-format-currency";
 import { RESOURCE_PRICE_TYPES } from "../data/resource-price-types";
 import { validateSlug } from "../helpers/slug-is-valid";
+import { getFileUrl } from "../helpers/get-file-url";
+import { uploadFile } from "../helpers/upload-file";
+import { toastNotificationShown } from "../store/common-slice";
+import { useAppDispatch } from "../store/store";
+
+const RESOURCE_FILE_INPUT_ID = "reosurce-file-input";
 
 const StyledForm = styled.div`
   padding: 8px;
@@ -38,6 +44,26 @@ const StyledIconList = styled.div`
   display: flex;
   gap: 8px;
   padding-top: 8px;
+`;
+
+const StyledUploadContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+`;
+
+const StyledPictureErrorLabel = styled.p`
+  color: #aa3131;
+`;
+
+const StyledPicturePreview = styled.img`
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 480px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1);
 `;
 
 const StyledIconButton = styled(IconButton)<{ selected: boolean }>`
@@ -68,16 +94,28 @@ const StyledErrorHelperText = styled.p`
   color: #ff0000;
 `;
 
+const StyledButton = styled(Button)`
+  @media screen and (min-width: 768px) {
+    align-self: baseline;
+  }
+`;
+
 export default function ResourceBasicInfoView() {
+  const dispatch = useAppDispatch();
   const resource = useOutletContext<Resource<string>>();
   const handleRequestCall = useHandleRequestCall();
+  const [isSaving, setIsSaving] = useState(false);
   const [updateResource, updateData] = useUpdateResourceMutation();
   const [pictureType, setPictureType] = useState<"icon" | "picture">(
-    resource.picture.icon ? "icon" : "picture"
+    resource.picture.src.length ? "picture" : "icon"
   );
   const [resourceIcon, setResourceIcon] = useState<ResourceIconName>(
     resource.picture.icon
   );
+  const [resourcePicture, setResourcePicture] = useState(
+    resource.picture.src[0] || null
+  );
+  const [pictureError, setPictureError] = useState("");
   const [hasPrice, setHasPrice] = useState<"yes" | "no">(
     resource.priceInCents === null ? "no" : "yes"
   );
@@ -95,9 +133,9 @@ export default function ResourceBasicInfoView() {
   const [slug, setSlug] = useState(resource.slug);
   const priceIsValid = isPriceValid(priceString);
   const slugIsValid = validateSlug(slug);
-  const isSaving = updateData.isLoading;
   const { formChanged } = useFormComparator({
     pictureType,
+    resourcePicture,
     resourceIcon,
     hasPrice,
     priceString,
@@ -109,9 +147,44 @@ export default function ResourceBasicInfoView() {
   });
 
   const onSaveClick = async () => {
+    setIsSaving(true);
+    let uploadedFileUrl = "";
+    if (resourcePicture) {
+      const fileInput = document.getElementById(
+        RESOURCE_FILE_INPUT_ID
+      ) as HTMLInputElement;
+      if (!fileInput) {
+        throw new Error("Could not get file input");
+      }
+      const files = fileInput.files;
+      if (files?.length) {
+        const file = files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+        const { success, error } = await uploadFile(formData);
+        if (success) {
+          uploadedFileUrl = getFileUrl(success.path);
+        }
+        console.log("uploadedFileUrl", uploadedFileUrl);
+        if (error) {
+          dispatch(
+            toastNotificationShown({
+              message:
+                "There was an error while uploading the picture. Please try again.",
+              type: "error",
+            })
+          );
+          setIsSaving(false);
+          return;
+        }
+      }
+    }
     const dto: UpdateResourcePayload = {
       ...resource,
-      picture: { icon: resourceIcon, src: [] },
+      picture: {
+        icon: resourceIcon,
+        src: pictureType === "icon" ? [] : [uploadedFileUrl],
+      },
       priceInCents: hasPrice ? Number(priceString) * 100 : null,
       checkoutType,
       title,
@@ -121,6 +194,44 @@ export default function ResourceBasicInfoView() {
     };
     const updateRequest = await updateResource({ dto, id: resource._id });
     handleRequestCall(updateRequest, "Changes saved successfully.");
+    setIsSaving(false);
+  };
+
+  // Called when clicking the "Upload" button
+  const onUploadFileClick = () => {
+    const fileInput = document.getElementById(RESOURCE_FILE_INPUT_ID);
+    if (!fileInput) {
+      throw new Error("Could not get file input");
+    }
+    fileInput.click();
+  };
+
+  // Called after picking a picture to upload
+  const onFileChanged = () => {
+    const fileInput = document.getElementById(
+      RESOURCE_FILE_INPUT_ID
+    ) as HTMLInputElement;
+    if (!fileInput) {
+      throw new Error("Could not get file input");
+    }
+    const files = fileInput.files;
+    if (files?.length) {
+      const file = files[0];
+      const validExtensions = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "image/svg",
+      ];
+      if (!validExtensions.includes(file.type)) {
+        setPictureError("This is not a valid image file.");
+        return;
+      }
+      setPictureError("");
+      const previewUrl = URL.createObjectURL(file);
+      setResourcePicture(previewUrl);
+    }
   };
 
   return (
@@ -129,6 +240,7 @@ export default function ResourceBasicInfoView() {
         label="Image"
         description="Choose an icon or upload a picture"
         type="options-radio"
+        orientation="row"
         onChange={setPictureType}
         value={pictureType}
         options={[
@@ -136,19 +248,39 @@ export default function ResourceBasicInfoView() {
           { label: "Picture", value: "picture" },
         ]}
       >
-        <StyledIconList>
-          {Object.entries(RESOURCE_ICON("inherit", 24)).map(
-            ([iconName, icon]) => (
-              <StyledIconButton
-                key={iconName}
-                selected={resourceIcon === iconName}
-                onClick={() => setResourceIcon(iconName as ResourceIconName)}
-              >
-                {icon}
-              </StyledIconButton>
-            )
-          )}
-        </StyledIconList>
+        {pictureType === "icon" ? (
+          <StyledIconList>
+            {Object.entries(RESOURCE_ICON("inherit", 24)).map(
+              ([iconName, icon]) => (
+                <StyledIconButton
+                  key={iconName}
+                  selected={resourceIcon === iconName}
+                  onClick={() => setResourceIcon(iconName as ResourceIconName)}
+                >
+                  {icon}
+                </StyledIconButton>
+              )
+            )}
+          </StyledIconList>
+        ) : (
+          <StyledUploadContainer>
+            {resourcePicture ? (
+              <StyledPicturePreview src={resourcePicture} />
+            ) : (
+              <>No picture yet</>
+            )}
+            {pictureError ? (
+              <StyledPictureErrorLabel>{pictureError}</StyledPictureErrorLabel>
+            ) : null}
+            <input
+              type="file"
+              hidden
+              id={RESOURCE_FILE_INPUT_ID}
+              onChange={onFileChanged}
+            />
+            <StyledButton onClick={onUploadFileClick}>Upload</StyledButton>
+          </StyledUploadContainer>
+        )}
       </FormField>
       <FormField
         label="Base Price"
@@ -228,11 +360,9 @@ export default function ResourceBasicInfoView() {
         subtitle={subtitle}
         description={description}
       />
-      <div>
-        <Button onClick={onSaveClick} disabled={!formChanged || isSaving}>
-          Save Changes
-        </Button>
-      </div>
+      <StyledButton onClick={onSaveClick} disabled={!formChanged || isSaving}>
+        Save Changes
+      </StyledButton>
     </StyledForm>
   );
 }

@@ -74,6 +74,7 @@ const StyledPictureErrorLabel = styled.p`
 
 const StyledPicturePreview = styled.img`
   width: 100%;
+  aspect-ratio: 1 / 1;
   max-width: 480px;
   object-fit: cover;
   border-radius: 6px;
