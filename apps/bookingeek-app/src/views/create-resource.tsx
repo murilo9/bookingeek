@@ -1,5 +1,6 @@
 import {
   CreateResourcePayload,
+  ReservationTimeGranularity,
   RESOURCE_CHECKOUT_TYPES,
   ResourceCheckoutType,
   ResourceIconName,
@@ -27,6 +28,10 @@ import { toastNotificationShown } from "../store/common-slice";
 import { useAuth } from "../hooks/useAuth";
 import { useGetBusinessByIdQuery } from "../store/businesses-api";
 import { useCreateResourceMutation } from "../store/resources-api";
+import { uploadFile } from "../helpers/upload-file";
+import { getFileUrl } from "../helpers/get-file-url";
+
+const RESOURCE_FILE_INPUT_ID = "reosurce-file-input";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -54,6 +59,25 @@ const StyledIconList = styled.div`
   display: flex;
   gap: 8px;
   margin-top: 16px;
+`;
+
+const StyledUploadContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+`;
+
+const StyledPictureErrorLabel = styled.p`
+  color: #aa3131;
+`;
+
+const StyledPicturePreview = styled.img`
+  width: 100%;
+  max-width: 480px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1);
 `;
 
 const StyledIconButton = styled(IconButton)<{ selected: boolean }>`
@@ -103,8 +127,12 @@ export default function CreateResourceView() {
   const [slug, setSlug] = useState("");
   const [pictureType, setPictureType] = useState<"icon" | "picture">("picture");
   const [resourceIcon, setResourceIcon] = useState<ResourceIconName>("bed");
+  const [resourcePicture, setResourcePicture] = useState<string | null>(null);
+  const [pictureError, setPictureError] = useState("");
   const [hasPrice, setHasPrice] = useState<"yes" | "no">("no");
   const [priceString, setPriceString] = useState("0.00");
+  const [priceTypeMinutes, setPriceTypeMinutes] =
+    useState<ReservationTimeGranularity>(60);
   const [checkoutType, setCheckoutType] =
     useState<ResourceCheckoutType>("in-loco-online");
   const [availabilityType, setAvailabilityType] = useState<
@@ -115,7 +143,9 @@ export default function CreateResourceView() {
   >("slots");
   const priceIsValid = isPriceValid(priceString);
   const [slugError, setSlugError] = useState(false);
-  const maySubmit = title.trim() && slug.trim() && validateSlug(slug);
+  const pictureIsValid = pictureType === "icon" || resourcePicture !== null;
+  const maySubmit =
+    title.trim() && slug.trim() && validateSlug(slug) && pictureIsValid;
   const { data: business } = useGetBusinessByIdQuery(user?.businessId || "");
 
   // Forms the slug if not formed yet, after title changes
@@ -129,8 +159,76 @@ export default function CreateResourceView() {
     setSlugError(!validateSlug(slug));
   };
 
+  // Called when clicking the "Upload" button
+  const onUploadFileClick = () => {
+    const fileInput = document.getElementById(RESOURCE_FILE_INPUT_ID);
+    if (!fileInput) {
+      throw new Error("Could not get file input");
+    }
+    fileInput.click();
+  };
+
+  // Called after picking a picture to upload
+  const onFileChanged = () => {
+    const fileInput = document.getElementById(
+      RESOURCE_FILE_INPUT_ID
+    ) as HTMLInputElement;
+    if (!fileInput) {
+      throw new Error("Could not get file input");
+    }
+    const files = fileInput.files;
+    if (files?.length) {
+      const file = files[0];
+      const validExtensions = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "image/svg",
+      ];
+      if (!validExtensions.includes(file.type)) {
+        setPictureError("This is not a valid image file.");
+        return;
+      }
+      setPictureError("");
+      const previewUrl = URL.createObjectURL(file);
+      setResourcePicture(previewUrl);
+    }
+  };
+
   const onCreateResourceClick = async () => {
     setCreatingResource(true);
+    let uploadedFileUrl = "";
+    if (resourcePicture) {
+      const fileInput = document.getElementById(
+        RESOURCE_FILE_INPUT_ID
+      ) as HTMLInputElement;
+      if (!fileInput) {
+        throw new Error("Could not get file input");
+      }
+      const files = fileInput.files;
+      if (files?.length) {
+        const file = files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+        const { success, error } = await uploadFile(formData);
+        if (success) {
+          uploadedFileUrl = getFileUrl(success.path);
+        }
+        console.log("uploadedFileUrl", uploadedFileUrl);
+        if (error) {
+          dispatch(
+            toastNotificationShown({
+              message:
+                "There was an error while uploading the picture. Please try again.",
+              type: "error",
+            })
+          );
+          setCreatingResource(false);
+          return;
+        }
+      }
+    }
     const createResourcePayload: CreateResourcePayload = {
       title,
       subtitle,
@@ -139,6 +237,12 @@ export default function CreateResourceView() {
       availabilityType,
       checkoutType,
       reservationTimeType,
+      picture: {
+        icon: resourceIcon,
+        src: pictureType === "icon" ? [] : [uploadedFileUrl],
+      },
+      priceInCents: hasPrice === "yes" ? Number(priceString) * 100 : null,
+      priceTypeMinutes,
     };
     const { data, error } = await createResource(createResourcePayload);
     if (error) {
@@ -221,7 +325,25 @@ export default function CreateResourceView() {
               )}
             </StyledIconList>
           ) : (
-            "TODO: file upload input"
+            <StyledUploadContainer>
+              {resourcePicture ? (
+                <StyledPicturePreview src={resourcePicture} />
+              ) : (
+                <>No picture yet</>
+              )}
+              {pictureError ? (
+                <StyledPictureErrorLabel>
+                  {pictureError}
+                </StyledPictureErrorLabel>
+              ) : null}
+              <input
+                type="file"
+                hidden
+                id={RESOURCE_FILE_INPUT_ID}
+                onChange={onFileChanged}
+              />
+              <StyledButton onClick={onUploadFileClick}>Upload</StyledButton>
+            </StyledUploadContainer>
           )}
         </FormField>
 
@@ -245,7 +367,14 @@ export default function CreateResourceView() {
                 }
                 error={!priceIsValid}
               />
-              <Select>
+              <Select
+                value={priceTypeMinutes}
+                onChange={({ target: { value } }) =>
+                  setPriceTypeMinutes(
+                    Number(value) as ReservationTimeGranularity
+                  )
+                }
+              >
                 {Object.entries(RESOURCE_PRICE_TYPES).map(([type, label]) => (
                   <option value={type} key={type}>
                     {label}
@@ -305,7 +434,10 @@ export default function CreateResourceView() {
       <StyledFormBlock>
         <StyledFormBlockTitle>Preview</StyledFormBlockTitle>
         <ResourceItem
-          picture={{ icon: resourceIcon, src: [] }}
+          picture={{
+            icon: resourceIcon,
+            src: resourcePicture ? [resourcePicture] : [],
+          }}
           priceInCents={Number(priceString) * 100}
           priceTypeMinutes={60}
           title={title}

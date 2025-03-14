@@ -100,10 +100,6 @@ export class ResourcesService {
         amount: 1,
         unit: 'hours',
       },
-      picture: {
-        icon: 'user',
-        src: [],
-      },
       priceInCents: null,
       priceTypeMinutes: 60,
       reservationTimeGranularityMinutes: 60,

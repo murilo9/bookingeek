@@ -1,5 +1,15 @@
-import { Expose } from 'class-transformer';
-import { IsDefined, IsIn, IsNotEmpty, IsString } from 'class-validator';
+import { Expose, Type } from 'class-transformer';
+import {
+  IsDefined,
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  ValidateIf,
+  ValidateNested,
+} from 'class-validator';
+import { ResourcePictureDto } from './resource-picture.dto';
+import { ReservationTimeGranularity } from '@bookingeek/core';
 
 export class CreateResourceDto {
   @Expose()
@@ -20,6 +30,21 @@ export class CreateResourceDto {
   @IsString()
   @IsNotEmpty()
   slug: string;
+  @Expose()
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => ResourcePictureDto)
+  picture: ResourcePictureDto;
+  @Expose()
+  @IsDefined()
+  @IsNumber()
+  @ValidateIf((dto) => dto.priceInCents !== null)
+  priceInCents: number | null;
+  @Expose()
+  @IsDefined()
+  @IsNumber()
+  @IsIn([5, 10, 15, 30, 60])
+  priceTypeMinutes: ReservationTimeGranularity;
   @Expose()
   @IsDefined()
   @IsString()

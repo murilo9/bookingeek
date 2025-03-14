@@ -15,6 +15,7 @@ import {
   ResourceCheckoutType,
   UpdateResourcePayload,
   RESOURCE_CHECKOUT_TYPES,
+  ReservationTimeGranularity,
 } from "@bookingeek/core";
 import Button from "../components/common/button";
 import IconButton from "../components/common/icon-button";
@@ -83,6 +84,8 @@ export default function ResourceBasicInfoView() {
   const [priceString, setPriceString] = useState(
     resource.priceInCents ? (resource.priceInCents / 100).toFixed(2) : "0.00"
   );
+  const [priceTypeMinutes, setPriceTypeMinutes] =
+    useState<ReservationTimeGranularity>(resource.priceTypeMinutes);
   const [checkoutType, setCheckoutType] = useState<ResourceCheckoutType>(
     resource.checkoutType
   );
@@ -167,7 +170,12 @@ export default function ResourceBasicInfoView() {
               }
               error={!priceIsValid}
             />
-            <Select>
+            <Select
+              value={priceTypeMinutes}
+              onChange={({ target: { value } }) =>
+                setPriceTypeMinutes(Number(value) as ReservationTimeGranularity)
+              }
+            >
               {Object.entries(RESOURCE_PRICE_TYPES).map(([type, label]) => (
                 <option value={type} key={type}>
                   {label}

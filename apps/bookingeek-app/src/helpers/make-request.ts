@@ -11,6 +11,8 @@ type Options = {
   baseUrl?: string;
   queryParams?: URLSearchParams;
   headers?: Record<string, string>;
+  noJSON?: boolean;
+  noContentType?: boolean;
 };
 
 // Makes a GET request.
@@ -40,9 +42,8 @@ export async function post<T>(
     `${options?.baseUrl || BASE_URL_DEV}${route}${options?.queryParams || ""}`,
     {
       method: "POST",
-      body: JSON.stringify(body),
+      body: options?.noJSON ? (body as BodyInit) : JSON.stringify(body),
       headers: {
-        "Content-Type": "application/json",
         authorization: cookies.get("access_token") || "",
         ...options?.headers,
       },
