@@ -51,6 +51,22 @@ const StyledHeadingText = styled.div`
   margin-bottom: 16px;
 `;
 
+const StyledEmptyResourcesLabel = styled.p`
+  margin-top: 24px;
+  text-align: center;
+  padding: 0px 16px;
+  font-size: 20px;
+`;
+
+const StyledEmptyResourcesImage = styled.img`
+  width: 100%;
+  max-width: 180px;
+  margin: 48px auto 24px auto;
+  @media screen and (min-width: 768px) {
+    max-width: 320px;
+  }
+`;
+
 const buildFormFromExtraFields = (
   extraFields: Array<ResourceExtraField>
 ): Record<string, string> =>
@@ -84,6 +100,7 @@ export default function BusinessShowcasePage() {
 
   const { data: resources, isLoading: isLoadingResources } =
     useGetResourcesQuery({ businessId: business?._id || "undefined" });
+  const activeResources = resources?.filter((resource) => resource.isActive);
   const selectedResource = resources?.find(
     (resource) =>
       resource._id === resourceIdOrSlug || resource.slug === resourceIdOrSlug
@@ -322,8 +339,8 @@ export default function BusinessShowcasePage() {
         <StyledResourcesList>
           {isLoadingResources ? (
             <>Loading reosurces...</>
-          ) : resources?.length ? (
-            resources.map((resource) => (
+          ) : activeResources?.length ? (
+            activeResources.map((resource) => (
               <ResourceItem
                 key={resource._id}
                 isActive={resource.isActive}
@@ -339,7 +356,12 @@ export default function BusinessShowcasePage() {
               />
             ))
           ) : (
-            <p>No resources</p>
+            <>
+              <StyledEmptyResourcesImage src="/no-resources.svg" />
+              <StyledEmptyResourcesLabel>
+                This business has no active resources yet.
+              </StyledEmptyResourcesLabel>
+            </>
           )}
         </StyledResourcesList>
       )}
