@@ -21,14 +21,14 @@ const StyledResourceItem = styled.div`
 const StyledResourcePicture = styled.img`
   width: 40px;
   height: 40px;
-  border-radius: 40px;
+  border-radius: 6px;
   object-fit: cover;
 `;
 
 const StyledResourceIcon = styled.div`
   width: 40px;
   height: 40px;
-  border-radius: 40px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
