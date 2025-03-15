@@ -9,11 +9,27 @@ import {
   Resource,
   ReservationTimeGranularity,
   UpdateResourcePayload,
+  ResourceWeekAvailability,
 } from "@bookingeek/core";
 import Button from "../components/common/button";
 import ButtonRadio from "../components/common/button-radio";
 import RadioCard from "../components/common/radio-card";
 import { AVAILABILITY_TYPE_OPTIONS } from "../data/availability-type-options";
+
+const EMPTY_DAY_OF_WEEK_AVAILABILITY = {
+  available: true,
+  rules: [],
+};
+
+const EMPTY_AVAILABILITY: ResourceWeekAvailability = {
+  friday: EMPTY_DAY_OF_WEEK_AVAILABILITY,
+  monday: EMPTY_DAY_OF_WEEK_AVAILABILITY,
+  saturday: EMPTY_DAY_OF_WEEK_AVAILABILITY,
+  sunday: EMPTY_DAY_OF_WEEK_AVAILABILITY,
+  thursday: EMPTY_DAY_OF_WEEK_AVAILABILITY,
+  tuesday: EMPTY_DAY_OF_WEEK_AVAILABILITY,
+  wednesday: EMPTY_DAY_OF_WEEK_AVAILABILITY,
+};
 
 const StyledForm = styled.div`
   padding: 8px;
@@ -38,6 +54,12 @@ const StyledRadioCardsList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+`;
+
+const StyledWarningLabel = styled.p`
+  color: rgb(187, 127, 36);
+  font-size: 14px;
+  font-weight: 500;
 `;
 
 // Options for choosing a resource's minimal reservation advance unit
@@ -95,6 +117,9 @@ export default function ResourceScheduleTypeView() {
     minimalReservationDurationAmount,
     minimalReservationDurationUnit,
   });
+  const reservationTypeChanged =
+    availabilityType !== resource.availabilityType ||
+    reservationTimeType !== resource.reservationTimeType;
 
   // Saves the current changes
   const onSaveClick = async () => {
@@ -111,6 +136,10 @@ export default function ResourceScheduleTypeView() {
         amount: Number(minimalReservationDurationAmount),
         unit: minimalReservationDurationUnit,
       },
+      // If reservation type changed, clears current resource's rules
+      availability: reservationTypeChanged
+        ? EMPTY_AVAILABILITY
+        : resource.availability,
     };
     const requestCall = await updateResource({ dto, id: resource._id });
     handleRequestCall(requestCall, "Changes saved successfully.");
@@ -122,6 +151,7 @@ export default function ResourceScheduleTypeView() {
         <StyledTitleLabel>Schedule Type</StyledTitleLabel>
         <p>Set how customers can schedule your time</p>
       </StyledFormField>
+
       <ButtonRadio<"date-time" | "date-only">
         onChange={setAvailabilityType}
         options={AVAILABILITY_TYPE_OPTIONS}
@@ -165,6 +195,7 @@ export default function ResourceScheduleTypeView() {
           ) : null}
         </>
       ) : null}
+
       <FormField<"weeks" | "days" | "hours" | "minutes">
         type={"options-select-value"}
         label="Minimal Advance Time"
@@ -175,6 +206,12 @@ export default function ResourceScheduleTypeView() {
         onInputValueChange={setMinimalReservationAdvanceAmount}
         options={MINIMAL_RESERVATION_ADVANCE_UNIT_OPTIONS}
       />
+      {reservationTypeChanged ? (
+        <StyledWarningLabel>
+          Warning: changing schedule type will clear resource's current
+          availability rules.
+        </StyledWarningLabel>
+      ) : null}
       <div>
         <Button onClick={onSaveClick} disabled={!formChanged || isSaving}>
           Save Changes
