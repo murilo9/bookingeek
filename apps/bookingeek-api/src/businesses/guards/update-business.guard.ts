@@ -6,7 +6,9 @@ import {
 } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { ObjectId } from 'mongodb';
-import { User } from '@bookingeek/core';
+import { Business, User } from '@bookingeek/core';
+import { DbCollection } from 'src/database/collection.enum';
+import { SafeObjectId } from 'src/common/helpers/safe-object-id';
 
 /**
  * Checks if requesting user belongs to the business.
@@ -20,10 +22,19 @@ export class UpdateBusinessGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context
       .switchToHttp()
-      .getRequest<{ user: User<ObjectId>; params: { id: string } }>();
+      .getRequest<{ user: User<ObjectId>; params: { idOrSlug: string } }>();
     const { user } = request;
-    const businessId = request.params.id;
-    const userBelongsToBusiness = user.businessId.toString() === businessId;
+    const businessIdOrSlug = request.params.idOrSlug;
+    const business = await this.databaseService.findOne<Business<ObjectId>>(
+      DbCollection.Businesses,
+      {
+        $or: [
+          { _id: SafeObjectId(businessIdOrSlug) },
+          { slug: businessIdOrSlug },
+        ],
+      },
+    );
+    const userBelongsToBusiness = user.businessId.equals(business._id);
     // Checks if user belongs to the business
     if (!userBelongsToBusiness) {
       throw new ForbiddenException('You do not belong to that business.');

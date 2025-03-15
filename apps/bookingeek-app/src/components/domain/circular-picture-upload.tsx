@@ -2,7 +2,6 @@ import styled from "styled-components";
 import IconButton from "../common/icon-button";
 import DeleteIcon from "../icons/delete/delete";
 import EditIcon from "../icons/edit/edit";
-import { ChangeEventHandler } from "react";
 
 const StyledContainer = styled.div`
   position: relative;

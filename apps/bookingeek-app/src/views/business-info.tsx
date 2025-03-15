@@ -53,6 +53,9 @@ const StyledBusinessUrl = styled.a`
   font-size: 14px;
   cursor: pointer;
 `;
+const StyledPictureErrorLabel = styled.p`
+  color: #aa3131;
+`;
 
 export default function BusinessInfoView() {
   const dispatch = useAppDispatch();
@@ -65,7 +68,7 @@ export default function BusinessInfoView() {
   const [slug, setSlug] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
-  const [businessPicture, setBusinessPicture] = useState<string | null>(null);
+  const [newPicture, setNewPicture] = useState<string | null>(null);
   const [picturePreviewUrl, setPicturePreviewUrl] = useState<string | null>(
     null
   );
@@ -103,7 +106,7 @@ export default function BusinessInfoView() {
     setSavingChanges(true);
     let uploadedFileUrl;
     // If there is a new picture, uploads it
-    if (businessPicture) {
+    if (newPicture) {
       const fileInput = document.getElementById(
         BUSINESS_FILE_INPUT_ID
       ) as HTMLInputElement;
@@ -187,7 +190,7 @@ export default function BusinessInfoView() {
       setPictureError("");
       const previewUrl = URL.createObjectURL(file);
       setPicturePreviewUrl(previewUrl);
-      setBusinessPicture(previewUrl);
+      setNewPicture(previewUrl);
     }
   };
 
@@ -222,6 +225,9 @@ export default function BusinessInfoView() {
           previewUrl={picturePreviewUrl || "/business.png"}
           onChange={onFileChanged}
         />
+        {pictureError ? (
+          <StyledPictureErrorLabel>{pictureError}</StyledPictureErrorLabel>
+        ) : null}
       </div>
       <FormField value={name} onChange={setName} label="Name" />
       {/* TODO: validate slug for uniqueness */}
