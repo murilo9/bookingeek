@@ -21,6 +21,8 @@ import {
   ResourceExtraField,
 } from '@bookingeek/core';
 import { CustomPriceRuleDto } from './custom-price-rule';
+import { MinimalReservationAdvanceDto } from './minimal-reservation-advance.dto';
+import { ResourceExtraFieldDto } from './resource-extra-field.dto';
 
 export class ResourceWeekAvailabilityDto {
   @Expose()
@@ -107,7 +109,7 @@ export class UpdateResourceDto {
   @IsDefined()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => ResourceExtraField)
+  @Type(() => ResourceExtraFieldDto)
   extraFields: Array<ResourceExtraField>;
   @Expose()
   @IsDefined()
@@ -127,12 +129,12 @@ export class UpdateResourceDto {
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => MinimalReservationDuration)
+  @Type(() => MinimalReservationAdvanceDto)
   minimalReservationDuration: MinimalReservationDuration;
   @Expose()
   @IsDefined()
   @ValidateNested()
-  @Type(() => MinimalReservationAdvance)
+  @Type(() => MinimalReservationAdvanceDto)
   minimalReservationAdvance: MinimalReservationAdvance;
   @Expose()
   @IsDefined()
