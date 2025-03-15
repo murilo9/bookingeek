@@ -3,7 +3,7 @@ import ReservationProvider from "../components/domain/reservation-provider";
 import ResourceProvider from "../components/domain/resource-provider";
 import BusinessPanelPage from "../pages/panel";
 import AccountManagementView from "../views/account";
-import BusinessInfoView from "../views/business";
+import BusinessInfoView from "../views/business-info";
 import BusinessReservationDetailsView from "../views/business-reservation-details";
 import ReservationsListView from "../views/reservations-list";
 import ResourceAvailabilityView from "../views/resource-availability";
@@ -16,6 +16,8 @@ import ResourceUnavailabilityView from "../views/resource-unavailability";
 import ResourcesListView from "../views/resources-list";
 import UsersManagementView from "../views/users";
 import CreateResourceView from "../views/create-resource";
+import ReservationDetailsPage from "../pages/reservation";
+import BusinessShowcasePage from "../pages/showcase";
 
 export default function ProtectedRouter() {
   return (
@@ -49,8 +51,21 @@ export default function ProtectedRouter() {
         <Route path="/users" element={<UsersManagementView />} />
         <Route path="/account" element={<AccountManagementView />} />
         <Route path="/business" element={<BusinessInfoView />} />
+
         <Route path="*" element={<Navigate to="/resources" />} />
       </Route>
+      {/* FROM PUBLIC ROUTER */}
+      <Route path="/b">
+        <Route index element={<Navigate to="/" />} />
+        <Route path=":businessIdOrSlug" element={<BusinessShowcasePage />}>
+          <Route path=":resourceIdOrSlug" element={<BusinessShowcasePage />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/" />} />
+      </Route>
+      <Route
+        path="/reservation/:reservationId"
+        element={<ReservationDetailsPage />}
+      />
     </Routes>
   );
 }

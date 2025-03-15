@@ -8,12 +8,12 @@ import { SetMetadata, applyDecorators } from '@nestjs/common';
  * @returns
  */
 export const EntityShouldExist = (
-  idRequestParam: string,
+  idOrSlugRequestParam: string,
   entityCollection: string,
   entityName: string,
 ) =>
   applyDecorators(
-    SetMetadata('idRequestParam', idRequestParam),
+    SetMetadata('idOrSlugRequestParam', idOrSlugRequestParam),
     SetMetadata('entityCollection', entityCollection),
     SetMetadata('entityName', entityName),
   );

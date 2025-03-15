@@ -12,7 +12,7 @@ import {
 } from "../store/common-slice";
 import Toast from "../components/common/toast";
 import { useEffect } from "react";
-import { useGetBusinessByIdQuery } from "../store/businesses-api";
+import { useGetBusinessByIdOrSlugQuery } from "../store/businesses-api";
 import DesktopHeader from "../components/common/desktop-header";
 import IconButton from "../components/common/icon-button";
 import ViewHeader from "../components/common/view-hedaer";
@@ -52,7 +52,7 @@ export default function BusinessPanelPage() {
   const { data: businessResources } = useGetResourcesQuery({
     businessId: user!.businessId,
   });
-  const { data: businessData } = useGetBusinessByIdQuery(
+  const { data: businessData } = useGetBusinessByIdOrSlugQuery(
     user?.businessId || "null"
   );
   // Dismisses toast after 6 seconds

@@ -3,16 +3,16 @@ import { appApi } from "./store";
 
 export const businessesApi = appApi.injectEndpoints({
   endpoints: (builder) => ({
-    getBusinessById: builder.query<Business<string>, string>({
-      query: (id) => `businesses/${id}`,
+    getBusinessByIdOrSlug: builder.query<Business<string>, string>({
+      query: (idOrSlug) => `businesses/${idOrSlug}`,
       providesTags: ["Business"],
     }),
     updateBusiness: builder.mutation<
       Business<string>,
-      { payload: UpdateBusinessPayload; id: string }
+      { payload: UpdateBusinessPayload; idOrSlug: string }
     >({
-      query: ({ payload, id }) => ({
-        url: `businesses/${id}`,
+      query: ({ payload, idOrSlug }) => ({
+        url: `businesses/${idOrSlug}`,
         method: "PUT",
         body: payload,
       }),
@@ -22,5 +22,5 @@ export const businessesApi = appApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetBusinessByIdQuery, useUpdateBusinessMutation } =
+export const { useGetBusinessByIdOrSlugQuery, useUpdateBusinessMutation } =
   businessesApi;

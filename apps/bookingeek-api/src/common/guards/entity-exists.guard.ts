@@ -4,10 +4,10 @@ import {
   Inject,
   NotFoundException,
 } from '@nestjs/common';
-import { ObjectId } from 'mongodb';
 import { DatabaseService } from 'src/database/database.service';
 import { Reflector } from '@nestjs/core';
 import { DbCollection } from 'src/database/collection.enum';
+import { SafeObjectId } from '../helpers/safe-object-id';
 
 /**
  * Verifies if entity exists.
@@ -25,8 +25,8 @@ export class EntityExistsGuard implements CanActivate {
     const request = context.switchToHttp().getRequest<{
       params: { [key: string]: string };
     }>();
-    const idRequestParam = this.reflector.get<string>(
-      'idRequestParam',
+    const idOrSlugRequestParam = this.reflector.get<string>(
+      'idOrSlugRequestParam',
       context.getHandler(),
     );
     const entityCollection = this.reflector.get<DbCollection>(
@@ -38,10 +38,14 @@ export class EntityExistsGuard implements CanActivate {
       context.getHandler(),
     );
 
-    const entityId = new ObjectId(request.params[idRequestParam]);
-    const entity = await this.databaseService.findOne(entityCollection, {
-      _id: entityId,
-    });
+    const entityIdOrSlug = request.params[idOrSlugRequestParam];
+    const query = {
+      $or: [{ _id: SafeObjectId(entityIdOrSlug) }, { slug: entityIdOrSlug }],
+    };
+    console.log(entityName);
+    console.log(query);
+    const entity = await this.databaseService.findOne(entityCollection, query);
+    console.log(entity);
     if (!entity) {
       throw new NotFoundException(`${entityName} not found`);
     }

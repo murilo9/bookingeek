@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import { useGetReservationsQuery } from "../store/reservations-api";
 import NotFoundPage from "./not-found";
 import styled from "styled-components";
-import { useGetBusinessByIdQuery } from "../store/businesses-api";
+import { useGetBusinessByIdOrSlugQuery } from "../store/businesses-api";
 import { useGetResourcesQuery } from "../store/resources-api";
 import BusinessOverview from "../components/domain/business-overview";
 import ReservationOverview from "../components/domain/reservation-overview";
@@ -58,7 +58,7 @@ export default function ReservationDetailsPage() {
     useGetResourcesQuery({ _id: reservation?.resourceId });
   const resource = resources ? resources[0] : undefined;
   const { isLoading: businessIsLoading, data: business } =
-    useGetBusinessByIdQuery(resource?.businessId || "");
+    useGetBusinessByIdOrSlugQuery(resource?.businessId || "undefined");
   const isLoading =
     reservationIsLoading || resourceIsLoading || businessIsLoading;
   const everythingIsFound = reservation && resource && business;

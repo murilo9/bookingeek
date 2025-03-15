@@ -6,7 +6,7 @@ import FormField from "../components/common/form-field";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import {
-  useGetBusinessByIdQuery,
+  useGetBusinessByIdOrSlugQuery,
   useUpdateBusinessMutation,
 } from "../store/businesses-api";
 import {
@@ -21,6 +21,7 @@ import { toastNotificationShown } from "../store/common-slice";
 import { validateSlug } from "../helpers/slug-is-valid";
 import IconButton from "../components/common/icon-button";
 import CopyIcon from "../components/icons/copy/copy";
+import { FormFieldDescription } from "../components/common/form-field-description";
 
 const BUSINESS_FILE_INPUT_ID = "business-picture-upload-input";
 
@@ -31,10 +32,11 @@ const StyledContainer = styled.div`
   max-width: 600px;
 `;
 
-const StyledRow = styled.div`
+const StyledRow = styled.div<{ marginTop?: string }>`
   display: flex;
   gap: 8px;
   align-items: center;
+  margin-top: ${(props) => props.marginTop || "0"};
 `;
 
 const StyledButton = styled(Button)`
@@ -43,12 +45,21 @@ const StyledButton = styled(Button)`
   }
 `;
 
+const StyledBusinessUrl = styled.a`
+  padding: 8px;
+  text-decoration: underline;
+  font-weight: 500;
+  color: #222222;
+  font-size: 14px;
+  cursor: pointer;
+`;
+
 export default function BusinessInfoView() {
   const dispatch = useAppDispatch();
   const [updateBusiness] = useUpdateBusinessMutation();
   const { user } = useAuth();
   const { data: business, isLoading: isLoadingBusiness } =
-    useGetBusinessByIdQuery(user?.businessId || "");
+    useGetBusinessByIdOrSlugQuery(user?.businessId || "undefined");
   const [savingChanges, setSavingChanges] = useState(false);
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
@@ -81,10 +92,8 @@ export default function BusinessInfoView() {
     }
   }, [business]);
 
-  const onCopylugUrl = () => {
-    navigator.clipboard.writeText(
-      `https://bookingeek.com/business/${business!._id}`
-    );
+  const onCopySlugUrl = (url: string) => {
+    navigator.clipboard.writeText(url);
     dispatch(
       toastNotificationShown({ message: "Link copied.", type: "neutral" })
     );
@@ -136,7 +145,7 @@ export default function BusinessInfoView() {
       },
     };
     const { data, error } = await updateBusiness({
-      id: business!._id,
+      idOrSlug: business!._id,
       payload,
     });
     if (error) {
@@ -187,6 +196,26 @@ export default function BusinessInfoView() {
   ) : (
     <StyledContainer>
       <div>
+        <FormFieldLabel>Business Profile Static URL</FormFieldLabel>
+        <FormFieldDescription>
+          This URL never changes, and always redirects to your business'
+          profile.
+        </FormFieldDescription>
+        <StyledRow marginTop="8px">
+          <StyledBusinessUrl
+            href={`/b/${business!._id}`}
+            target="_blank"
+          >{`https://sitehenger/b/${business!._id}`}</StyledBusinessUrl>
+          <IconButton
+            onClick={() =>
+              onCopySlugUrl(`https://bookingeek.com/b/${business!._id}`)
+            }
+          >
+            <CopyIcon />
+          </IconButton>
+        </StyledRow>
+      </div>
+      <div>
         <FormFieldLabel>Picture</FormFieldLabel>
         <CircularPictureUpload
           id={BUSINESS_FILE_INPUT_ID}
@@ -204,12 +233,18 @@ export default function BusinessInfoView() {
           <StyledRow>
             <span>
               {slugIsValid
-                ? `Preview: https://bookingeek.com/business/${slug}`
+                ? `Preview: https://bookingeek.com/b/${slug}`
                 : "Slug is not valid"}
             </span>
-            <IconButton onClick={onCopylugUrl}>
-              <CopyIcon />
-            </IconButton>
+            {slugIsValid ? (
+              <IconButton
+                onClick={() =>
+                  onCopySlugUrl(`https://bookingeek.com/b/${slug}`)
+                }
+              >
+                <CopyIcon />
+              </IconButton>
+            ) : null}
           </StyledRow>
         }
         error={!slugIsValid}

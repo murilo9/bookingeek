@@ -15,6 +15,7 @@ import {
 import { UserPassword } from 'src/common/types/user-password.entity';
 import { BusinessSignUpDto } from './dto/business-signup.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
+import { SafeObjectId } from 'src/common/helpers/safe-object-id';
 
 @Injectable()
 export class BusinessesService {
@@ -110,10 +111,14 @@ export class BusinessesService {
   /**
    * Retrieves a business.
    */
-  async retrieveBusiness(_id: ObjectId) {
+  async retrieveBusiness(idOrSlug: string) {
+    const query = {
+      $or: [{ _id: SafeObjectId(idOrSlug) }, { slug: idOrSlug }],
+    };
+    console.log(query);
     const business = await this.databaseService.findOne<Business<ObjectId>>(
       DbCollection.Businesses,
-      { _id },
+      query,
     );
     return business;
   }
@@ -121,19 +126,16 @@ export class BusinessesService {
   /**
    * Updates a business.
    */
-  async updateBusiness(
-    updateBusinessDto: UpdateBusinessDto,
-    businessId: ObjectId,
-  ) {
+  async updateBusiness(updateBusinessDto: UpdateBusinessDto, idOrSlug: string) {
     let business = await this.databaseService.findOne<Business<ObjectId>>(
       DbCollection.Businesses,
-      { _id: businessId },
+      { $or: [{ _id: SafeObjectId(idOrSlug) }, { slug: idOrSlug }] },
     );
     business = { ...business, ...updateBusinessDto };
     await this.databaseService.updateOne<Business<ObjectId>>(
       DbCollection.Businesses,
       business,
-      { _id: businessId },
+      { $or: [{ _id: SafeObjectId(idOrSlug) }, { slug: idOrSlug }] },
     );
     return business;
   }

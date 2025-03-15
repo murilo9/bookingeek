@@ -26,7 +26,7 @@ import { useNavigate } from "react-router";
 import { useAppDispatch } from "../store/store";
 import { toastNotificationShown } from "../store/common-slice";
 import { useAuth } from "../hooks/useAuth";
-import { useGetBusinessByIdQuery } from "../store/businesses-api";
+import { useGetBusinessByIdOrSlugQuery } from "../store/businesses-api";
 import { useCreateResourceMutation } from "../store/resources-api";
 import { uploadFile } from "../helpers/upload-file";
 import { getFileUrl } from "../helpers/get-file-url";
@@ -147,7 +147,9 @@ export default function CreateResourceView() {
   const pictureIsValid = pictureType === "icon" || resourcePicture !== null;
   const maySubmit =
     title.trim() && slug.trim() && validateSlug(slug) && pictureIsValid;
-  const { data: business } = useGetBusinessByIdQuery(user?.businessId || "");
+  const { data: business } = useGetBusinessByIdOrSlugQuery(
+    user?.businessId || "undefined"
+  );
 
   // Forms the slug if not formed yet, after title changes
   const onTitleInputBlur = () => {

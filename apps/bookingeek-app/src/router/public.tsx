@@ -8,10 +8,10 @@ import SignInPage from "../pages/sign-in";
 export default function PublicRouter() {
   return (
     <Routes>
-      <Route path="/business">
+      <Route path="/b">
         <Route index element={<Navigate to="/" />} />
-        <Route path=":businessId" element={<BusinessShowcasePage />}>
-          <Route path=":resourceId" element={<BusinessShowcasePage />} />
+        <Route path=":businessIdOrSlug" element={<BusinessShowcasePage />}>
+          <Route path=":resourceIdOrSlug" element={<BusinessShowcasePage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Route>

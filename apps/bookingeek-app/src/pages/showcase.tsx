@@ -21,7 +21,7 @@ import {
   CreateReservationPayload,
 } from "@bookingeek/core";
 import CheckoutStep from "../components/domain/checkout-step";
-import { useGetBusinessByIdQuery } from "../store/businesses-api";
+import { useGetBusinessByIdOrSlugQuery } from "../store/businesses-api";
 import { ReservationFormSteps } from "../types/reservation-form-steps";
 import Button from "../components/common/button";
 import BusinessOverview from "../components/domain/business-overview";
@@ -70,25 +70,26 @@ export default function BusinessShowcasePage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams();
-  const { resourceId: resourceIdFromUrl } = params;
+  const { resourceIdOrSlug } = params;
   const [createReservation, createReservationData] =
     useCreateReservationMutation();
   const isCreatingReservation = createReservationData.isLoading;
-  const { businessId } = useParams();
+  const { businessIdOrSlug } = useParams();
   const { data: business, isLoading: isLoadingBusiness } =
-    useGetBusinessByIdQuery(businessId!);
+    useGetBusinessByIdOrSlugQuery(businessIdOrSlug!);
   const [currentStep, setCurrentStep] =
     useState<ReservationFormSteps>("dateTimeSelect");
   const [createdReservation, setCreatedReservation] =
     useState<Reservation<string> | null>(null);
 
   const { data: resources, isLoading: isLoadingResources } =
-    useGetResourcesQuery({ businessId });
-  const defaultResource = resources?.find(
-    (resource) => resource._id === resourceIdFromUrl
+    useGetResourcesQuery({ businessId: business?._id || "undefined" });
+  const selectedResource = resources?.find(
+    (resource) =>
+      resource._id === resourceIdOrSlug || resource.slug === resourceIdOrSlug
   );
-  const [selectedResource, setSelectedResource] =
-    useState<Resource<string> | null>(defaultResource || null);
+  const selectedResourceNotFound =
+    business && resourceIdOrSlug && !selectedResource;
   // Reservation form fields
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<{
@@ -150,6 +151,11 @@ export default function BusinessShowcasePage() {
     }
   };
 
+  const onResetForm = () => {
+    dispatch(genericDialogClosed());
+    navigate(`/b/${business!.slug}`);
+  };
+
   // TODO: save reservation form in cookie so it can be restored (remove it after reservation is done)
   const beforeResetForm = () => {
     dispatch(
@@ -171,16 +177,6 @@ export default function BusinessShowcasePage() {
         ),
       })
     );
-  };
-
-  const onResetForm = () => {
-    setSelectedResource(null);
-    setSelectedDate(null);
-    setSelectedTime(null);
-    setCustomerName("");
-    setCustomerEmail("");
-    setCurrentStep("dateTimeSelect");
-    dispatch(genericDialogClosed());
   };
 
   const onNextStepClick = () => {
@@ -302,7 +298,7 @@ export default function BusinessShowcasePage() {
 
   return isLoadingBusiness ? (
     <>Loading...</>
-  ) : businessNotFound ? (
+  ) : businessNotFound || selectedResourceNotFound ? (
     <NotFoundPage />
   ) : (
     <StyledShowcasePage>
@@ -337,7 +333,9 @@ export default function BusinessShowcasePage() {
                 priceTypeMinutes={resource.priceTypeMinutes}
                 description={resource.description}
                 subtitle={resource.subtitle}
-                onClick={() => setSelectedResource(resource)}
+                onClick={() =>
+                  navigate(`/b/${business!.slug}/${resource.slug}`)
+                }
               />
             ))
           ) : (

@@ -70,27 +70,27 @@ export class BusinessesController {
   /**
    * Called for retrieving data of any business.
    */
-  @EntityShouldExist('id', DbCollection.Businesses, 'Business')
+  @EntityShouldExist('idOrSlug', DbCollection.Businesses, 'Business')
   @UseGuards(EntityExistsGuard)
-  @Get('businesses/:id')
-  getBusiness(@Param('id') businessId: string) {
-    return this.businessService.retrieveBusiness(new ObjectId(businessId));
+  @Get('businesses/:idOrSlug')
+  getBusiness(@Param('idOrSlug') businessIdOrSlug: string) {
+    return this.businessService.retrieveBusiness(businessIdOrSlug);
   }
 
   /**
    * Called for retrieving data of any business.
    */
-  @EntityShouldExist('id', DbCollection.Businesses, 'Business')
+  @EntityShouldExist('idOrSlug', DbCollection.Businesses, 'Business')
   @UseGuards(IdentityGuard, EntityExistsGuard, UpdateBusinessGuard)
-  @Put('businesses/:id')
+  @Put('businesses/:idOrSlug')
   updateBusiness(
-    @Param('id') businessId: string,
+    @Param('idOrSlug') businessIdOrSlug: string,
     @Body(new ValidationPipe(UpdateBusinessDto))
     updateBusinessDto: UpdateBusinessDto,
   ) {
     return this.businessService.updateBusiness(
       updateBusinessDto,
-      new ObjectId(businessId),
+      businessIdOrSlug,
     );
   }
 }

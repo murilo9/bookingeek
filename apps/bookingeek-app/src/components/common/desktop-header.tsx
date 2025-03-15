@@ -68,8 +68,8 @@ export default function DesktopHeader({
       <StyledHeader>
         <StyledLogo>Bookingeek</StyledLogo>
         <StyledGrouper>
-          <StyledBusinessName>{businessName}</StyledBusinessName>
           <StyledBusinessLogo src={businessPictureUrl} />
+          <StyledBusinessName>{businessName}</StyledBusinessName>
         </StyledGrouper>
       </StyledHeader>
     </StyledHeaderBorder>
