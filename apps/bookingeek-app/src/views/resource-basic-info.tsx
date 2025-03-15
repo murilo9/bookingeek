@@ -60,7 +60,7 @@ const StyledPictureErrorLabel = styled.p`
 const StyledPicturePreview = styled.img`
   width: 100%;
   aspect-ratio: 1 / 1;
-  max-width: 480px;
+  max-width: 240px;
   object-fit: cover;
   border-radius: 6px;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1);
@@ -112,8 +112,9 @@ export default function ResourceBasicInfoView() {
   const [resourceIcon, setResourceIcon] = useState<ResourceIconName>(
     resource.picture.icon
   );
-  const [resourcePicture, setResourcePicture] = useState(
-    resource.picture.src[0] || null
+  const [newPicture, setNewPicture] = useState<string | null>(null);
+  const [picturePreviewUrl, setPicturePreviewUrl] = useState(
+    resource.picture.src.length ? resource.picture.src[0] : null
   );
   const [pictureError, setPictureError] = useState("");
   const [hasPrice, setHasPrice] = useState<"yes" | "no">(
@@ -135,7 +136,7 @@ export default function ResourceBasicInfoView() {
   const slugIsValid = validateSlug(slug);
   const { formChanged } = useFormComparator({
     pictureType,
-    resourcePicture,
+    newPicture,
     resourceIcon,
     hasPrice,
     priceString,
@@ -148,8 +149,8 @@ export default function ResourceBasicInfoView() {
 
   const onSaveClick = async () => {
     setIsSaving(true);
-    let uploadedFileUrl = "";
-    if (resourcePicture) {
+    let uploadedFileUrl: string | null = "";
+    if (newPicture) {
       const fileInput = document.getElementById(
         RESOURCE_FILE_INPUT_ID
       ) as HTMLInputElement;
@@ -165,7 +166,6 @@ export default function ResourceBasicInfoView() {
         if (success) {
           uploadedFileUrl = getFileUrl(success.path);
         }
-        console.log("uploadedFileUrl", uploadedFileUrl);
         if (error) {
           dispatch(
             toastNotificationShown({
@@ -183,7 +183,10 @@ export default function ResourceBasicInfoView() {
       ...resource,
       picture: {
         icon: resourceIcon,
-        src: pictureType === "icon" ? [] : [uploadedFileUrl],
+        src:
+          pictureType === "icon"
+            ? []
+            : [uploadedFileUrl || resource.picture.src[0]],
       },
       priceInCents: hasPrice ? Number(priceString) * 100 : null,
       checkoutType,
@@ -230,7 +233,8 @@ export default function ResourceBasicInfoView() {
       }
       setPictureError("");
       const previewUrl = URL.createObjectURL(file);
-      setResourcePicture(previewUrl);
+      setPicturePreviewUrl(previewUrl);
+      setNewPicture(previewUrl);
     }
   };
 
@@ -264,8 +268,8 @@ export default function ResourceBasicInfoView() {
           </StyledIconList>
         ) : (
           <StyledUploadContainer>
-            {resourcePicture ? (
-              <StyledPicturePreview src={resourcePicture} />
+            {picturePreviewUrl ? (
+              <StyledPicturePreview src={picturePreviewUrl} />
             ) : (
               <>No picture yet</>
             )}
@@ -353,7 +357,13 @@ export default function ResourceBasicInfoView() {
       <StyledTitleLabel>Preview</StyledTitleLabel>
       <ResourceItem
         isActive={true}
-        picture={{ icon: resourceIcon, src: [] }}
+        picture={{
+          icon: resourceIcon,
+          src:
+            pictureType === "picture" && picturePreviewUrl
+              ? [picturePreviewUrl]
+              : [],
+        }}
         priceInCents={Number(priceString) * 100}
         priceTypeMinutes={resource.priceTypeMinutes}
         title={title}
