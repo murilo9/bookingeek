@@ -29,7 +29,7 @@ export default function ProtectedRouter() {
           <Route path="availability" element={<ResourceAvailabilityView />} />
           <Route path="basic-info" element={<ResourceBasicInfoView />} />
           <Route path="schedule-type" element={<ResourceScheduleTypeView />} />
-          <Route path="custom-prices" element={<ResourceCustomPricesView />} />
+          {/* <Route path="custom-prices" element={<ResourceCustomPricesView />} /> */}
           <Route
             path="extra-data-fields"
             element={<ResourceExtraDataFieldsView />}

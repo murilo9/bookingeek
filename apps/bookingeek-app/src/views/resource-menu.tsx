@@ -44,6 +44,7 @@ const MENU_ITEMS: Array<{
   title: string;
   description: string;
   action: string;
+  disabled?: boolean;
 }> = [
   {
     title: "Basic Info",
@@ -75,6 +76,7 @@ const MENU_ITEMS: Array<{
     title: "Custom Prices",
     description: "Set different prices for specific dates/times in the year.",
     action: "custom-prices",
+    disabled: true,
   },
 ];
 
@@ -125,10 +127,16 @@ export default function ResourceMenuView() {
           Resource is {resourceIsActive ? "active" : "inactive"}
         </StyledActivationlabel>
       </StyledActivationToggleContainer>
-      {MENU_ITEMS.map(({ action, description, title }) => (
-        <StyledMenuItem onClick={() => navigate(`${currentPath}/${action}`)}>
+      {MENU_ITEMS.map(({ action, description, title, disabled }) => (
+        <StyledMenuItem
+          onClick={() =>
+            disabled ? null : navigate(`${currentPath}/${action}`)
+          }
+        >
           <StyledMenuItemTitle>{title}</StyledMenuItemTitle>
-          <StyledMenuItemDescription>{description}</StyledMenuItemDescription>
+          <StyledMenuItemDescription>
+            {disabled ? <i>Coming soon</i> : description}
+          </StyledMenuItemDescription>
         </StyledMenuItem>
       ))}
     </>
