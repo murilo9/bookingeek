@@ -41,6 +41,7 @@ type ButtonProps = {
   startSlot?: JSX.Element;
   endSlot?: JSX.Element;
   onClick?: () => void;
+  fullwidth?: boolean;
 };
 
 const StyledButton = styled.button<ButtonProps>`
@@ -55,6 +56,7 @@ const StyledButton = styled.button<ButtonProps>`
   align-items: center;
   justify-content: center;
   gap: 12px;
+  width: ${(props) => (props.fullwidth ? "100%" : "auto")};
   cursor: ${(props) => (props.disabled ? "disabled" : "pointer")};
   background: ${(props) =>
     props.disabled

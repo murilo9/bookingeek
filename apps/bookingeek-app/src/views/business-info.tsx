@@ -80,6 +80,7 @@ export default function BusinessInfoView() {
   const [refundDescription, setRefundDescription] = useState("");
   const [pictureError, setPictureError] = useState("");
   const slugIsValid = validateSlug(slug);
+  const maySubmit = !savingChanges && !pictureError && slugIsValid;
 
   // Initializes the form fields once business data is loaded
   useEffect(() => {
@@ -295,7 +296,9 @@ export default function BusinessInfoView() {
           </>
         ) : null}
       </StyledContainer>
-      <StyledButton onClick={onSubmit}>Save Changes</StyledButton>
+      <StyledButton onClick={onSubmit} disabled={!maySubmit}>
+        Save Changes
+      </StyledButton>
     </StyledContainer>
   );
 }

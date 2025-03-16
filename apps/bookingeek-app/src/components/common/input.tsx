@@ -3,13 +3,15 @@ import styled from "styled-components";
 
 type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "children">;
 
+type ExtraInputProps = { error?: boolean; fullwidth?: boolean };
+
 const borderColor = {
   normal: "#BCBCBC",
   hover: "#999999",
   activeFocus: "#777777",
 };
 
-const StyledInput = styled.input<{ error?: boolean }>`
+const StyledInput = styled.input<ExtraInputProps>`
   outline: none;
   height: 36px;
   padding: 0px 12px;
@@ -18,7 +20,7 @@ const StyledInput = styled.input<{ error?: boolean }>`
   color: #222222;
   font-size: 14px;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  width: ${(props) => (props.fullwidth ? "100%" : "auto")};
   &:hover {
     border-color: ${(props) => (props.error ? "#ff0000" : borderColor.hover)};
   }
@@ -29,6 +31,6 @@ const StyledInput = styled.input<{ error?: boolean }>`
   }
 `;
 
-export default function Input(props: InputProps & { error?: boolean }) {
+export default function Input(props: InputProps & ExtraInputProps) {
   return <StyledInput {...props} />;
 }
