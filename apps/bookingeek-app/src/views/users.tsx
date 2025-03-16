@@ -1,8 +1,10 @@
 export default function UsersManagementView() {
   return (
     <>
-      <h2>Users Management View</h2>
-      <p>Users will be listed here in order to be managed</p>
+      <p>
+        Here you will be able to add more users that can manage your business.
+        Coming soon.
+      </p>
     </>
   );
 }
