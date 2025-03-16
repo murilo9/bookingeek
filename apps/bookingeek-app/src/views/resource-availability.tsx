@@ -18,6 +18,9 @@ import IconButton from "../components/common/icon-button";
 import AddIcon from "../components/icons/add/add";
 import { capitalize } from "../helpers/capitalize";
 import { deepCopy } from "../helpers/deep-copy";
+import CopyIcon from "../components/icons/copy/copy";
+import PasteIcon from "../components/icons/paste/paste";
+import { validateAvailablilityRulesList } from "../helpers/validate-availability-rules-list";
 
 const StyledForm = styled.div`
   padding: 8px;
@@ -64,6 +67,13 @@ const StyledDayOfWeekAvailabilityFieldLabel = styled.p<{ active?: boolean }>`
   color: ${(props) => (props.active ? "inherit" : "#888888")};
 `;
 
+const StyledInvalidRulesLabel = styled.p`
+  color: #aa3131;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 16px;
+`;
+
 export default function ResourceAvailabilityView() {
   const handleRequestCall = useHandleRequestCall();
   const resource = useOutletContext<Resource<string>>();
@@ -71,6 +81,7 @@ export default function ResourceAvailabilityView() {
     deepCopy(resource.availability)
   );
   const [updateResource, updateData] = useUpdateResourceMutation();
+  const [copiedRules, setCopiedRules] = useState<Array<TimeRange> | null>(null);
   const isSaving = updateData.isLoading;
   const rulesList = Object.entries(availabilityForm);
   const { formChanged } = useFormComparator({
@@ -96,10 +107,6 @@ export default function ResourceAvailabilityView() {
       startInMinutesPastMidnight: 0,
     };
     dayOfWeekRules.rules.push(newRule);
-    console.log("updated availability", {
-      ...availabilityForm,
-      [dayOfWeek]: dayOfWeekRules,
-    });
     setAvailabilityForm({ ...availabilityForm, [dayOfWeek]: dayOfWeekRules });
   };
 
@@ -134,7 +141,8 @@ export default function ResourceAvailabilityView() {
   // Separate render for availability rules
   const renderAvailabilityRules = (
     availability: DayOfWeekAvailability,
-    dayOfWeek: DayOfWeekName
+    dayOfWeek: DayOfWeekName,
+    rulesAreValid: boolean
   ) =>
     availability.rules.length ? (
       availability.rules.map((rule, ruleIndex) => (
@@ -151,43 +159,73 @@ export default function ResourceAvailabilityView() {
           onChange={(timeRange) =>
             onAvailabilityRangeRuleChange(dayOfWeek, ruleIndex, timeRange)
           }
+          error={!rulesAreValid}
         />
       ))
     ) : (
       <StyledEmptyRulesText>No rules set</StyledEmptyRulesText>
     );
 
+  const onPasteRules = (dayOfWeek: DayOfWeekName) => {
+    const dayOfWeekRules = availabilityForm[dayOfWeek];
+    dayOfWeekRules.rules.push(...copiedRules!);
+    setAvailabilityForm({ ...availabilityForm, [dayOfWeek]: dayOfWeekRules });
+  };
+
   // Separate render for days of week
   const renderDaysOfWeek = () =>
-    rulesList.map(([dayOfWeek, availability]) => (
-      <StyledDayOfWeekAvailabilityField key={dayOfWeek}>
-        <StyledDayOfWeekAvailabilityFieldLabelContainer>
-          <Checkbox
-            checked={availability.available}
-            onChange={(checked) => {
-              console.log(checked);
-              onDayOfWeekToggle(dayOfWeek as DayOfWeekName, checked);
-            }}
-            size={20}
-          />
-          <StyledDayOfWeekAvailabilityFieldLabel
-            active={availability.available}
-          >
-            {capitalize(dayOfWeek)}
-          </StyledDayOfWeekAvailabilityFieldLabel>
-          {availabilityIsDateOnly ? null : (
-            <IconButton
-              onClick={() => onAddRuleClick(dayOfWeek as DayOfWeekName)}
+    rulesList.map(([dayOfWeek, availability]) => {
+      const rulesAreValid = validateAvailablilityRulesList(availability.rules);
+      return (
+        <StyledDayOfWeekAvailabilityField key={dayOfWeek}>
+          <StyledDayOfWeekAvailabilityFieldLabelContainer>
+            <Checkbox
+              checked={availability.available}
+              onChange={(checked) =>
+                onDayOfWeekToggle(dayOfWeek as DayOfWeekName, checked)
+              }
+              size={20}
+            />
+            <StyledDayOfWeekAvailabilityFieldLabel
+              active={availability.available}
             >
-              <AddIcon />
-            </IconButton>
-          )}
-        </StyledDayOfWeekAvailabilityFieldLabelContainer>
-        {availabilityIsDateOnly
-          ? null
-          : renderAvailabilityRules(availability, dayOfWeek as DayOfWeekName)}
-      </StyledDayOfWeekAvailabilityField>
-    ));
+              {capitalize(dayOfWeek)}
+            </StyledDayOfWeekAvailabilityFieldLabel>
+            {copiedRules ? (
+              <IconButton
+                onClick={() => onPasteRules(dayOfWeek as DayOfWeekName)}
+              >
+                <PasteIcon />
+              </IconButton>
+            ) : null}
+            {availability.rules.length ? (
+              <IconButton onClick={() => setCopiedRules(availability.rules)}>
+                <CopyIcon />
+              </IconButton>
+            ) : null}
+            {availabilityIsDateOnly ? null : (
+              <IconButton
+                onClick={() => onAddRuleClick(dayOfWeek as DayOfWeekName)}
+              >
+                <AddIcon />
+              </IconButton>
+            )}
+          </StyledDayOfWeekAvailabilityFieldLabelContainer>
+          {availabilityIsDateOnly
+            ? null
+            : renderAvailabilityRules(
+                availability,
+                dayOfWeek as DayOfWeekName,
+                rulesAreValid
+              )}
+          {!rulesAreValid ? (
+            <StyledInvalidRulesLabel>
+              Rules cannot be duplicated or overlaping.
+            </StyledInvalidRulesLabel>
+          ) : null}
+        </StyledDayOfWeekAvailabilityField>
+      );
+    });
 
   return (
     <StyledForm>

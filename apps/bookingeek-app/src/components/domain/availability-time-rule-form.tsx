@@ -35,6 +35,7 @@ type AvailabilityDayOfWeekFormProps = {
   onRemoveClick: () => void;
   onChange: (value: TimeRange) => void;
   customDeleteIcon?: JSX.Element;
+  error?: boolean;
 };
 
 const getSlotsList = (
@@ -62,6 +63,7 @@ export default function AvailabilityTimeRuleForm({
   onRemoveClick,
   onChange,
   customDeleteIcon,
+  error,
 }: AvailabilityDayOfWeekFormProps) {
   const [startTime, setStartTime] = useState(
     timeRange.startInMinutesPastMidnight
@@ -96,7 +98,7 @@ export default function AvailabilityTimeRuleForm({
         <Select
           value={startTime}
           onChange={({ target: { value } }) => setStartTime(Number(value))}
-          error={ruleIsInvalid}
+          error={ruleIsInvalid || error}
         >
           {possibleTimes.map((time) => (
             <option
@@ -111,7 +113,7 @@ export default function AvailabilityTimeRuleForm({
         <Select
           value={endTime}
           onChange={({ target: { value } }) => setEndTime(Number(value))}
-          error={ruleIsInvalid}
+          error={ruleIsInvalid || error}
         >
           {possibleTimes.map((time) => (
             <option
@@ -129,7 +131,7 @@ export default function AvailabilityTimeRuleForm({
         onChange={({ target: { value } }) =>
           handleTimeSlotChange(Number(value))
         }
-        error={ruleIsInvalid}
+        error={ruleIsInvalid || error}
       >
         {possibleSlots.map((slot) => (
           <option value={slot.startTime} key={startTime}>
