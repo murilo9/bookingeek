@@ -12,6 +12,7 @@ import {
 } from "@bookingeek/core";
 import Button from "../components/common/button";
 import AddIcon from "../components/icons/add/add";
+const FILEDS_LIMIT = 8;
 
 const StyledForm = styled.div`
   padding: 8px;
@@ -36,6 +37,15 @@ const StyledDivider = styled.div`
   width: 100%;
 `;
 
+// Checks if a field is invalid
+const getInvalidFields = (field: ResourceExtraField) => {
+  const hasName = Boolean(field.title.trim());
+  const hasOptions = field.type.includes("options")
+    ? field.options?.length !== 0
+    : true;
+  return !hasName || !hasOptions;
+};
+
 export default function ResourceExtraDataFieldsView() {
   const resource = useOutletContext<Resource<string>>();
   const handleRequestCall = useHandleRequestCall();
@@ -45,9 +55,13 @@ export default function ResourceExtraDataFieldsView() {
     extraFields,
   });
   const isSaving = updateData.isLoading;
+  const reachedLimit = extraFields.length === FILEDS_LIMIT;
+  const hasInvalidFields = extraFields.filter(getInvalidFields).length > 0;
+
+  const maySaveChanges =
+    formChanged && !isSaving && !reachedLimit && !hasInvalidFields;
 
   // Adds an extra data field
-  // TODO: set field amount limit
   const onAddExtraFieldClick = () => {
     const updatedExtraFields = [...extraFields];
     updatedExtraFields.push({ title: "New field", type: "text" });
@@ -61,12 +75,14 @@ export default function ResourceExtraDataFieldsView() {
   };
 
   const onSaveClick = async () => {
-    const dto: UpdateResourcePayload = {
-      ...resource,
-      extraFields,
-    };
-    const requestCall = await updateResource({ dto, id: resource._id });
-    handleRequestCall(requestCall, "Changes saved successfully.");
+    if (maySaveChanges) {
+      const dto: UpdateResourcePayload = {
+        ...resource,
+        extraFields,
+      };
+      const requestCall = await updateResource({ dto, id: resource._id });
+      handleRequestCall(requestCall, "Changes saved successfully.");
+    }
   };
 
   const onExtraFieldUpdate = (
@@ -99,10 +115,11 @@ export default function ResourceExtraDataFieldsView() {
           variant="secondary"
           onClick={onAddExtraFieldClick}
           startSlot={<AddIcon size={20} />}
+          disabled={reachedLimit}
         >
           Add Field
         </Button>
-        <Button disabled={!formChanged || isSaving} onClick={onSaveClick}>
+        <Button disabled={!maySaveChanges} onClick={onSaveClick}>
           Save Changes
         </Button>
       </StyledButtonsContainer>

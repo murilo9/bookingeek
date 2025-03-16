@@ -57,6 +57,11 @@ const StyledAddOptionButtonContainer = styled.div`
   padding-top: 8px;
 `;
 
+const StyledErrorLabel = styled.p`
+  font-size: 14px;
+  color: #ff0000;
+`;
+
 const FIELD_TYPE_OPTIONS = Object.entries(RESOURCE_EXTRA_FIELD_OPTIONS).map(
   ([label, value]) => ({ label, value })
 );
@@ -111,7 +116,7 @@ export default function ExtraDataFieldForm({
   // Triggers the changes every times options change
   useEffect(() => {
     afterUpdate();
-  }, [fieldOptions]);
+  }, [fieldOptions, fieldTitle, fieldType]);
 
   return (
     <StyledForm>
@@ -121,9 +126,12 @@ export default function ExtraDataFieldForm({
           <Input
             value={fieldTitle}
             onChange={({ target: { value } }) => setFieldTitle(value)}
-            onBlur={afterUpdate}
+            error={!fieldTitle.trim()}
           />
         </StyledFormField>
+        {!fieldTitle.trim() ? (
+          <StyledErrorLabel>Field must have a title</StyledErrorLabel>
+        ) : null}
         <StyledFormField>
           <FormFieldLabel>Type</FormFieldLabel>
           <Select
