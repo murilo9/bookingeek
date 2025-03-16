@@ -24,6 +24,8 @@ import PasteIcon from "../components/icons/paste/paste";
 import { COLORS } from "../data/colors";
 import { deepCopy } from "../helpers/deep-copy";
 import { onFormatNumber } from "../helpers/on-format-number";
+import { useAppDispatch } from "../store/store";
+import { toastNotificationShown } from "../store/common-slice";
 
 const StyledForm = styled.div`
   padding: 8px;
@@ -80,14 +82,15 @@ const StyledSaveButton = styled(Button)`
 `;
 
 export default function ResourceUnavailabilityView() {
+  const dispatch = useAppDispatch();
   const handleRequestCall = useHandleRequestCall();
   const resource = useOutletContext<Resource<string>>();
   const [updateResource, updateData] = useUpdateResourceMutation();
+  const [copiedRule, setCopiedRule] = useState<CustomPriceRule | null>(null);
   const [unavailabilityRules, setUnavailabilityRules] = useState<
     Array<CustomPriceRule>
   >(resource.unavailability);
   const isSaving = updateData.isLoading;
-  const canPaste = false; // TODO: implement this
   const { formChanged } = useFormComparator({
     unavailabilityRules,
   });
@@ -170,6 +173,19 @@ export default function ResourceUnavailabilityView() {
     setUnavailabilityRules(updatedUnvavailabilityRules);
   };
 
+  const onCopyRule = (rule: CustomPriceRule) => {
+    setCopiedRule(rule);
+    dispatch(
+      toastNotificationShown({ message: "Coiped to clipboard.", type: "info" })
+    );
+  };
+
+  const onPasteRule = () => {
+    if (copiedRule) {
+      setUnavailabilityRules([...unavailabilityRules, copiedRule]);
+    }
+  };
+
   return (
     <>
       <StyledForm>
@@ -203,7 +219,7 @@ export default function ResourceUnavailabilityView() {
                   }
                 />
                 <StyledRuleDayRowButtonContainer>
-                  <IconButton disabled>
+                  <IconButton onClick={() => onCopyRule(rule)}>
                     <CopyIcon />
                   </IconButton>
                   <IconButton onClick={() => onRemoveRuleClick(ruleIndex)}>
@@ -250,7 +266,11 @@ export default function ResourceUnavailabilityView() {
           >
             Add Day
           </Button>
-          <StyledIconButton variant="secondary" disabled={!canPaste}>
+          <StyledIconButton
+            variant="secondary"
+            onClick={onPasteRule}
+            disabled={!copiedRule}
+          >
             <PasteIcon size={20} />
           </StyledIconButton>
         </StyledButtonsContainer>
