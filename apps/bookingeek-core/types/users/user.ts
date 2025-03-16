@@ -1,5 +1,5 @@
 import { PersistentEntity } from "../common";
-import { SignInProvider } from "./sign-in-provider";
+import { SignInProvider } from "../businesses/sign-in-provider";
 
 /**
  * Represents a business' employee that can sign in
