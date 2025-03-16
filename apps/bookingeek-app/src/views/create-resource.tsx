@@ -369,6 +369,7 @@ export default function CreateResourceView() {
                   onFormatCurrency(value.trim(), setPriceString)
                 }
                 error={!priceIsValid}
+                fullwidth
               />
               <Select
                 value={priceTypeMinutes}

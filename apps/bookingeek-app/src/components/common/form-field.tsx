@@ -146,6 +146,7 @@ export default function FormField<ValueType = string, InputValueType = string>({
               autoFocus={autofocus}
               type={type || "text"}
               error={error}
+              fullwidth
             />
             <Select error={error}>
               {(options || []).map((option) => (
@@ -199,6 +200,7 @@ export default function FormField<ValueType = string, InputValueType = string>({
             autoFocus={autofocus}
             type={type || "text"}
             error={error}
+            fullwidth
           />
         );
     }

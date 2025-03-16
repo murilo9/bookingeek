@@ -305,6 +305,7 @@ export default function ResourceBasicInfoView() {
                 onFormatCurrency(value.trim(), setPriceString)
               }
               error={!priceIsValid}
+              fullwidth
             />
             <Select
               value={priceTypeMinutes}

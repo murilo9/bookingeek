@@ -217,6 +217,7 @@ export default function ResourceUnavailabilityView() {
                       31
                     )
                   }
+                  fullwidth
                 />
                 <StyledRuleDayRowButtonContainer>
                   <IconButton onClick={() => onCopyRule(rule)}>

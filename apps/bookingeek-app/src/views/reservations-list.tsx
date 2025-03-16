@@ -36,7 +36,7 @@ export default function ReservationsListView() {
   return (
     <StyledReservationsView>
       <StyledHeader>
-        <Input placeholder="Search" />
+        <Input placeholder="Search" fullwidth />
         {/* TODO: add fitler button */}
       </StyledHeader>
       <StyledReservationItemsList>

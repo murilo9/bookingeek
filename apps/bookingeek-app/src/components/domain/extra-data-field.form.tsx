@@ -127,6 +127,7 @@ export default function ExtraDataFieldForm({
             value={fieldTitle}
             onChange={({ target: { value } }) => setFieldTitle(value)}
             error={!fieldTitle.trim()}
+            fullwidth
           />
         </StyledFormField>
         {!fieldTitle.trim() ? (
@@ -157,6 +158,7 @@ export default function ExtraDataFieldForm({
                       onChange={({ target: { value } }) =>
                         onFieldOptionChange(value, index)
                       }
+                      fullwidth
                     />
                     <IconButton onClick={() => onRemoveOptionClick(index)}>
                       <CloseIcon color="#ff0000" />
