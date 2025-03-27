@@ -1,8 +1,12 @@
-import { UpdateUserPayload, User } from "@bookingeek/core";
+import { RetrieveUsersQuery, UpdateUserPayload, User } from "@bookingeek/core";
 import { appApi } from "./store";
+import { buildQueryString } from "../helpers/build-query-string";
 
 export const usersApi = appApi.injectEndpoints({
   endpoints: (builder) => ({
+    getUsers: builder.query<Array<User<string>>, RetrieveUsersQuery>({
+      query: (query) => `/users?${buildQueryString(query)}`,
+    }),
     updateUser: builder.mutation<
       User<string>,
       { payload: UpdateUserPayload; id: string }
@@ -18,4 +22,4 @@ export const usersApi = appApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useUpdateUserMutation } = usersApi;
+export const { useUpdateUserMutation, useGetUsersQuery } = usersApi;
