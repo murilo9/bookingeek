@@ -1,8 +1,13 @@
+"use client";
 import MenuIcon from "@/icons/menu";
 import "./header.css";
 import ButtonBlack from "../button-black/button-black";
+import { useState } from "react";
+import MobileMenu from "./mobile-menu";
 
 export default function Header() {
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
     <header>
       <div className="left-container">
@@ -21,10 +26,14 @@ export default function Header() {
             Sign Up
           </ButtonBlack>
         </ul>
-        <button className="mobile-menu">
+        <button
+          className="mobile-menu-button"
+          onClick={() => setShowMenu(!showMenu)}
+        >
           <MenuIcon />
         </button>
       </div>
+      {showMenu ? <MobileMenu /> : null}
     </header>
   );
 }

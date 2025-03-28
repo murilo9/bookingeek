@@ -1,0 +1,24 @@
+.mobile-menu {
+  flex: 0 0 100%;
+  padding: 24px 0 16px 0;
+
+  ul.links-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    gap: 16px;
+  }
+
+  ul.links-list li {
+    list-style-type: none;
+  }
+
+  ul.links-list li > a {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    width: 100%;
+    text-align: center;
+  }
+}

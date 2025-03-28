@@ -1,8 +1,8 @@
 header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  padding: 0px 16px 0px 24px;
-  min-height: 64px;
+  padding: 8px 16px 8px 24px;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -68,7 +68,7 @@ header .bookingeek {
     font-weight: 600;
   }
 
-  header .right-container button.mobile-menu {
+  header .right-container .mobile-menu-button {
     display: none;
   }
 }
