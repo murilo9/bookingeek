@@ -6,6 +6,7 @@ import { ReservationsModule } from './reservations/reservations.module';
 import { ResourcesModule } from './resources/resources.module';
 import { FilesModule } from './files/files.module';
 import { UsersModule } from './users/users.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [

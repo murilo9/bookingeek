@@ -5,6 +5,7 @@ import {
   Inject,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { verify } from 'jsonwebtoken';
 import { ObjectId } from 'mongodb';
 import { DbCollection } from 'src/database/collection.enum';
@@ -18,6 +19,7 @@ import { DatabaseService } from 'src/database/database.service';
 export class IdentityGuard implements CanActivate {
   constructor(
     @Inject(DatabaseService) private databaseService: DatabaseService,
+    @Inject(ConfigService) private configService: ConfigService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -27,7 +29,9 @@ export class IdentityGuard implements CanActivate {
     }>();
     const { authorization } = request.headers;
     try {
-      const { _id } = verify(authorization, 'secret') as { _id: string };
+      const jwtSecret = this.configService.get('JWT_SECRET');
+      console.log('jwtSecret', jwtSecret);
+      const { _id } = verify(authorization, jwtSecret) as { _id: string };
       const user = await this.databaseService.findOne<User<ObjectId>>(
         DbCollection.Users,
         {
