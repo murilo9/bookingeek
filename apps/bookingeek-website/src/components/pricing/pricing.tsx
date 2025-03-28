@@ -69,7 +69,7 @@ export default function Pricing() {
                 </li>
               ))}
             </ul>
-            <ButtonBlack>Start Now</ButtonBlack>
+            <ButtonBlack href="app.bookingeek.com">Start Now</ButtonBlack>
           </div>
         ))}
       </ul>

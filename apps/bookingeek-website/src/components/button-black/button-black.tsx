@@ -10,7 +10,7 @@ export default function ButtonBlack({
   href?: string;
 }) {
   return href ? (
-    <a href={href}>
+    <a href={href} style={{ display: "contents" }}>
       <button className={`button-black ${className || ""}`}>{children}</button>
     </a>
   ) : (

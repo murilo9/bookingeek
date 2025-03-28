@@ -17,7 +17,9 @@ export default function Header() {
           <li>
             <a href="https://app.bookingeek.com">Sign In</a>
           </li>
-          <ButtonBlack href="https://app.bookingeek.com">Sign Up</ButtonBlack>
+          <ButtonBlack href="https://app.bookingeek.com/signup">
+            Sign Up
+          </ButtonBlack>
         </ul>
         <button className="mobile-menu">
           <MenuIcon />

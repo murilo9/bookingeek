@@ -10,7 +10,9 @@ export default function Hero() {
           Stop wasting time with complicated scheduling. We offer only the tools
           you really need.
         </p>
-        <ButtonBlack>Simplify Your Scheduling</ButtonBlack>
+        <ButtonBlack href="https://app.bookingeek.com">
+          Simplify Your Scheduling
+        </ButtonBlack>
       </div>
       <div className="img"></div>
     </section>
