@@ -44,6 +44,7 @@ export async function post<T>(
       method: "POST",
       body: options?.noJSON ? (body as BodyInit) : JSON.stringify(body),
       headers: {
+        ...(options?.noJSON ? {} : { "Content-Type": "application/json" }),
         authorization: cookies.get("access_token") || "",
         ...options?.headers,
       },
