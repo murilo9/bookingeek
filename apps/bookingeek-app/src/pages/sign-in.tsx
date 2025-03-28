@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { BASE_URL_DEV, SIGNIN_ROUTE } from "../env";
+import { SIGNIN_ROUTE } from "../env";
 import { post } from "../helpers/make-request";
 import { SignInPayload, BusinessSignUpResponse } from "@bookingeek/core";
 import Button from "../components/common/button";
 import FormField from "../components/common/form-field";
 import SocialSignInList from "../components/common/social-signin-list";
-import { useGoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const StyledPageContainer = styled.div`
   display: flex;

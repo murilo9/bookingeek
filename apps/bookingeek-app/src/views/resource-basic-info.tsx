@@ -105,7 +105,7 @@ export default function ResourceBasicInfoView() {
   const resource = useOutletContext<Resource<string>>();
   const handleRequestCall = useHandleRequestCall();
   const [isSaving, setIsSaving] = useState(false);
-  const [updateResource, updateData] = useUpdateResourceMutation();
+  const [updateResource] = useUpdateResourceMutation();
   const [pictureType, setPictureType] = useState<"icon" | "picture">(
     resource.picture.src.length ? "picture" : "icon"
   );

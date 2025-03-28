@@ -2,7 +2,7 @@ import { useNavigate, useOutletContext } from "react-router";
 import styled from "styled-components";
 import Toggle from "../components/common/toggle";
 import { Resource, UpdateResourcePayload } from "@bookingeek/core";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUpdateResourceMutation } from "../store/resources-api";
 import { useAppDispatch } from "../store/store";
 import { toastNotificationShown } from "../store/common-slice";

@@ -4,7 +4,6 @@ import Button from "../components/common/button";
 import Input from "../components/common/input";
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { useFormComparator } from "../hooks/useFormComparator";
 import { useUpdateUserMutation } from "../store/users-api";
 import { UpdateUserPayload } from "@bookingeek/core";
 import { useAppDispatch } from "../store/store";
@@ -32,12 +31,6 @@ const StyledPlanForm = styled.div`
 
 const StyledPlanExpirationLabel = styled.p`
   font-size: 14px;
-`;
-
-const StyledPlanOptionsButton = styled.p`
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: underline;
 `;
 
 export default function AccountManagementView() {

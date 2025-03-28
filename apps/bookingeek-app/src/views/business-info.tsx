@@ -3,7 +3,7 @@ import { FormFieldLabel } from "../components/common/form-field-label";
 import CircularPictureUpload from "../components/domain/circular-picture-upload";
 import Button from "../components/common/button";
 import FormField from "../components/common/form-field";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import {
   useGetBusinessByIdOrSlugQuery,

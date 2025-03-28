@@ -66,7 +66,7 @@ export default function ReservationItem({
   clickable,
   onClick,
 }: ReservationItemProps) {
-  const { data, isLoading } = useGetResourcesQuery({
+  const { data } = useGetResourcesQuery({
     _id: reservation.resourceId,
   });
   const resource = data?.length ? data[0] : undefined;

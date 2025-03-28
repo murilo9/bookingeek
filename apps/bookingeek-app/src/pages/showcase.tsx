@@ -16,7 +16,6 @@ import PaymentTypeStep from "../components/domain/payment-type-step";
 import ConfirmationStep from "../components/domain/confirmation-step";
 import {
   Reservation,
-  Resource,
   ResourceExtraField,
   CreateReservationPayload,
 } from "@bookingeek/core";

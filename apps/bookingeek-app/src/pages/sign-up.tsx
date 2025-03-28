@@ -10,7 +10,7 @@ import IconButton from "../components/common/icon-button";
 import OptionCard from "../components/common/option-card";
 import SignUpOverview from "../components/common/sign-up-overview";
 import CloseIcon from "../components/icons/close/close";
-import { BASE_URL_DEV, SIGNUP_ROUTE } from "../env";
+import { SIGNUP_ROUTE } from "../env";
 import { BusinessField, BUSINESS_FIELDS } from "../types/business-fields";
 import {
   BusinessRefundType,

@@ -8,7 +8,6 @@ import BusinessReservationDetailsView from "../views/business-reservation-detail
 import ReservationsListView from "../views/reservations-list";
 import ResourceAvailabilityView from "../views/resource-availability";
 import ResourceBasicInfoView from "../views/resource-basic-info";
-import ResourceCustomPricesView from "../views/resource-custom-prices";
 import ResourceExtraDataFieldsView from "../views/resource-extra-data-fields";
 import ResourceMenuView from "../views/resource-menu";
 import ResourceScheduleTypeView from "../views/resource-schedule-type";
