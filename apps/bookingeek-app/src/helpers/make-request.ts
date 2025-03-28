@@ -1,5 +1,5 @@
 import { RequestErrorResponse } from "@bookingeek/core";
-import { BASE_URL_DEV } from "../env";
+import { BASE_URL } from "../env";
 import cookies from "js-cookie";
 
 type Response<T> = {
@@ -21,7 +21,7 @@ export async function get<T>(
   options?: Options
 ): Promise<Response<T>> {
   const request = await fetch(
-    `${options?.baseUrl || BASE_URL_DEV}${route}${options?.queryParams || ""}`
+    `${options?.baseUrl || BASE_URL}${route}${options?.queryParams || ""}`
   );
   const response: T | RequestErrorResponse = await request.json();
   const success = response as T;
@@ -39,7 +39,7 @@ export async function post<T>(
   options?: Options
 ): Promise<Response<T>> {
   const request = await fetch(
-    `${options?.baseUrl || BASE_URL_DEV}${route}${options?.queryParams || ""}`,
+    `${options?.baseUrl || BASE_URL}${route}${options?.queryParams || ""}`,
     {
       method: "POST",
       body: options?.noJSON ? (body as BodyInit) : JSON.stringify(body),

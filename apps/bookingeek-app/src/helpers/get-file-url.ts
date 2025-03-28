@@ -1,3 +1,3 @@
-import { BASE_URL_DEV } from "../env";
+import { BASE_URL } from "../env";
 
-export const getFileUrl = (fileName: string) => `${BASE_URL_DEV}/${fileName}`;
+export const getFileUrl = (fileName: string) => `${BASE_URL}/${fileName}`;

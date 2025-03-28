@@ -8,12 +8,12 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { useDispatch, useSelector } from "react-redux";
 import commonReducer from "./common-slice";
-import { BASE_URL_DEV } from "../env";
+import { BASE_URL } from "../env";
 
 export const appApi = createApi({
   tagTypes: ["Resource", "Post", "Reservation", "Business", "User"],
   baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL_DEV,
+    baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
       const accessToken = Cookies.get("access_token");
       // If we have a token set in state, let's assume that we should be passing it.
