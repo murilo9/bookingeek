@@ -29,6 +29,7 @@ import { getFileUrl } from "../helpers/get-file-url";
 import { uploadFile } from "../helpers/upload-file";
 import { toastNotificationShown } from "../store/common-slice";
 import { useAppDispatch } from "../store/store";
+import { useGetBusinessByIdOrSlugQuery } from "../store/businesses-api";
 
 const RESOURCE_FILE_INPUT_ID = "reosurce-file-input";
 
@@ -104,6 +105,7 @@ export default function ResourceBasicInfoView() {
   const dispatch = useAppDispatch();
   const resource = useOutletContext<Resource<string>>();
   const handleRequestCall = useHandleRequestCall();
+  const { data: business } = useGetBusinessByIdOrSlugQuery(resource.businessId);
   const [isSaving, setIsSaving] = useState(false);
   const [updateResource] = useUpdateResourceMutation();
   const [pictureType, setPictureType] = useState<"icon" | "picture">(
@@ -351,7 +353,9 @@ export default function ResourceBasicInfoView() {
         label="Slug"
         description="Used in URLs"
         helperText={
-          slugIsValid ? `https://bookingeek.com/r/${slug}` : "Invalid slug"
+          slugIsValid
+            ? `https://bookingeek.com/b/${business?.slug}/${slug}`
+            : "Invalid slug"
         }
         value={slug}
         onChange={setSlug}
