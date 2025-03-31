@@ -1,9 +1,0 @@
-- api call to validate existing business names/slugs
-- polish signup form (icons, etc look on Figma)
-- error messages at sign up form (validation already exists)
-- check for duplicated rules at resource availability view
-- implement copy/paste rules feature
-- prevent saving duplicated time slots at resourece's availability config
-- extra data fields limits
-- filter reservations by resource at business' reservations list view
-- move unecessary types from the frontend folder to bookingeek-core, or remove them
