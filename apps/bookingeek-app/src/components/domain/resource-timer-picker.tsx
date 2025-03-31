@@ -111,13 +111,15 @@ export default function ResourceTimePicker({
       <StyledTimeRangesContainer>
         <FormField
           label="From"
+          placeholder="Start time"
           type="options-select"
           options={availableTimes}
           value={selectedTimeStartMinutes}
           onChange={setSelectedTimeStartMinutes}
         />
         <FormField
-          label="From"
+          label="To"
+          placeholder="End time"
           type="options-select"
           options={availableTimes}
           value={selectedTimeEndMinutes}
