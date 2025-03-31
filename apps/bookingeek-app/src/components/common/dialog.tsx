@@ -14,6 +14,7 @@ const StyledContainer = styled.div`
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   padding: 24px;
+  z-index: 1;
 `;
 
 const StyledDialog = styled.div`
