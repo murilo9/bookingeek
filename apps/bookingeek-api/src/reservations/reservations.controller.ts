@@ -29,6 +29,7 @@ export class ReservationsController {
     const retrieveReservationsDto = new ParseReservationsQueryPipe().transform(
       query,
     );
+    console.log('retrieveReservationsDto', retrieveReservationsDto);
     return this.reservationsService.retrieveReservations(
       retrieveReservationsDto,
     );

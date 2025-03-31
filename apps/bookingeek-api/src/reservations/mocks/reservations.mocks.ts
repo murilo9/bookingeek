@@ -1,4 +1,5 @@
 import { Reservation } from '@bookingeek/core';
+import { BUSINNES_ID_0 } from 'src/businesses/mocks/businesses.mocks';
 import { RESOURCE_ID_0 } from 'src/resources/mocks/resources.mock';
 
 export function RESERVATIONS_MOCK<T>(
@@ -7,6 +8,7 @@ export function RESERVATIONS_MOCK<T>(
   return [
     {
       _id: new Id(),
+      businessId: new Id(BUSINNES_ID_0),
       created: new Date().getTime(),
       updated: new Date().getTime(),
       IS_DELETED: false,
@@ -43,6 +45,7 @@ export function RESERVATIONS_MOCK<T>(
     },
     {
       _id: new Id(),
+      businessId: new Id(BUSINNES_ID_0),
       created: new Date().getTime(),
       updated: new Date().getTime(),
       IS_DELETED: false,

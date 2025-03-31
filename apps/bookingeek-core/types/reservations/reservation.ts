@@ -9,6 +9,8 @@ export interface Reservation<T> extends PersistentEntity<T> {
   code: number;
   // The resource being reserved
   resourceId: T;
+  // The business that the reservation's resource belongs to
+  businessId: T;
   // A "picture" of the resource on the time of the reservation
   resourceJSON: string;
   // Reservation start date's timestamp, based on server's clock (used mainly for DB filtering purposes)
