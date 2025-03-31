@@ -43,6 +43,12 @@ const StyledIconContainer = styled.div`
   align-items: center;
 `;
 
+const StyledResourceIcon = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+`;
+
 type ReservationOverviewProps = {
   selectedResource: Resource<string>;
   selectedDate: Date | null;
@@ -68,14 +74,14 @@ export default function ReservationOverview({
       <FormHeader>Reservation overview</FormHeader>
       <StyledInfoEntry>
         {selectedResource.picture.src ? (
+          <StyledResourceIcon
+            src={selectedResource.picture.src[0]}
+            alt={selectedResource.title}
+          />
+        ) : (
           <StyledIconContainer>
             {RESOURCE_ICON("inherit", 24)[selectedResource.picture.icon]}
           </StyledIconContainer>
-        ) : (
-          <img
-            src={selectedResource.picture.src}
-            alt={selectedResource.title}
-          />
         )}
         <p style={{ fontWeight: 500 }}>{selectedResource.title}</p>
       </StyledInfoEntry>
