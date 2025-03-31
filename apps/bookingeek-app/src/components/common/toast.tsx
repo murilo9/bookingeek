@@ -63,7 +63,7 @@ type ToastProps = {
 };
 
 export default function Toast({ message, type, onClose }: ToastProps) {
-  const actualType = type || "error";
+  const actualType = type || "info";
   return (
     <StyledToast type={actualType}>
       <StyledToastMessage type={actualType}>{message}</StyledToastMessage>
