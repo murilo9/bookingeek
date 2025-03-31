@@ -14,7 +14,7 @@ const StyledSelect = styled.select<{ error?: boolean }>`
   border-radius: 6px;
   border: 1px solid ${(props) => (props.error ? "#ff0000" : borderColor.normal)};
   background: none;
-  color: #222222;
+  color: ${(props) => (props.value ? "#222222" : "#666666")};
   font-size: 14px;
   font-weight: 500;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);

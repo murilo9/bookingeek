@@ -55,6 +55,10 @@ const StyledFormFieldGrid = styled.div`
   column-gap: 12px;
 `;
 
+const StyledSelectOption = styled.option`
+  color: #222222;
+`;
+
 type FormFieldProps<ValueType = string, InputValueType = string> = {
   // Text displayed above the input
   label: string;
@@ -123,12 +127,21 @@ export default function FormField<ValueType = string, InputValueType = string>({
     switch (type) {
       case "options-select":
         return (
-          <Select error={error}>
-            {(options || []).map((option) => (
-              <option value={option.value} key={value as string}>
-                {option.label}
+          <Select
+            error={error}
+            value={value as string | number}
+            onChange={({ target: { value } }) => onChange(value as ValueType)}
+          >
+            <>
+              <option value="" selected disabled hidden>
+                {placeholder || ""}
               </option>
-            ))}
+              {(options || []).map((option) => (
+                <StyledSelectOption value={option.value} key={value as string}>
+                  {option.label}
+                </StyledSelectOption>
+              ))}
+            </>
           </Select>
         );
       case "options-select-value":
