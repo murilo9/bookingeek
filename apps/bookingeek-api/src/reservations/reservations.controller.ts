@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
+  Param,
   Post,
   Query,
   UseGuards,
@@ -13,6 +15,11 @@ import { CreateReservationGuard } from './guards/create-reservation.guard';
 import { ParseReservationsQueryPipe } from './pipes/parse-reservation-query.pipe';
 import { RetrieveReservationsDto } from './dto/retrieve-reservations.dto';
 import { CreateReservationDto } from './dto/create-reservation.dto';
+import { IdentityGuard } from 'src/common/guards/identity.guard';
+import { SafeObjectId } from 'src/common/helpers/safe-object-id';
+import { EntityShouldExist } from 'src/common/decorators/entity-should-exist';
+import { DbCollection } from 'src/database/collection.enum';
+import { EntityExistsGuard } from 'src/common/guards/entity-exists.guard';
 
 @Controller()
 export class ReservationsController {
@@ -29,7 +36,6 @@ export class ReservationsController {
     const retrieveReservationsDto = new ParseReservationsQueryPipe().transform(
       query,
     );
-    console.log('retrieveReservationsDto', retrieveReservationsDto);
     return this.reservationsService.retrieveReservations(
       retrieveReservationsDto,
     );
@@ -42,5 +48,15 @@ export class ReservationsController {
     createReservationDto: CreateReservationDto,
   ) {
     return this.reservationsService.createReservation(createReservationDto);
+  }
+
+  @EntityShouldExist('reservationId', DbCollection.Reservations, 'Reservation')
+  @UseGuards(EntityExistsGuard, IdentityGuard)
+  @Delete('reservations/:reservationId')
+  cancelReservation(@Param('reservationId') reservationId: string) {
+    return this.reservationsService.cancelReservation(
+      SafeObjectId(reservationId),
+      'business',
+    );
   }
 }

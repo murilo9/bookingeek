@@ -11,6 +11,14 @@ import CalendarIcon from "../components/icons/calendar/calendar";
 import ClockIcon from "../components/icons/clock/clock";
 import Button from "../components/common/button";
 import { formatPriceInCents } from "../helpers/format-price-in-cents";
+import { useAppDispatch } from "../store/store";
+import {
+  genericDialogClosed,
+  genericDialogShown,
+  toastNotificationShown,
+} from "../store/common-slice";
+import { useCancelReservationMutation } from "../store/reservations-api";
+import { useState } from "react";
 
 const StyledReservationDetails = styled.div`
   padding: 8px;
@@ -89,6 +97,9 @@ const StyledButtonsContainer = styled.div`
 `;
 
 export default function BusinessReservationDetailsView() {
+  const dispatch = useAppDispatch();
+  const [cancellingReservation, setCancellingReservation] = useState(false);
+  const [cancelReservation] = useCancelReservationMutation();
   const reservation = useOutletContext<Reservation<string>>();
   const { data, isLoading: isLoadingResource } = useGetResourcesQuery({
     _id: reservation.resourceId,
@@ -107,6 +118,47 @@ export default function BusinessReservationDetailsView() {
       value,
     })),
   ];
+
+  const onCancelReservationConfirm = async () => {
+    setCancellingReservation(true);
+    await cancelReservation(reservation._id);
+    setCancellingReservation(false);
+    dispatch(
+      toastNotificationShown({
+        message: "Reservation cancelled successfully.",
+        type: "info",
+      })
+    );
+    dispatch(genericDialogClosed());
+    // TODO: make outlet context responsive to resource cache invalidation and remove the need of this reload
+    window.location.reload();
+  };
+
+  const onCancelReservationClick = () => {
+    dispatch(
+      genericDialogShown({
+        title: "Cancel Reservation",
+        body: <p>Are you sure you want to cancel this reservation?</p>,
+        actions: (
+          <>
+            <Button
+              variant="secondary"
+              onClick={() => dispatch(genericDialogClosed())}
+            >
+              Back
+            </Button>
+            <Button
+              variant="danger"
+              onClick={onCancelReservationConfirm}
+              disabled={cancellingReservation}
+            >
+              Cancel Reservation
+            </Button>
+          </>
+        ),
+      })
+    );
+  };
 
   const renderCancellationLabel = () =>
     reservation.cancelledBy ? (
@@ -127,10 +179,12 @@ export default function BusinessReservationDetailsView() {
   const renderActionButtons = () =>
     reservation.cancelledBy === null ? (
       <>
-        <Button variant="secondary">
+        <Button variant="secondary" disabled>
           Change Date{resourceIsDateOnly ? "" : "/Time"}
         </Button>
-        <Button variant="danger">Cancel Reservation</Button>
+        <Button variant="danger" onClick={onCancelReservationClick}>
+          Cancel Reservation
+        </Button>
       </>
     ) : paymentIsDone ? (
       <Button variant="secondary" disabled={totallyRefunded}>

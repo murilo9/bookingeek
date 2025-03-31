@@ -25,9 +25,19 @@ export const reservationsApi = appApi.injectEndpoints({
       }),
       invalidatesTags: ["Reservation"],
     }),
+    cancelReservation: builder.mutation<Reservation<string>, string>({
+      query: (reservationId) => ({
+        url: `reservations/${reservationId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Reservation"],
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useCreateReservationMutation, useGetReservationsQuery } =
-  reservationsApi;
+export const {
+  useCreateReservationMutation,
+  useGetReservationsQuery,
+  useCancelReservationMutation,
+} = reservationsApi;

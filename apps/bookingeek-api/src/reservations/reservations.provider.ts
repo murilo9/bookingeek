@@ -114,4 +114,14 @@ export class ReservationsService {
     >(DbCollection.Reservations, reservationToCreate);
     return reservation;
   }
+
+  async cancelReservation(
+    reservationId: ObjectId,
+    cancelledBy: 'business' | 'customer',
+  ) {
+    const reservationToCancel = await this.databaseService.updateOne<
+      Reservation<ObjectId>
+    >(DbCollection.Reservations, { cancelledBy }, { _id: reservationId });
+    return reservationToCancel;
+  }
 }
