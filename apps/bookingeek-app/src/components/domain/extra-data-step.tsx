@@ -46,6 +46,7 @@ export default function ExtraDataStep({
   onNextClick,
   extraDataForm,
   setExtraDataForm,
+  onBackClick,
 }: ExtraDataStepProps) {
   const [emailError, setEmailError] = useState("");
   const customerEmailIsValid = emailIsValid(customerEmail);
@@ -119,7 +120,9 @@ export default function ExtraDataStep({
         )
       )}
       <StyledButtonsContainer>
-        <Button variant="secondary">Back</Button>
+        <Button variant="secondary" onClick={onBackClick}>
+          Back
+        </Button>
         <Button disabled={!canGoToNextStep} onClick={() => onNextClick()}>
           Next
         </Button>
