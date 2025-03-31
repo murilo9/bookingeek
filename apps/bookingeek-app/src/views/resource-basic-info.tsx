@@ -354,7 +354,7 @@ export default function ResourceBasicInfoView() {
         description="Used in URLs"
         helperText={
           slugIsValid
-            ? `https://bookingeek.com/b/${business?.slug}/${slug}`
+            ? `https://app.bookingeek.com/b/${business?.slug}/${slug}`
             : "Invalid slug"
         }
         value={slug}

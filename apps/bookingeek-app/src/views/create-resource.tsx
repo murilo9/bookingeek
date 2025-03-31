@@ -285,7 +285,7 @@ export default function CreateResourceView() {
           helperText={
             slugError
               ? "Invalid slug"
-              : `https://bookingeek.com/b/${business?.slug}/${slug}`
+              : `https://app.bookingeek.com/b/${business?.slug}/${slug}`
           }
           value={slug}
           onChange={setSlug}

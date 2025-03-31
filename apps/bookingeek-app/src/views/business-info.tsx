@@ -209,10 +209,10 @@ export default function BusinessInfoView() {
           <StyledBusinessUrl
             href={`/b/${business!._id}`}
             target="_blank"
-          >{`https://sitehenger/b/${business!._id}`}</StyledBusinessUrl>
+          >{`https://app.bookingeek/b/${business!._id}`}</StyledBusinessUrl>
           <IconButton
             onClick={() =>
-              onCopySlugUrl(`https://bookingeek.com/b/${business!._id}`)
+              onCopySlugUrl(`https://app.bookingeek.com/b/${business!._id}`)
             }
           >
             <CopyIcon />
@@ -240,13 +240,13 @@ export default function BusinessInfoView() {
           <StyledRow>
             <span>
               {slugIsValid
-                ? `Preview: https://bookingeek.com/b/${slug}`
+                ? `Preview: https://app.bookingeek.com/b/${slug}`
                 : "Slug is not valid"}
             </span>
             {slugIsValid ? (
               <IconButton
                 onClick={() =>
-                  onCopySlugUrl(`https://bookingeek.com/b/${slug}`)
+                  onCopySlugUrl(`https://app.bookingeek.com/b/${slug}`)
                 }
               >
                 <CopyIcon />
