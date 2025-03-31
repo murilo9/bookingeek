@@ -327,16 +327,18 @@ export default function ResourceBasicInfoView() {
           </StyledPriceInputGrid>
         ) : null}
       </FormField>
-      <FormField
-        label="Checkout Options"
-        description="Set how customers can pay"
-        type="options-radio"
-        value={checkoutType}
-        onChange={setCheckoutType}
-        options={Object.entries(RESOURCE_CHECKOUT_TYPES).map(
-          ([value, label]) => ({ value, label })
-        )}
-      />
+      {hasPrice === "yes" ? (
+        <FormField
+          label="Checkout Options"
+          description="Set how customers can pay"
+          type="options-radio"
+          value={checkoutType}
+          onChange={setCheckoutType}
+          options={Object.entries(RESOURCE_CHECKOUT_TYPES).map(
+            ([value, label]) => ({ value, label })
+          )}
+        />
+      ) : null}
       <FormField label="Title" value={title} onChange={setTitle} />
       <FormField label="Subtitle" value={subtitle} onChange={setSubtitle} />
       <FormField
