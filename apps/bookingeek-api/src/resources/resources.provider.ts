@@ -12,6 +12,19 @@ import {
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { UpdateResourceDto } from './dto/update-resource.dto';
 
+const INITIAL_AVAILABILITY_RULES = {
+  ranges: [
+    {
+      startInMinutesPastMidnight: 60 * 9,
+      endInMinutesPastMidnight: 60 * 19,
+    },
+  ],
+  slots: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18].map((time) => ({
+    startInMinutesPastMidnight: 60 * time,
+    endInMinutesPastMidnight: 60 * (time + 1),
+  })),
+};
+
 @Injectable()
 export class ResourcesService {
   constructor(
@@ -80,11 +93,31 @@ export class ResourcesService {
       isActive: false,
       availability: {
         sunday: { available: false, rules: [] },
-        monday: { available: false, rules: [] },
-        tuesday: { available: false, rules: [] },
-        wednesday: { available: false, rules: [] },
-        thursday: { available: false, rules: [] },
-        friday: { available: false, rules: [] },
+        monday: {
+          available: true,
+          rules:
+            INITIAL_AVAILABILITY_RULES[createResourceDto.reservationTimeType],
+        },
+        tuesday: {
+          available: true,
+          rules:
+            INITIAL_AVAILABILITY_RULES[createResourceDto.reservationTimeType],
+        },
+        wednesday: {
+          available: true,
+          rules:
+            INITIAL_AVAILABILITY_RULES[createResourceDto.reservationTimeType],
+        },
+        thursday: {
+          available: true,
+          rules:
+            INITIAL_AVAILABILITY_RULES[createResourceDto.reservationTimeType],
+        },
+        friday: {
+          available: true,
+          rules:
+            INITIAL_AVAILABILITY_RULES[createResourceDto.reservationTimeType],
+        },
         saturday: { available: false, rules: [] },
       },
       availabilityType: 'date-time',
