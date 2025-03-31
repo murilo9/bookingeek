@@ -115,7 +115,9 @@ export default function ResourceTimePicker({
           type="options-select"
           options={availableTimes}
           value={selectedTimeStartMinutes}
-          onChange={setSelectedTimeStartMinutes}
+          onChange={(timeString) =>
+            setSelectedTimeStartMinutes(Number(timeString))
+          }
         />
         <FormField
           label="To"
@@ -123,7 +125,9 @@ export default function ResourceTimePicker({
           type="options-select"
           options={availableTimes}
           value={selectedTimeEndMinutes}
-          onChange={setSelectedTimeEndMinutes}
+          onChange={(timeString) =>
+            setSelectedTimeEndMinutes(Number(timeString))
+          }
         />
       </StyledTimeRangesContainer>
     ) : (
