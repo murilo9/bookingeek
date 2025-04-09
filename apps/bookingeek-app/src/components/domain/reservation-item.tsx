@@ -9,6 +9,7 @@ import { useGetResourcesQuery } from "../../store/resources-api";
 import { format } from "date-fns";
 import CalendarIcon from "../icons/calendar/calendar";
 import ClockIcon from "../icons/clock/clock";
+import ReservationCancellationLabel from "./reservation-cancelled-label";
 
 const StyledReservationItem = styled.div<{ clickable?: boolean }>`
   display: flex;
@@ -99,6 +100,7 @@ export default function ReservationItem({
               </StyledInfoEntryText>
             </StyledInfoEntry>
           </StyledInfoContainer>
+          <ReservationCancellationLabel reservation={reservation} />
         </>
       ) : (
         "Loading..."

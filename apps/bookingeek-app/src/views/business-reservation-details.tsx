@@ -19,6 +19,7 @@ import {
 } from "../store/common-slice";
 import { useCancelReservationMutation } from "../store/reservations-api";
 import { useState } from "react";
+import ReservationCancellationLabel from "../components/domain/reservation-cancelled-label";
 
 const StyledReservationDetails = styled.div`
   padding: 8px;
@@ -71,18 +72,6 @@ const StyledDataEntryTitle = styled.p`
 
 const StyledDataEntryValue = styled.p`
   font-size: 14px;
-`;
-
-const StyledCancellationLabelTitle = styled.p`
-  font-size: 14px;
-  font-weight: 600;
-  color: #b80101;
-`;
-
-const StyledCancellationLabelSubtitle = styled.p`
-  font-size: 14px;
-  font-weight: 500;
-  color: #b80101;
 `;
 
 const StyledButtonsContainer = styled.div`
@@ -160,22 +149,6 @@ export default function BusinessReservationDetailsView() {
     );
   };
 
-  const renderCancellationLabel = () =>
-    reservation.cancelledBy ? (
-      <div>
-        <StyledCancellationLabelTitle>
-          {reservation.cancelledBy === "customer"
-            ? "Cancelled by customer"
-            : "Cancelled by us"}
-        </StyledCancellationLabelTitle>
-        <StyledCancellationLabelSubtitle>
-          {refundedAmountInCents
-            ? `Refunded $ ${formatPriceInCents(refundedAmountInCents)} / ${formatPriceInCents(totalPriceInCents)}`
-            : "Not refunded"}
-        </StyledCancellationLabelSubtitle>
-      </div>
-    ) : null;
-
   const renderActionButtons = () =>
     reservation.cancelledBy === null ? (
       <>
@@ -229,7 +202,7 @@ export default function BusinessReservationDetailsView() {
             <StyledDataEntryValue>{value}</StyledDataEntryValue>
           </div>
         ))}
-        {renderCancellationLabel()}
+        <ReservationCancellationLabel reservation={reservation} />
         <StyledButtonsContainer>{renderActionButtons()}</StyledButtonsContainer>
       </StyledReservationDetails>
     </>
