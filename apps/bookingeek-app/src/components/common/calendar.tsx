@@ -11,7 +11,7 @@ type DayProps = {
 
 const StyledDay = styled.div<DayProps>`
   width: 36px;
-  height: 40px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,25 +30,25 @@ const StyledDay = styled.div<DayProps>`
 
 const StyledWeek = styled.div`
   display: flex;
-  gap: 6px;
+  gap: 8px;
 `;
 
 const StyledMonth = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 `;
 
-const header = ["M", "T", "W", "T", "F", "S", "S"];
+const header = ["S", "M", "T", "W", "T", "F", "S"];
 
 type CalendarProps = {
   // Day of month that should be backgrounded
   activeDay?: number;
   // Days of month that should be outlined
-  outlinedDays?: Array<number>;
+  outlinedDays?: Array<boolean>;
   // Called once clicking on a clickable day
   onClick?: (day: number) => void;
-  // MOnth to display
+  // Month to display
   monthIndex: number;
   // Year to display
   year: number;
@@ -74,7 +74,7 @@ export default function Calendar({
 
   const handleClick = (day: number) => {
     if (onClick) {
-      const dayIsClickable = outlinedDays?.some((value) => value === day);
+      const dayIsClickable = outlinedDays && outlinedDays[day];
       if (allClickable || dayIsClickable) {
         onClick(day);
       }
@@ -94,10 +94,8 @@ export default function Calendar({
             <StyledDay
               onClick={() => handleClick(day)}
               backgrounded={day === activeDay}
-              outlined={outlinedDays?.some((value) => value === day)}
-              clickable={
-                allClickable || outlinedDays?.some((value) => value === day)
-              }
+              outlined={outlinedDays && outlinedDays[day]}
+              clickable={allClickable || (outlinedDays && outlinedDays[day])}
             >
               {day > 0 ? day : ""}
             </StyledDay>
