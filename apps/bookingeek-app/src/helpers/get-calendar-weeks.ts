@@ -1,24 +1,32 @@
-import { endOfMonth, getWeeksInMonth, startOfMonth } from "date-fns";
+import { endOfMonth, getWeeksInMonth } from "date-fns";
 
+/**
+ * Returns an aray of weeks in a given month.
+ * @param monthIndex Reference month, zero-indexed.
+ * @param year Reference year.
+ * @returns
+ */
 export function getCalendarWeeks(monthIndex: number, year: number) {
-  const referenceDate = new Date(year, monthIndex, 1, 0, 0, 0, 0);
-  const weeksInMonth = getWeeksInMonth(referenceDate);
-  const lastDayOfMonth = endOfMonth(referenceDate).getDate();
+  const startOfMonthDate = new Date(year, monthIndex, 1, 0, 0, 0, 0);
+  const weeksInMonth = getWeeksInMonth(startOfMonthDate);
+  const lastDayOfMonth = endOfMonth(startOfMonthDate).getDate();
   const weeks = [];
   let lastFilledDay = 0;
+  // Fill each week
   for (let weekIndex = 0; weekIndex < weeksInMonth; weekIndex++) {
     const week = [0, 0, 0, 0, 0, 0, 0];
     if (lastFilledDay === 0) {
-      const startOfMonthDate = startOfMonth(referenceDate);
       const firstDayOfMonthDayOfWeek = startOfMonthDate.getDay();
       let dayOfWeekToFill = firstDayOfMonthDayOfWeek;
       week[firstDayOfMonthDayOfWeek] = lastFilledDay = 1;
+      // Fill each day of week
       while (dayOfWeekToFill < week.length) {
         week[dayOfWeekToFill] = lastFilledDay;
         dayOfWeekToFill++;
         lastFilledDay++;
       }
     } else {
+      // Fill each day of week
       for (
         let dayOfWeekIndex = 0;
         dayOfWeekIndex < week.length;
@@ -27,7 +35,7 @@ export function getCalendarWeeks(monthIndex: number, year: number) {
         if (lastFilledDay === lastDayOfMonth) {
           break;
         }
-        week[dayOfWeekIndex] = lastFilledDay + 1;
+        week[dayOfWeekIndex] = lastFilledDay;
         lastFilledDay++;
       }
     }
