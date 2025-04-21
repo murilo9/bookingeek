@@ -2,12 +2,16 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Filter, ObjectId } from 'mongodb';
 import { DatabaseService } from 'src/database/database.service';
 import { DbCollection } from 'src/database/collection.enum';
-import { getDaysInMonth } from 'date-fns';
+import { endOfMonth, getDaysInMonth, startOfMonth } from 'date-fns';
 import {
   Resource,
   RetrieveResourceAvailabilityQuery,
-  DayOfWeekAvailability,
   FromPersistentEntity,
+  Reservation,
+  reservationsTimeOverlap,
+  RetrieveResourceAvailabilityResponse,
+  DAY_OF_WEEK_NAME,
+  DayOfWeekAvailability,
 } from '@bookingeek/core';
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { UpdateResourceDto } from './dto/update-resource.dto';
@@ -15,13 +19,13 @@ import { UpdateResourceDto } from './dto/update-resource.dto';
 const INITIAL_AVAILABILITY_RULES = {
   ranges: [
     {
-      startInMinutesPastMidnight: 60 * 9,
-      endInMinutesPastMidnight: 60 * 19,
+      startTimeInMinutesPastMidnight: 60 * 9,
+      endTimeInMinutesPastMidnight: 60 * 19,
     },
   ],
   slots: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18].map((time) => ({
-    startInMinutesPastMidnight: 60 * time,
-    endInMinutesPastMidnight: 60 * (time + 1),
+    startTimeInMinutesPastMidnight: 60 * time,
+    endTimeInMinutesPastMidnight: 60 * (time + 1),
   })),
 };
 
@@ -49,7 +53,7 @@ export class ResourcesService {
   async retrieveResourceAvailability(
     resourceId: ObjectId,
     query: RetrieveResourceAvailabilityQuery,
-  ) {
+  ): Promise<RetrieveResourceAvailabilityResponse<ObjectId>> {
     const resource = await this.databaseService.findOne<Resource<ObjectId>>(
       DbCollection.Resources,
       { _id: resourceId },
@@ -59,26 +63,51 @@ export class ResourcesService {
     const month = query.month ? Number(query.month) : now.getMonth();
     const year = query.year ? Number(query.year) : now.getFullYear();
     // Date used as reference for this whole month
-    const referenceMonthDate = new Date(year, month, 1, 0, 0, 0, 0);
-    const daysInMonth = getDaysInMonth(referenceMonthDate);
-    // ----- 1. Builds the array of availabiluty rules -----
+    const referenceMonthDateObj = new Date(year, month, 1, 0, 0, 0, 0);
+    const daysInMonth = getDaysInMonth(referenceMonthDateObj);
     // One-indexed list of availability rules for each day in the reference month
-    const availabilityDaysInMonth = [[]];
-    for (let day = 1; day++; day <= daysInMonth) {
-      const referenceDayDate = new Date(year, month, day, 0, 0, 0, 0);
-      const dayOfWeek = referenceDayDate.getDay();
-      const resourceAvailabilityThisDayOfWeek = availability[
-        String(dayOfWeek)
-      ] as DayOfWeekAvailability;
-      if (resourceAvailabilityThisDayOfWeek.available) {
-        availabilityDaysInMonth.push(resourceAvailabilityThisDayOfWeek.rules);
-      }
+    const availabilityDaysInMonth: Array<DayOfWeekAvailability> = [
+      { available: false, rules: [] }, // Day zero
+    ];
+    for (let day = 1; day < daysInMonth; day++) {
+      const referenceDayDateObj = new Date(year, month, day, 0, 0, 0, 0);
+      const dayOfWeek = referenceDayDateObj.getDay();
+      availabilityDaysInMonth.push(availability[DAY_OF_WEEK_NAME[dayOfWeek]]);
     }
-    // ----- 2. Removes rules that overlap with reservations -----
-    // TODO
+    // Retrieves all reservations in the reference month
+    const reservationsInReferenceMonth = await this.databaseService.findMany<
+      Reservation<ObjectId>
+    >(DbCollection.Reservations, {
+      resourceId: resource._id,
+      startDateTimestamp: {
+        $gte: startOfMonth(referenceMonthDateObj).getTime(),
+      },
+      endDateTimestamp: {
+        $lt: endOfMonth(referenceMonthDateObj).getTime(),
+      },
+    });
+    return {
+      days: availabilityDaysInMonth.map((availability, dayOfMonth) => ({
+        ...availability,
+        hasAnyReservationInDay: reservationsInReferenceMonth.some(
+          (reservation) => reservation.startDate.day === dayOfMonth,
+        ),
+        availableSlots: availability.rules.filter((rule) => {
+          const reservationsInDayOfMonth = reservationsInReferenceMonth.filter(
+            (reservation) => reservation.startDate.day === dayOfMonth,
+          );
+          const reservationsOverlapWithRule = Boolean(
+            reservationsInDayOfMonth.find((reservation) => {
+              const overlap = reservationsTimeOverlap(reservation, rule);
+              return overlap;
+            }),
+          );
 
-    // Finally, returns the array of days with availability rules
-    return availabilityDaysInMonth;
+          return !reservationsOverlapWithRule;
+        }),
+      })),
+      reservations: reservationsInReferenceMonth,
+    };
   }
 
   /**
@@ -120,7 +149,6 @@ export class ResourcesService {
         },
         saturday: { available: false, rules: [] },
       },
-      availabilityType: 'date-time',
       businessId,
       customPrices: [],
       description: '',

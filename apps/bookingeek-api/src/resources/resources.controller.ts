@@ -39,7 +39,7 @@ export class ResourcesController {
    */
   @EntityShouldExist('id', DbCollection.Resources, 'resource')
   @UseGuards(EntityExistsGuard)
-  @Get('resource/:id/availability')
+  @Get('resources/:id/availability')
   retrieveResourceAvailability(
     @Param('id') resourceId: string,
     @Query() query: RetrieveResourceAvailabilityQuery,

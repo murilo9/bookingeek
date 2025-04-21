@@ -12,7 +12,7 @@ import {
   User,
   Resource,
   customPriceRuleMatchesDateTime,
-  reservationsOverlap,
+  reservationsTimeOverlap,
   Reservation,
   getDateFromDateDef,
   DAY_OF_WEEK_NAME,
@@ -61,24 +61,27 @@ export class CreateReservationGuard implements CanActivate {
       );
     }
     // Available time rule check
-    const availableTime = defaultActiveAvailability.rules.find(
-      (priceRule) =>
-        priceRule.startInMinutesPastMidnight <=
-          startTimeInMinutesPastMidnight &&
-        priceRule.endInMinutesPastMidnight >= endTimeInMinutesPastMidnight,
-    );
-    const customPriceRule = resource.customPrices.find((customPriceRule) =>
-      customPriceRuleMatchesDateTime(
-        customPriceRule,
-        startDate,
-        startTimeInMinutesPastMidnight,
-        endTimeInMinutesPastMidnight,
-      ),
-    );
-    if (!availableTime && !customPriceRule) {
-      throw new BadRequestException(
-        'Resource is not available this time of the day',
+    if (resource.availabilityType === 'date-time') {
+      const availableTime = defaultActiveAvailability.rules.find(
+        (priceRule) =>
+          priceRule.startTimeInMinutesPastMidnight <=
+            startTimeInMinutesPastMidnight &&
+          priceRule.endTimeInMinutesPastMidnight >=
+            endTimeInMinutesPastMidnight,
       );
+      const customPriceRule = resource.customPrices.find((customPriceRule) =>
+        customPriceRuleMatchesDateTime(
+          customPriceRule,
+          startDate,
+          startTimeInMinutesPastMidnight,
+          endTimeInMinutesPastMidnight,
+        ),
+      );
+      if (!availableTime && !customPriceRule) {
+        throw new BadRequestException(
+          'Resource is not available this time of the day',
+        );
+      }
     }
     // Checks if there are any reservations overlapping with the reservation intent
     const reservationsForIntentedDate = await this.databaseService.findMany<
@@ -93,7 +96,7 @@ export class CreateReservationGuard implements CanActivate {
     });
     const overlappingReservation = reservationsForIntentedDate.find(
       (reservation) =>
-        reservationsOverlap(reservation, {
+        reservationsTimeOverlap(reservation, {
           startTimeInMinutesPastMidnight,
           endTimeInMinutesPastMidnight,
         }),

@@ -103,8 +103,8 @@ export default function ResourceAvailabilityView() {
   const onAddRuleClick = (dayOfWeek: DayOfWeekName) => {
     const dayOfWeekRules = availabilityForm[dayOfWeek];
     const newRule = {
-      endInMinutesPastMidnight: resource.reservationTimeGranularityMinutes,
-      startInMinutesPastMidnight: 0,
+      endTimeInMinutesPastMidnight: resource.reservationTimeGranularityMinutes,
+      startTimeInMinutesPastMidnight: 0,
     };
     dayOfWeekRules.rules.push(newRule);
     setAvailabilityForm({ ...availabilityForm, [dayOfWeek]: dayOfWeekRules });

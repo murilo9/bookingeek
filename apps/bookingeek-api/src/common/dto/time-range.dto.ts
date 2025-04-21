@@ -9,10 +9,10 @@ export class TimeRangeDto {
   @IsDefined()
   @IsNumber()
   // Start time, in minutes, past midnight
-  startInMinutesPastMidnight: number;
+  startTimeInMinutesPastMidnight: number;
   @Expose()
   @IsDefined()
   @IsNumber()
   // End time, in minutes, past midnight
-  endInMinutesPastMidnight: number;
+  endTimeInMinutesPastMidnight: number;
 }

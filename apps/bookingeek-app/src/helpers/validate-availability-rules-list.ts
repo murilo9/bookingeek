@@ -1,15 +1,16 @@
 import { TimeRange } from "@bookingeek/core";
 
 const rulesDontOverlap = (ruleA: TimeRange, ruleB: TimeRange) =>
-  ruleA.startInMinutesPastMidnight >= ruleB.endInMinutesPastMidnight ||
-  ruleB.startInMinutesPastMidnight >= ruleA.endInMinutesPastMidnight;
+  ruleA.startTimeInMinutesPastMidnight >= ruleB.endTimeInMinutesPastMidnight ||
+  ruleB.startTimeInMinutesPastMidnight >= ruleA.endTimeInMinutesPastMidnight;
 
 /**
  * Checks if a list of rules contains invalid, duplicated or overlaping rules.
  */
 export const validateAvailablilityRulesList = (rules: Array<TimeRange>) => {
   const invalidRuleExists = rules.find(
-    (rule) => rule.startInMinutesPastMidnight >= rule.endInMinutesPastMidnight
+    (rule) =>
+      rule.startTimeInMinutesPastMidnight >= rule.endTimeInMinutesPastMidnight
   );
   const overlappingRuleExists = rules.find(
     (comparingRule, comparingRuleIndex) => {

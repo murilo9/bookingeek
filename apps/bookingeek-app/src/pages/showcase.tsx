@@ -1,7 +1,10 @@
 import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useGetResourcesQuery } from "../store/resources-api";
+import {
+  useGetResourcesQuery,
+  useLazyGetResourceMonthAvailabilityQuery,
+} from "../store/resources-api";
 import ResourceItem from "../components/domain/resource-item";
 import DateTimeSelectStep from "../components/domain/date-time-select-step";
 import { useCreateReservationMutation } from "../store/reservations-api";
@@ -18,6 +21,8 @@ import {
   Reservation,
   ResourceExtraField,
   CreateReservationPayload,
+  TimeRange,
+  DayOfWeekAvailability,
 } from "@bookingeek/core";
 import CheckoutStep from "../components/domain/checkout-step";
 import { useGetBusinessByIdOrSlugQuery } from "../store/businesses-api";
@@ -121,11 +126,17 @@ export default function BusinessShowcasePage() {
     Record<string, string | boolean>
   >({});
 
-  // Builds extraFieldForm's initial value every time selectedResource changes
+  // Every time selectedResource changes
   useEffect(() => {
-    if (selectedResource) {
-      setExtraDataForm(buildFormFromExtraFields(selectedResource.extraFields));
-    }
+    const load = async () => {
+      if (selectedResource) {
+        // Builds extraFieldForm's initial value
+        setExtraDataForm(
+          buildFormFromExtraFields(selectedResource.extraFields)
+        );
+      }
+    };
+    load();
   }, [selectedResource]);
 
   // Redirects to 404 page if business could not be found
@@ -141,8 +152,8 @@ export default function BusinessShowcasePage() {
       },
       startDate: getDateDefFromDate(selectedDate!),
       endDate: getDateDefFromDate(selectedDate!),
-      startTimeInMinutesPastMidnight: selectedTime!.startMinutes,
-      endTimeInMinutesPastMidnight: selectedTime!.endMinutes,
+      startTimeInMinutesPastMidnight: selectedTime?.startMinutes || null,
+      endTimeInMinutesPastMidnight: selectedTime?.endMinutes || null,
       extraFields: extraDataForm,
       resourceId: selectedResource!._id,
     };

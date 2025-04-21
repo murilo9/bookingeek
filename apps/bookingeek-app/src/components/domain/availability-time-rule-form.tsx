@@ -66,21 +66,24 @@ export default function AvailabilityTimeRuleForm({
   error,
 }: AvailabilityDayOfWeekFormProps) {
   const [startTime, setStartTime] = useState(
-    timeRange.startInMinutesPastMidnight
+    timeRange.startTimeInMinutesPastMidnight
   );
-  const [endTime, setEndTime] = useState(timeRange.endInMinutesPastMidnight);
+  const [endTime, setEndTime] = useState(
+    timeRange.endTimeInMinutesPastMidnight
+  );
   const possibleTimes = getTimesList(reservationTimeGranularityMinutes);
   const possibleSlots = getSlotsList(reservationTimeGranularityMinutes);
   const ruleIsInvalid = startTime >= endTime;
 
   // Emmits the onChange events every time startTime or endTime change
   useEffect(() => {
-    const startTimeChanged = startTime !== timeRange.startInMinutesPastMidnight;
-    const endTimeChanged = endTime !== timeRange.endInMinutesPastMidnight;
+    const startTimeChanged =
+      startTime !== timeRange.startTimeInMinutesPastMidnight;
+    const endTimeChanged = endTime !== timeRange.endTimeInMinutesPastMidnight;
     if (startTimeChanged || endTimeChanged) {
       onChange({
-        startInMinutesPastMidnight: startTime,
-        endInMinutesPastMidnight: endTime,
+        startTimeInMinutesPastMidnight: startTime,
+        endTimeInMinutesPastMidnight: endTime,
       });
     }
   }, [startTime, endTime]);

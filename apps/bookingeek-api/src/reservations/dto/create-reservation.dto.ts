@@ -17,46 +17,47 @@ export class CreateReservationDto {
   @IsDefined()
   @IsString()
   @IsNotEmpty()
+  // Reserving resource's ID
   resourceId: string;
+  @Expose()
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => DateDefDto)
   // Reservation start date data
-  @Expose()
-  @IsDefined()
-  @ValidateNested()
-  @Type(() => DateDefDto)
   startDate: DateDefDto;
-  // Reservation end date data
   @Expose()
   @IsDefined()
   @ValidateNested()
   @Type(() => DateDefDto)
+  // Reservation end date data
   endDate: DateDefDto;
+  @Expose()
+  @IsDefined()
+  @IsNumber()
+  @ValidateIf((dto) => dto.startTimeInMinutesPastMidnight !== null)
   // Start time, in minutes past midnight. Only applies if type = 'date-time'
-  @Expose()
-  @IsDefined()
-  @IsNumber()
-  @ValidateIf((dto) => dto.startTimeInMinutesPastMidnight !== null)
   startTimeInMinutesPastMidnight: number | null;
-  // End time, in minutes past midnight. Only applies if type = 'date-time'
   @Expose()
   @IsDefined()
   @IsNumber()
   @ValidateIf((dto) => dto.startTimeInMinutesPastMidnight !== null)
+  // End time, in minutes past midnight. Only applies if type = 'date-time'
   endTimeInMinutesPastMidnight: number | null;
-  // Customer's data
   @Expose()
   @IsDefined()
   @ValidateNested()
   @Type(() => ReservationCustomerDataDto)
+  // Customer's data
   customerData: ReservationCustomerDataDto;
-  // Extra data fields, if any
   @Expose()
   @IsDefined()
   @IsObject()
+  // Extra data fields, if any
   extraFields: Record<string, string | boolean>;
-  // Checkout option chosen by the customer
   @Expose()
   @IsDefined()
   @IsString()
   @IsIn(['online', 'in-loco'])
+  // Checkout option chosen by the customer
   checkoutOptionChosen: 'online' | 'in-loco';
 }

@@ -3,7 +3,7 @@
  */
 export class TimeRange {
   // Start time, in minutes, past midnight
-  startInMinutesPastMidnight: number;
+  startTimeInMinutesPastMidnight: number;
   // End time, in minutes, past midnight
-  endInMinutesPastMidnight: number;
+  endTimeInMinutesPastMidnight: number;
 }

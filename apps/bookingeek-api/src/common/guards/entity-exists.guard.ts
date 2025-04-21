@@ -42,10 +42,10 @@ export class EntityExistsGuard implements CanActivate {
     const query = {
       $or: [{ _id: SafeObjectId(entityIdOrSlug) }, { slug: entityIdOrSlug }],
     };
-    console.log(entityName);
-    console.log(query);
+    //console.log('entityName', entityName);
+    //console.log('query', query);
     const entity = await this.databaseService.findOne(entityCollection, query);
-    console.log(entity);
+    //console.log('entity', entity);
     if (!entity) {
       throw new NotFoundException(`${entityName} not found`);
     }

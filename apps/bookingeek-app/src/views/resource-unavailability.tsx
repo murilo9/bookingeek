@@ -119,8 +119,8 @@ export default function ResourceUnavailabilityView() {
       month: now.getMonth(),
       times: [
         {
-          startInMinutesPastMidnight: now.getHours() * 60,
-          endInMinutesPastMidnight:
+          startTimeInMinutesPastMidnight: now.getHours() * 60,
+          endTimeInMinutesPastMidnight:
             now.getHours() * 60 + resource.reservationTimeGranularityMinutes,
         },
       ],
@@ -153,8 +153,8 @@ export default function ResourceUnavailabilityView() {
     const updatedRule = updatedUnvavailabilityRules[ruleIndex];
     const now = new Date();
     updatedRule.times.push({
-      startInMinutesPastMidnight: now.getHours() * 60,
-      endInMinutesPastMidnight:
+      startTimeInMinutesPastMidnight: now.getHours() * 60,
+      endTimeInMinutesPastMidnight:
         now.getHours() * 60 + resource.reservationTimeGranularityMinutes,
     });
     updatedUnvavailabilityRules.splice(ruleIndex, 1, updatedRule);

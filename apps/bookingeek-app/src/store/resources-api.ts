@@ -3,6 +3,8 @@ import { buildQueryString } from "../helpers/build-query-string";
 import {
   CreateResourcePayload,
   Resource,
+  RetrieveResourceAvailabilityQuery,
+  RetrieveResourceAvailabilityResponse,
   RetrieveResourcesQuery,
   UpdateResourcePayload,
 } from "@bookingeek/core";
@@ -39,6 +41,13 @@ export const resourcesApi = appApi.injectEndpoints({
       }),
       invalidatesTags: ["Resource"],
     }),
+    getResourceMonthAvailability: builder.query<
+      RetrieveResourceAvailabilityResponse<string>,
+      { resourceId: string } & RetrieveResourceAvailabilityQuery
+    >({
+      query: ({ resourceId, year, month }) =>
+        `resources/${resourceId}/availability?${buildQueryString({ year, month })}`,
+    }),
   }),
   overrideExisting: false,
 });
@@ -47,4 +56,6 @@ export const {
   useGetResourcesQuery,
   useCreateResourceMutation,
   useUpdateResourceMutation,
+  useGetResourceMonthAvailabilityQuery,
+  useLazyGetResourceMonthAvailabilityQuery,
 } = resourcesApi;

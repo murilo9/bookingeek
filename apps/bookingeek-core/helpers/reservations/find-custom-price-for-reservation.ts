@@ -22,9 +22,10 @@ export function findCustomPriceForReservation<T>(
     if (customPriceApplies && resource.availabilityType === "date-time") {
       customPrice.times.forEach((customTime) => {
         const customTimeApplies =
-          customTime.startInMinutesPastMidnight <=
+          customTime.startTimeInMinutesPastMidnight <=
             startTimeInMinutesPastMidnight &&
-          customTime.endInMinutesPastMidnight >= endTimeInMinutesPastMidnight;
+          customTime.endTimeInMinutesPastMidnight >=
+            endTimeInMinutesPastMidnight;
         if (customTimeApplies) {
           customPriceApplied = customPrice;
         }

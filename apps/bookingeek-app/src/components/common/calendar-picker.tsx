@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "./calendar";
 import styled from "styled-components";
 import { MONTHS } from "../../data/months";
@@ -26,8 +26,22 @@ type CalendarPickerProps = {
   value: Date | null;
   // Change handler
   onChange: (value: Date) => void;
+  // Zero-indexed number of month to display
+  displayMonth: number;
+  // Number of year to display
+  displayYear: number;
+  // Callback to handle navigation to next month
+  onNextClick: () => void;
+  // Callback to handle navigation to previous month
+  onPrevClick: () => void;
   // If defined, these dates will be outlined and only them can be selected
   availableDates?: Array<Date>;
+  // If defined, provides an alternative for availableDates
+  availableDaysOfSelectedMonth?: Array<boolean>;
+  // Called every time the displayed month changes
+  onDisplayMonthOrYearChange?: (month: number, year: number) => void;
+  // Used to prevent past dates to be outlined and clickable
+  disablePastDates?: boolean;
 };
 
 /**
@@ -36,15 +50,15 @@ type CalendarPickerProps = {
 export default function CalendarPicker({
   value,
   availableDates,
+  availableDaysOfSelectedMonth,
+  displayMonth,
+  displayYear,
+  disablePastDates,
   onChange,
+  onDisplayMonthOrYearChange,
+  onNextClick,
+  onPrevClick,
 }: CalendarPickerProps) {
-  const [displayMonth, setDisplayMonth] = useState(
-    value?.getMonth() || new Date().getMonth()
-  );
-  const [displayYear, setDisplayYear] = useState(
-    value?.getFullYear() || new Date().getFullYear()
-  );
-
   // Whether active day should be highlighted in the calendar
   const valueIsInView =
     value?.getMonth() === displayMonth && value?.getFullYear() === displayYear;
@@ -55,35 +69,11 @@ export default function CalendarPicker({
     onChange(newDate);
   };
 
-  // Go to previous month
-  const onPrevClick = () => {
-    if (displayMonth === 0) {
-      setDisplayMonth(11);
-      setDisplayYear(displayYear - 1);
-    } else {
-      setDisplayMonth(displayMonth - 1);
+  useEffect(() => {
+    if (onDisplayMonthOrYearChange) {
+      onDisplayMonthOrYearChange(displayMonth, displayYear);
     }
-  };
-
-  // Go to next month
-  const onNextClick = () => {
-    if (displayMonth === 11) {
-      setDisplayMonth(0);
-      setDisplayYear(displayYear + 1);
-    } else {
-      setDisplayMonth(displayMonth + 1);
-    }
-  };
-
-  // Parsed available dates that are in the current view and should be rendered as outlined days
-  const outlinedDays = availableDates
-    ?.filter(
-      (availableDate) =>
-        availableDate.getMonth() === displayMonth &&
-        availableDate.getFullYear() === displayYear
-    )
-    // ...and retrieve only their month days
-    .map((availableDate) => availableDate.getDate());
+  }, [displayMonth, displayYear]);
 
   return (
     <StyledPickerContainer>
@@ -94,13 +84,20 @@ export default function CalendarPicker({
         <span>{`${MONTHS[displayMonth]} ${displayYear}`}</span>
         <IconButton onClick={onNextClick}>{">"}</IconButton>
       </StyledPickerHeader>
+      {/* TODO: take resource.minimalReservationAdvance into consideration as well */}
       <Calendar
         activeDay={valueIsInView ? value.getDate() : undefined}
-        outlinedDays={outlinedDays}
+        outlinedDays={availableDaysOfSelectedMonth?.map((value, dayIndex) =>
+          disablePastDates
+            ? new Date().getTime() <
+                new Date(
+                  `${displayYear}-${displayMonth + 1}-${dayIndex}`
+                ).getTime() && value
+            : value
+        )}
         year={displayYear}
         monthIndex={displayMonth}
         onClick={handleChange}
-        allClickable={!availableDates}
       />
     </StyledPickerContainer>
   );

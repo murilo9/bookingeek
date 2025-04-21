@@ -1,4 +1,4 @@
-export const reservationsOverlap = (
+export const reservationsTimeOverlap = (
   reservation1: {
     startTimeInMinutesPastMidnight: number;
     endTimeInMinutesPastMidnight: number;
@@ -6,7 +6,7 @@ export const reservationsOverlap = (
   reservation2: {
     startTimeInMinutesPastMidnight: number;
     endTimeInMinutesPastMidnight: number;
-  },
+  }
 ): boolean => {
   // TODO: give better names for these logical variables
   const free1 =
@@ -15,5 +15,5 @@ export const reservationsOverlap = (
   const free2 =
     reservation2.endTimeInMinutesPastMidnight <=
     reservation1.startTimeInMinutesPastMidnight;
-  return free1 || free2;
+  return !(free1 || free2);
 };

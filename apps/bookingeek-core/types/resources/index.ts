@@ -14,3 +14,4 @@ export * from "./resource-reservation-advance-unit";
 export * from "./retrieve-resource-availability-query";
 export * from "./retrieve-resources-query";
 export * from "./update-resource-payload";
+export * from "./retrieve-resource-availability-response";
