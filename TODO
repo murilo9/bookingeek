@@ -1,3 +1,2 @@
-- dedicated docs folder (general business rules, setup, api, app, website)
-- remove @bookingeek/core
+- test Stripe payments/refunds
 - request mockups for Postman/Insomnia (URL & payload JSON)

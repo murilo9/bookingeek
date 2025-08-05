@@ -35,7 +35,7 @@ Bookingeek's backend consists of a REST API made with Nest.js, connected with a 
 - Business: responsible for businesses and users registration and authentication.
 - Resources: responsible for resources management.
 - Reservations: responsible for reservations management.
-- Stripe: facade for Stripe's API. Creates checkout sessions and handle Stripe webook events.
+- Stripe: facade for Stripe's API. Creates checkout sessions and handle Stripe webhook events.
 - Database: responsible for data persistency.
 - Files: responsible for file uploads (for now, only resources' and businesses' pictures).
 
@@ -66,15 +66,15 @@ F: frontend; B: backend; S: stripe
 ### Google Sign In
 
 1. F: user clicks the Google Sign In button and signs in with Google, which sends an access token.
-2. F: sends the access token to the backend (to the specific google sign in rendpoint).
+2. F: sends the access token to the backend (to the specific google sign in endpoint).
 3. B: uses the access token to call Google's OAuth API and retrieve user's e-mail address.
 4. B: checks if a user with the given e-mail address exists. If so, signs in as normal. If not, returns the e-mail address.
 5. F: if received an access token, signs in as normal. If received an email address, redirect the user to the sign up page with e-mail address input filled and the 'google' provider, 'name' and 'email' parameters (all passed by the query string) so the sign up form can operate in 'google' provider mode.
 
 ### Reservation
 
-1. F: The customer selects a resource and fills the necessary data to make a reservation, that generates a CreateReservationDto, which is sent to the backend.
-2. B: Validates the CreateReservationDto and creates a reservation that is sent back to the frontend, and a reservation cancel key, that is sent to the customer's email as a query paramter in the cancel URL.
+1. F: The customer selects a resource and fills the necessary data to make a reservation that generates a CreateReservationDto, which is sent to the backend.
+2. B: Validates the CreateReservationDto and creates a reservation that is sent back to the frontend, and a reservation cancel key that is sent to the customer's email as a query paramter in the cancel URL.
 3. F: Receives the created reservation. If online checkout was chosen, renders Stripe's embedded checkout form. Otherwise, the flow ends here.
 4. S: Once payment is done, emmits a checkout event via webhook.
 5. B: Receives Stripe's checkout event and updates the reservation's payment status.
