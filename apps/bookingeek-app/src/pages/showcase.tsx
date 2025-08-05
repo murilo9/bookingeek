@@ -251,7 +251,10 @@ export default function BusinessShowcasePage() {
         setCurrentStep("extraData");
         break;
       case "confirmation":
-        if (selectedResource?.checkoutType === "in-loco-online") {
+        if (
+          selectedResource?.checkoutType === "in-loco-online" &&
+          business?.stripeConnectedAccountId
+        ) {
           setCurrentStep("paymentType");
         } else {
           setCurrentStep("extraData");

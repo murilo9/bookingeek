@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { format } from "date-fns";
-import { RESOURCE_ICON } from "../../data/resource-icons";
+import { renderResourceIcon, RESOURCE_ICON } from "../../data/resource-icons";
 import { ReservationFormSteps } from "../../types/reservation-form-steps";
 import { Resource, Business, getTimeStringFromMinutes } from "@bookingeek/core";
 import FormHeader from "../common/form-header";
@@ -73,14 +73,14 @@ export default function ReservationOverview({
     <StyledContainer currentStep={currentStep}>
       <FormHeader>Reservation overview</FormHeader>
       <StyledInfoEntry>
-        {selectedResource.picture.src ? (
+        {selectedResource.picture.src.length ? (
           <StyledResourceIcon
             src={selectedResource.picture.src[0]}
             alt={selectedResource.title}
           />
         ) : (
           <StyledIconContainer>
-            {RESOURCE_ICON("inherit", 24)[selectedResource.picture.icon]}
+            {renderResourceIcon(selectedResource.picture.icon, "inherit", 20)}
           </StyledIconContainer>
         )}
         <p style={{ fontWeight: 500 }}>{selectedResource.title}</p>
