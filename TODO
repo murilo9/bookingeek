@@ -1,2 +1,5 @@
+- fix requests with param undefined returning content
+- hide unavailable time slots for booking
 - test Stripe payments/refunds
+- prevent requests with param undefined on start
 - request mockups for Postman/Insomnia (URL & payload JSON)
