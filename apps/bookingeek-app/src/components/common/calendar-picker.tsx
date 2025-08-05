@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Calendar from "./calendar";
 import styled from "styled-components";
 import { MONTHS } from "../../data/months";
@@ -34,8 +34,6 @@ type CalendarPickerProps = {
   onNextClick: () => void;
   // Callback to handle navigation to previous month
   onPrevClick: () => void;
-  // If defined, these dates will be outlined and only them can be selected
-  availableDates?: Array<Date>;
   // If defined, provides an alternative for availableDates
   availableDaysOfSelectedMonth?: Array<boolean>;
   // Called every time the displayed month changes
@@ -49,7 +47,6 @@ type CalendarPickerProps = {
  */
 export default function CalendarPicker({
   value,
-  availableDates,
   availableDaysOfSelectedMonth,
   displayMonth,
   displayYear,

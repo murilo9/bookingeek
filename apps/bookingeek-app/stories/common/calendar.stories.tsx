@@ -24,7 +24,9 @@ export const Component: Story = {
     monthIndex: 10,
     year: 2024,
     activeDay: new Date().getDate(),
-    outlinedDays: [9, 12, 13, 21],
+    outlinedDays: Array.from({ length: 31 }, (_, index) =>
+      [8, 11, 12, 20].includes(index)
+    ),
     allClickable: false,
   },
 };

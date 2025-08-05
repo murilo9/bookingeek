@@ -10,7 +10,6 @@ import { format } from "date-fns";
 import CalendarIcon from "../components/icons/calendar/calendar";
 import ClockIcon from "../components/icons/clock/clock";
 import Button from "../components/common/button";
-import { formatPriceInCents } from "../helpers/format-price-in-cents";
 import { useAppDispatch } from "../store/store";
 import {
   genericDialogClosed,

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { format } from "date-fns";
-import { renderResourceIcon, RESOURCE_ICON } from "../../data/resource-icons";
+import { renderResourceIcon } from "../../data/resource-icons";
 import { ReservationFormSteps } from "../../types/reservation-form-steps";
 import { Resource, Business, getTimeStringFromMinutes } from "@bookingeek/core";
 import FormHeader from "../common/form-header";

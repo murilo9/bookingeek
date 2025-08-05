@@ -1,10 +1,7 @@
 import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import {
-  useGetResourcesQuery,
-  useLazyGetResourceMonthAvailabilityQuery,
-} from "../store/resources-api";
+import { useGetResourcesQuery } from "../store/resources-api";
 import ResourceItem from "../components/domain/resource-item";
 import DateTimeSelectStep from "../components/domain/date-time-select-step";
 import { useCreateReservationMutation } from "../store/reservations-api";
@@ -21,8 +18,6 @@ import {
   Reservation,
   ResourceExtraField,
   CreateReservationPayload,
-  TimeRange,
-  DayOfWeekAvailability,
 } from "@bookingeek/core";
 import CheckoutStep from "../components/domain/checkout-step";
 import { useGetBusinessByIdOrSlugQuery } from "../store/businesses-api";
