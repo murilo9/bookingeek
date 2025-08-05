@@ -119,6 +119,7 @@ export class ResourcesService {
   ) {
     const resourceToCreate: Omit<Resource<ObjectId>, FromPersistentEntity> = {
       ...createResourceDto,
+      reservationTimeGranularityMinutes: createResourceDto.priceTypeMinutes,
       isActive: false,
       availability: {
         sunday: { available: false, rules: [] },
@@ -151,7 +152,6 @@ export class ResourcesService {
       },
       businessId,
       customPrices: [],
-      description: '',
       extraFields: [],
       minimalReservationAdvance: {
         amount: 1,
@@ -161,10 +161,6 @@ export class ResourcesService {
         amount: 1,
         unit: 'hours',
       },
-      priceInCents: null,
-      priceTypeMinutes: 60,
-      reservationTimeGranularityMinutes: 60,
-      subtitle: '',
       unavailability: [],
     };
     const resource = await this.databaseService.insertOne<Resource<ObjectId>>(

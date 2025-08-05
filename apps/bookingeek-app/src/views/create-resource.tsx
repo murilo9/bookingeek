@@ -379,7 +379,7 @@ export default function CreateResourceView() {
                   )
                 }
               >
-                {Object.entries(RESOURCE_PRICE_TYPES).map(([type, label]) => (
+                {Object.entries(RESOURCE_PRICE_TYPES).map(([label, type]) => (
                   <option value={type} key={type}>
                     {label}
                   </option>

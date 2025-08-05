@@ -137,6 +137,7 @@ export default function ResourceBasicInfoView() {
   const priceIsValid = isPriceValid(priceString);
   const slugIsValid = validateSlug(slug);
   const { formChanged } = useFormComparator({
+    priceTypeMinutes,
     pictureType,
     newPicture,
     resourceIcon,
@@ -191,6 +192,7 @@ export default function ResourceBasicInfoView() {
             : [uploadedFileUrl || resource.picture.src[0]],
       },
       priceInCents: hasPrice ? Number(priceString) * 100 : null,
+      priceTypeMinutes,
       checkoutType,
       title,
       subtitle,
@@ -311,11 +313,14 @@ export default function ResourceBasicInfoView() {
             />
             <Select
               value={priceTypeMinutes}
-              onChange={({ target: { value } }) =>
-                setPriceTypeMinutes(Number(value) as ReservationTimeGranularity)
-              }
+              onChange={({ target: { value } }) => {
+                console.log("value", value);
+                setPriceTypeMinutes(
+                  Number(value) as ReservationTimeGranularity
+                );
+              }}
             >
-              {Object.entries(RESOURCE_PRICE_TYPES).map(([type, label]) => (
+              {Object.entries(RESOURCE_PRICE_TYPES).map(([label, type]) => (
                 <option value={type} key={type}>
                   {label}
                 </option>
