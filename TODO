@@ -1,5 +1,7 @@
 - fix requests with param undefined returning content
-- hide unavailable time slots for booking
+- get all availability data from server (days, time slots, time ranges)
+- for time ranges booking, inform unavailable ranges for selected day
 - test Stripe payments/refunds
+- add Facebook signin (the button is already there)
 - prevent requests with param undefined on start
 - request mockups for Postman/Insomnia (URL & payload JSON)
